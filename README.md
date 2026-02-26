@@ -160,27 +160,167 @@ Powerboat News
 SVEMO / UIM     ──────────►  svemo_rules.py      ────► (embedded in klasser.html)
 ```
 
-## Scrape Intervals
+## Scrapers
 
-The daemon runs a full scrape every 7 days. Individual scrapers also respect per-source intervals via `scrape_tracker.py`:
+All scrapers live in `bot/scrapers/` and use **Python stdlib only** (zero pip dependencies). Each one writes cached JSON to `bot/data/` and respects `scrape_tracker.py` intervals to avoid redundant work.
 
-| Source | Scraper | Interval | Notes |
-|--------|---------|----------|-------|
-| WebTracking races | `webtracking.py` | 24h | Public API, 277+ races |
-| WebTracking results | `webtracking_results.py` | 24h | Incremental by default |
-| SVEMO calendar | `svemo_calendar.py` | 48h | Requires TAM login |
-| SVEMO results | `svemo_results.py` | 48h | Requires TAM login |
-| UIM calendar | `uim_calendar.py` | 48h | Public, ASP.NET WebForms |
-| News (PRW, F1H2O, PBN) | `news_aggregator.py` | 12h | WP REST API + HTML scraping |
-| Rules / regulations | `svemo_rules.py` | 168h (weekly) | PDF links rarely change |
+### `webtracking.py` — Race List
 
-### Manual scraper commands
+| | |
+|---|---|
+| **Source** | [WebTracking.se](https://webtracking.se) (public REST API) |
+| **API** | `https://webtracking.se/pbl?reqType=rc&date=all` |
+| **Auth** | None |
+| **Interval** | 24h |
+| **Output** | `bot/data/webtracking_races.json` (~36 KB) |
+| **Used by** | `build_resultat.py` → `resultat.html` |
+
+Fetches the full race list (277+ races, 2011–present). Each race includes index, name, date, year, and auto-classified type (Offshore / Rundbana / Tavling). Filters out non-race entries (patrol boats, rescue).
+
+```bash
+python3 bot/scrapers/webtracking.py --force
+```
+
+### `webtracking_results.py` — Race Results
+
+| | |
+|---|---|
+| **Source** | [WebTracking.se](https://webtracking.se) (public REST API) |
+| **API** | `https://webtracking.se/pbl?reqType=rs&raceIdx={id}` |
+| **Auth** | None |
+| **Interval** | 24h |
+| **Output** | `bot/data/webtracking_results.json` (~426 KB) |
+| **Used by** | `build_resultat.py` → `resultat.html` |
+
+Fetches checkpoint crossing data and computes race results: position, laps completed, and total time per class. Handles both per-entrant starts (offshore) and class starts (circuit racing).
+
+**Incremental by default** — only scrapes races not already cached + current/last year races (which might update). Use `--full` to re-scrape everything.
+
+```bash
+python3 bot/scrapers/webtracking_results.py --force          # incremental
+python3 bot/scrapers/webtracking_results.py --full --force    # all 277+ races
+```
+
+### `svemo_calendar.py` — SVEMO Calendar
+
+| | |
+|---|---|
+| **Source** | [SVEMO TAM](https://tam.svemo.se) (ASP.NET with CSRF) |
+| **Auth** | Personnummer + password (in `config.json`) |
+| **Interval** | 48h |
+| **Output** | `bot/data/svemo_calendar.json` |
+| **Used by** | `build_kalender.py` → `kalender.html` |
+
+Logs in to tam.svemo.se, searches for boat racing branches (Rundbana=22, Aquabike=26, Offshore=27) for the current and next year, and filters for future events only. Each event includes name, date range, location, organizer, branch, and status.
+
+```bash
+python3 bot/scrapers/svemo_calendar.py --force
+```
+
+### `svemo_results.py` — Official SVEMO Results
+
+| | |
+|---|---|
+| **Source** | [SVEMO TAM](https://tam.svemo.se) + [SVEMO TA](https://ta.svemo.se) (public results pages) |
+| **Auth** | TAM login for competition list; public pages for actual results |
+| **Interval** | 48h |
+| **Output** | `bot/data/svemo_results.json` (~115 KB) |
+| **Used by** | `build_resultat.py` → `resultat.html` (SVEMO tab) |
+
+Two-step scraper: (1) logs in to TAM to get the paginated competition list, then (2) fetches per-class results from public `ta.svemo.se/Resultat/Tavling/{id}` pages. Parses HTML tables for position, driver, club, boat, class, nationality, and points. Incremental — only scrapes competitions not already cached.
+
+```bash
+python3 bot/scrapers/svemo_results.py --force
+```
+
+### `uim_calendar.py` — UIM International Calendar
+
+| | |
+|---|---|
+| **Source** | [UIM Sport](https://www.uim.sport) (ASP.NET WebForms / Telerik RadGrid) |
+| **Auth** | None |
+| **Interval** | 48h |
+| **Output** | `bot/data/uim_calendar.json` (~5 KB) |
+| **Used by** | `build_kalender.py` → `kalender.html` |
+
+Scrapes the offshore calendar from uim.sport. Parses the RadGrid table for event date, name, venue, country, and discipline. Falls back to a POST with ViewState if the initial HTML is empty (WebForms quirk). Filters to current year only.
+
+```bash
+python3 bot/scrapers/uim_calendar.py --force
+```
+
+### `svemo_rules.py` — Rule Books
+
+| | |
+|---|---|
+| **Source** | [SVEMO Regler](https://regler.svemo.se/regelbocker/vattensport) + [UIM Sport](https://www.uim.sport/RuleBookReleaseList.aspx) |
+| **Auth** | None |
+| **Interval** | 168h (weekly) |
+| **Output** | `bot/data/rules.json` (~15 KB) |
+| **Used by** | `klasser.html` |
+
+Extracts PDF links to official rule books from both SVEMO and UIM. Categorizes by class (Offshore, Circuit, Aquabike, etc.). Rule books change very rarely so this runs weekly.
+
+```bash
+python3 bot/scrapers/svemo_rules.py --force
+```
+
+### `news_aggregator.py` — International News
+
+| | |
+|---|---|
+| **Sources** | [Powerboat Racing World](https://powerboatracingworld.com) (WP REST), [F1H2O](https://www.f1h2o.com) (HTML), [Powerboat News](https://powerboat.news) (WP REST) |
+| **Auth** | None |
+| **Interval** | 12h |
+| **Output** | `bot/data/news_feed.json` (~13 KB) |
+| **Used by** | `build_news.py` → `nyheter.html` |
+
+Aggregates the latest 10 articles from each of 3 sources. PRW and Powerboat News use WordPress REST API (`/wp-json/wp/v2/posts`). F1H2O uses HTML scraping with regex on structured divs. Articles include title, date, URL, excerpt, and source tag. Combined feed sorted by date descending.
+
+```bash
+python3 bot/scrapers/news_aggregator.py
+```
+
+## Builders
+
+Builders read cached JSON from `bot/data/` and generate or update HTML pages.
+
+### `build_resultat.py` — Results Page
+
+Reads `webtracking_races.json`, `webtracking_results.json`, and `svemo_results.json`. Embeds the data as compact JavaScript variables (`var RACES=...`, `var RESULTS=...`, `var SVEMO=...`) directly into `resultat.html` for client-side filtering and display. The generated page is ~530 KB and is gitignored.
+
+### `build_kalender.py` — Calendar Page
+
+Reads `svemo_calendar.json` and `uim_calendar.json`. Replaces the `<tbody>` contents in `kalender.html` with upcoming events, adds class badges (offshore, rundbana, aquabike), and updates the "Uppdaterad" date.
+
+### `build_news.py` — News + AI Digest
+
+Reads `news_feed.json`. Calls **DeepSeek V3 via OpenRouter** to generate a Swedish weekly summary (3–4 paragraphs). Builds article cards (max 15, balanced across sources). Replaces the digest and article grid sections in `nyheter.html`. Requires an OpenRouter API key in `config.json`.
+
+## Scrape Schedule
+
+The daemon (`svera_daemon.sh`) runs a full scrape every **7 days**. Between cycles, individual scrapers respect their own intervals via `scrape_tracker.py`:
+
+| Source | Scraper | Interval | Auth |
+|--------|---------|----------|------|
+| WebTracking races | `webtracking.py` | 24h | None |
+| WebTracking results | `webtracking_results.py` | 24h | None |
+| SVEMO calendar | `svemo_calendar.py` | 48h | TAM login |
+| SVEMO results | `svemo_results.py` | 48h | TAM login |
+| UIM calendar | `uim_calendar.py` | 48h | None |
+| News (PRW, F1H2O, PBN) | `news_aggregator.py` | 12h | None |
+| Rules (SVEMO + UIM) | `svemo_rules.py` | 168h | None |
+
+### Manual commands
 
 ```bash
 # Check what needs re-scraping
 python3 bot/scrape_tracker.py
 
-# Force scrape a specific source
+# Force scrape everything + rebuild + deploy
+bash bot/update.sh
+
+# Or run individual scrapers
 python3 bot/scrapers/webtracking.py --force
 python3 bot/scrapers/webtracking_results.py --force
 python3 bot/scrapers/svemo_calendar.py --force
