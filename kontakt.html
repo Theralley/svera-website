@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kontakt — SVERA</title>
+  <meta name="description" content="Kontakta SVERA. Har du material, bilder, resultat eller information att bidra med? Hör av dig!">
+  <meta property="og:title" content="Kontakt — SVERA">
+  <meta property="og:description" content="Kontakta SVERA. Har du material, bilder, resultat eller information att bidra med? Hör av dig!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.svera.nu/kontakt.html">
+  <meta property="og:locale" content="sv_SE">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .contact-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:32px;margin-bottom:24px;border:1px solid var(--border)}
+    .contact-card h2{font-size:1.35rem;color:var(--primary);margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--accent)}
+    .contact-card p{margin-bottom:12px;line-height:1.75}
+    .email-display{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;background:#f0f2f8;border:1px solid var(--border);border-radius:var(--radius);font-size:1rem;font-weight:600;color:var(--primary);font-family:var(--font);margin:8px 0 16px;cursor:pointer;transition:all var(--transition);user-select:all}
+    .email-display:hover{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:0 4px 12px rgba(37,54,134,0.2)}
+    .email-note{font-size:.78rem;color:var(--text-light);font-style:italic}
+    .contact-topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:20px}
+    .topic-card{background:#f8f9fc;border-radius:var(--radius);padding:20px;border-left:3px solid var(--primary);transition:all var(--transition)}
+    .topic-card:hover{background:#f0f2f8;transform:translateY(-1px)}
+    .topic-card h4{font-size:.9rem;color:var(--primary);margin-bottom:6px}
+    .topic-card p{font-size:.85rem;color:var(--text-light);line-height:1.55;margin:0}
+    @media(max-width:600px){.contact-topics{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Hoppa till innehåll</a>
+<div class="top-bar"><div class="container"><span>Oberoende informationsresurs sedan 2026</span></div></div>
+
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img class="logo-img" src="assets/images/svera-logo.png" alt="SVERA">
+        <div class="logo-text"><h1>SVERA</h1><span class="tagline">Svenska Evenemang &amp; Racerbåtsarkivet</span></div>
+      </a>
+      <button class="hamburger" aria-label="Meny"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <nav class="main-nav">
+    <div class="container">
+      <ul class="nav-list">
+        <li><a href="/">Hem</a></li>
+        <li><a href="om.html">Om SVERA</a></li>
+        <li><a href="arkivet.html">Arkivet</a></li>
+        <li><a href="klasser.html">Klasser &amp; Regler</a></li>
+        <li><a href="kalender.html">Kalender</a></li>
+        <li><a href="resultat.html">Resultat</a></li>
+        <li><a href="nyheter.html">Nyheter</a></li>
+        <li><a href="klubbar.html">Klubbar</a></li>
+        <li><a href="kontakt.html" class="active">Kontakt</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" style="padding:30px 0 24px;">
+  <div class="container">
+    <span class="hero-badge">Kontakt</span>
+    <h2>Hör av dig till oss</h2>
+    <p>Har du material, bilder, resultat eller kunskap att bidra med? Vi vill gärna höra från dig.</p>
+  </div>
+</section>
+
+<div class="container page-content" id="main">
+
+  <div class="contact-card">
+    <h2>Kontakta SVERA</h2>
+    <p>SVERA drivs ideellt av entusiaster som vill göra informationen kring svensk båtracing mer tillgänglig. Alla bidrag och tips är välkomna.</p>
+
+    <p><strong>E-post:</strong></p>
+    <div class="email-display" id="emailBox" title="Klicka för att kopiera">
+      <span id="emailText">Laddar...</span>
+    </div>
+    <p class="email-note">Klicka på adressen för att kopiera den.</p>
+
+    <div class="contact-topics">
+      <div class="topic-card">
+        <h4>Saknas din klubb?</h4>
+        <p>Mejla oss namn, ort och eventuell webbadress eller Facebook-sida.</p>
+      </div>
+      <div class="topic-card">
+        <h4>Historiskt material</h4>
+        <p>Gamla resultatlistor, bilder, tidningsklipp eller berättelser? Allt är värdefullt.</p>
+      </div>
+      <div class="topic-card">
+        <h4>Felaktig information</h4>
+        <p>Har vi skrivit fel om en klass, klubb eller händelse? Hjälp oss rätta till det.</p>
+      </div>
+      <div class="topic-card">
+        <h4>Samarbeten</h4>
+        <p>Vill du bidra till SVERA som utvecklare, skribent eller datanörd? Hör av dig!</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>SVERA</h3>
+        <p>Svenska Evenemang &amp; Racerbåtsarkivet</p>
+        <p>Oberoende informationsresurs för svensk racerbåtssport.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Utforska</h3>
+        <ul>
+          <li><a href="om.html">Om SVERA</a></li>
+          <li><a href="arkivet.html">Arkivet</a></li>
+          <li><a href="klasser.html">Klasser &amp; Regler</a></li>
+          <li><a href="kalender.html">Kalender</a></li>
+          <li><a href="resultat.html">Resultat</a></li>
+          <li><a href="nyheter.html">Nyheter</a></li>
+          <li><a href="klubbar.html">Klubbar</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Kontakt</h3>
+        <p>Har du material, bilder eller kunskap att bidra med?</p>
+        <p><a href="kontakt.html">Kontakta oss &rarr;</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div style="margin-bottom:10px;">
+        <a href="https://buymeacoffee.com/theralley" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#FFDD00;color:#333;padding:8px 18px;border-radius:6px;font-size:0.82rem;font-weight:700;text-decoration:none;transition:all 0.2s;">&#9749; Bjud oss på en kaffe</a>
+      </div>
+      <p style="margin-bottom:6px;font-size:0.8rem;color:#8899aa;">Vi samlar och automatiserar informationen kring svensk båtracing — för att göra den tillgänglig för alla. Hjälp oss göra det ännu bättre.</p>
+      &copy; 2026 SVERA — Svenska Evenemang &amp; Racerbåtsarkivet. Senast uppdaterad 2026-02-25.
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+(function(){
+  // Bot-proof email: assembled from parts at runtime, never in plaintext HTML
+  var p = ['in','fo'];
+  var d = ['sv','era'];
+  var a = p.join('') + String.fromCharCode(64) + d.join('') + '.nu';
+  var el = document.getElementById('emailText');
+  if(el) el.textContent = a;
+  var box = document.getElementById('emailBox');
+  if(box){
+    box.addEventListener('click', function(){
+      if(navigator.clipboard){
+        navigator.clipboard.writeText(a).then(function(){
+          el.textContent = 'Kopierad!';
+          setTimeout(function(){ el.textContent = a; }, 2000);
+        });
+      } else {
+        // Fallback
+        var t = document.createElement('textarea');
+        t.value = a;
+        document.body.appendChild(t);
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+        el.textContent = 'Kopierad!';
+        setTimeout(function(){ el.textContent = a; }, 2000);
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>

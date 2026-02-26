@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tävlingskalender — SVERA</title>
+  <meta name="description" content="Tävlingskalender för svensk och internationell båtracing. Offshore, rundbana och aquabike — alla kommande tävlingar.">
+  <meta property="og:title" content="Tävlingskalender — SVERA">
+  <meta property="og:description" content="Tävlingskalender för svensk och internationell båtracing. Offshore, rundbana och aquabike — alla kommande tävlingar.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.svera.nu/kalender.html">
+  <meta property="og:locale" content="sv_SE">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .calendar-filter { display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
+    .filter-btn { padding:9px 18px; border:2px solid var(--border); background:var(--white); color:var(--text); font-size:0.82rem; font-weight:600; cursor:pointer; border-radius:6px; transition:all var(--transition); text-transform:uppercase; letter-spacing:0.5px; }
+    .filter-btn:hover, .filter-btn.active { background:var(--accent); color:#1a1f35; border-color:var(--accent); font-weight:700; }
+    .cal-table { width:100%; border-collapse:collapse; background:var(--white); box-shadow:var(--shadow); border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+    .cal-table thead { background:linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color:#fff; }
+    .cal-table th { padding:13px 14px; text-align:left; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.6px; font-weight:600; }
+    .cal-table td { padding:11px 14px; border-bottom:1px solid var(--border); font-size:0.85rem; }
+    .cal-table tr:hover td { background:#f0f2f8; }
+    .cal-table .badge { display:inline-block; padding:3px 10px; border-radius:12px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.3px; }
+    .badge-offshore { background:#1a5276; color:#fff; }
+    .badge-rundbana { background:#1e8449; color:#fff; }
+    .badge-aquabike { background:#b7950b; color:#fff; }
+    .badge-circuit { background:#6c3483; color:#fff; }
+    .badge-open { background:#27ae60; color:#fff; }
+    .badge-cancelled { background:#c0392b; color:#fff; }
+    .badge-uim { background:#e67e22; color:#fff; }
+    .cal-section { margin-bottom:36px; }
+    .cal-section h3 { font-size:1rem; color:var(--primary); margin-bottom:12px; padding-left:4px; border-left:4px solid var(--accent); padding:6px 12px; }
+    .cal-note { font-size:0.78rem; color:var(--text-light); margin-top:16px; }
+    @media(max-width:768px) {
+      .cal-table { font-size:0.78rem; }
+      .cal-table th, .cal-table td { padding:8px 6px; }
+      .cal-table .hide-mobile { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Hoppa till innehåll</a>
+
+<div class="top-bar"><div class="container"><span>Oberoende informationsresurs sedan 2026</span></div></div>
+
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img class="logo-img" src="assets/images/svera-logo.png" alt="SVERA">
+        <div class="logo-text"><h1>SVERA</h1><span class="tagline">Svenska Evenemang &amp; Racerbåtsarkivet</span></div>
+      </a>
+      <button class="hamburger" aria-label="Meny"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <nav class="main-nav">
+    <div class="container">
+      <ul class="nav-list">
+        <li><a href="/">Hem</a></li>
+        <li><a href="om.html">Om SVERA</a></li>
+        <li><a href="arkivet.html">Arkivet</a></li>
+        <li><a href="klasser.html">Klasser &amp; Regler</a></li>
+        <li><a href="kalender.html" class="active">Kalender</a></li>
+        <li><a href="resultat.html">Resultat</a></li>
+        <li><a href="nyheter.html">Nyheter</a></li>
+        <li><a href="klubbar.html">Klubbar</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" style="padding:30px 0 24px;">
+  <div class="container">
+    <span class="hero-badge">Kalender 2026</span>
+    <h2>Tävlingskalender</h2>
+    <p>Alla kommande tävlingar inom svensk och internationell båtracing — offshore, rundbana och aquabike.</p>
+  </div>
+</section>
+
+<div class="container page-content" id="main">
+
+  <div class="calendar-filter">
+    <button class="filter-btn active" onclick="filterCal('all')">Alla</button>
+    <button class="filter-btn" onclick="filterCal('offshore')">Offshore</button>
+    <button class="filter-btn" onclick="filterCal('rundbana')">Rundbana</button>
+    <button class="filter-btn" onclick="filterCal('aquabike')">Aquabike</button>
+    <button class="filter-btn" onclick="filterCal('uim')">Internationellt (UIM)</button>
+  </div>
+
+  <!-- SVEMO Swedish Calendar -->
+  <div class="cal-section">
+    <h3>Svenska tävlingar (SVEMO)</h3>
+    <table class="cal-table">
+      <thead>
+        <tr>
+          <th>Datum</th>
+          <th>Tävling</th>
+          <th>Gren</th>
+          <th class="hide-mobile">Arrangör</th>
+          <th class="hide-mobile">Klasser</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="svemo-events">
+        <tr data-branch="rundbana"><td>2026-05-23</td><td>Träningsläger</td><td><span class="badge badge-rundbana">Rundbana</span></td><td class="hide-mobile">Östhammars SS</td><td class="hide-mobile">Träning</td><td></td></tr>
+        <tr data-branch="offshore"><td>2026-05-23</td><td>Träning Offshore + Aquabike</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">Östhammars SS</td><td class="hide-mobile">Offshore + Aquabike träning</td><td></td></tr>
+        <tr data-branch="offshore"><td>2026-06-13</td><td>Vårracet</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">Öregrunds RK</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td></td></tr>
+        <tr data-branch="offshore"><td>2026-07-04</td><td>Oskarshamn Offshore</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">SUK</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td></td></tr>
+        <tr data-branch="offshore"><td>2026-08-08</td><td>Roslagsloppet</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">Öregrunds RK</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td></td></tr>
+        <tr data-branch="rundbana"><td>2026-08-29</td><td>Dalälvstrofén 2026</td><td><span class="badge badge-rundbana">Rundbana</span></td><td class="hide-mobile">RBK Ruskprickarna</td><td class="hide-mobile">F125, F4, GT15, GT30, OSY400, Thundercat</td><td></td></tr>
+        <tr data-branch="offshore"><td>2026-09-05</td><td>Saltsjöloppet 2026</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">Sportbåtsklubben</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150</td><td></td></tr>
+        <tr data-branch="rundbana"><td>2026-09-26</td><td>Östhammars GP mot cancer</td><td><span class="badge badge-rundbana">Rundbana</span></td><td class="hide-mobile">Östhammars SS</td><td class="hide-mobile">F4, GT15, GT30, OSY400, Thundercat</td><td></td></tr>
+        <tr data-branch="offshore"><td>2026-09-26</td><td>Östhammars GP mot cancer</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">Östhammars SS</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td></td></tr>
+      </tbody>
+    </table>
+    <p class="cal-note">Källa: SVEMO TA (tam.svemo.se). Uppdaterad 2026-02-26.</p>
+  </div>
+
+  <!-- UIM International Calendar -->
+  <div class="cal-section">
+    <h3>Internationella tävlingar (UIM)</h3>
+    <table class="cal-table">
+      <thead>
+        <tr>
+          <th>Datum</th>
+          <th>Tävling</th>
+          <th>Gren</th>
+          <th class="hide-mobile">Klasser</th>
+          <th>Land</th>
+        </tr>
+      </thead>
+      <tbody id="uim-events">
+        <tr data-branch="aquabike" class="uim"><td>2026-04-01 – 04</td><td>Aquabike World Series</td><td><span class="badge badge-aquabike">Aquabike</span></td><td class="hide-mobile">Runabout GP1, Ski GP1, Ladies, Freestyle</td><td>TBA</td></tr>
+        <tr data-branch="aquabike" class="uim"><td>2026-04-01 – 04</td><td>Aquabike WC — Endurance</td><td><span class="badge badge-aquabike">Aquabike</span></td><td class="hide-mobile">Endurance</td><td>TBA</td></tr>
+        <tr data-branch="offshore" class="uim"><td>2026-04-17 – 19</td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">XCAT</td><td>UAE, Fujairah</td></tr>
+        <tr data-branch="aquabike" class="uim"><td>2026-04-25 – 26</td><td>Aquabike International — Rijeka</td><td><span class="badge badge-aquabike">Aquabike</span></td><td class="hide-mobile">Circuit, Endurance</td><td>Kroatien</td></tr>
+        <tr data-branch="aquabike" class="uim"><td>2026-05-02 – 03</td><td>Aquabike International — Zagreb</td><td><span class="badge badge-aquabike">Aquabike</span></td><td class="hide-mobile">Circuit, Endurance</td><td>Kroatien</td></tr>
+        <tr data-branch="rundbana" class="uim"><td>2026-05-15 – 17</td><td>Formula WC — Jedovnice</td><td><span class="badge badge-circuit">Circuit</span></td><td class="hide-mobile">F125, F250, F500</td><td>Tjeckien</td></tr>
+        <tr data-branch="aquabike" class="uim"><td>2026-05-22 – 24</td><td>Aquabike International — Matylda Lake</td><td><span class="badge badge-aquabike">Aquabike</span></td><td class="hide-mobile">Circuit</td><td>Tjeckien</td></tr>
+        <tr data-branch="offshore" class="uim"><td>2026-05-29 – 31</td><td>International Raid Pavia–Venezia</td><td><span class="badge badge-offshore">Offshore</span> <span class="badge badge-aquabike">Aquabike</span></td><td class="hide-mobile">Alla discipliner</td><td>Italien</td></tr>
+        <tr data-branch="rundbana" class="uim"><td>2026-05-29 – 31</td><td>Formula WC — Znin</td><td><span class="badge badge-circuit">Circuit</span></td><td class="hide-mobile">F125, F250, F500</td><td>Polen</td></tr>
+        <tr data-branch="rundbana" class="uim"><td>2026-06-05 – 07</td><td>Formula WC — Klaipeda</td><td><span class="badge badge-circuit">Circuit</span></td><td class="hide-mobile">F2, F4</td><td>Litauen</td></tr>
+        <tr data-branch="aquabike" class="uim"><td>2026-06-06 – 07</td><td>Aquabike International — Vodice</td><td><span class="badge badge-aquabike">Aquabike</span></td><td class="hide-mobile">Circuit, Endurance</td><td>Kroatien</td></tr>
+        <tr data-branch="rundbana" class="uim"><td>2026-06-12 – 14</td><td>Formula WC — Boretto</td><td><span class="badge badge-circuit">Circuit</span></td><td class="hide-mobile">F125, F250, F500</td><td>Italien</td></tr>
+        <tr data-branch="offshore" class="uim"><td>2026-06-18 – 21</td><td>Offshore WC — 3D</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">3D</td><td>Italien, Rodi Garganico</td></tr>
+        <tr data-branch="offshore" class="uim"><td>2026-06-19 – 21</td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">XCAT</td><td>Europa (TBA)</td></tr>
+        <tr data-branch="offshore" class="uim"><td>2026-07-08 – 11</td><td>Offshore EC — 3B, 3C, 3J</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">3B, 3C, 3J</td><td>Norge, Tvedestrand</td></tr>
+        <tr data-branch="offshore" class="uim"><td>2026-07-30 – 02/08</td><td>Offshore WC — 3B, 3D, 3J</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">3B, 3D, 3J</td><td>Norge, Arendal</td></tr>
+        <tr data-branch="offshore" class="uim" style="background:#eef0f8;"><td>2026-08-04 – 06</td><td>Offshore WC — 3D, 3J &#127480;&#127466;</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">3D, 3J</td><td><strong>Sverige, Öregrund</strong></td></tr>
+        <tr data-branch="offshore" class="uim"><td>2026-08-28 – 30</td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">XCAT</td><td>Europa (TBA)</td></tr>
+        <tr data-branch="offshore" class="uim"><td>2026-09-09 – 13</td><td>Offshore WC — 3D</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">3D</td><td>Italien, Trani</td></tr>
+        <tr data-branch="offshore" class="uim"><td>2026-10-09 – 11</td><td>Offshore EC — 3D</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">3D</td><td>Italien, Como</td></tr>
+        <tr data-branch="offshore" class="uim"><td>2026-10-29 – 31</td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">XCAT</td><td>Kuwait, Salmiya</td></tr>
+        <tr data-branch="offshore" class="uim"><td>2026-11-27 – 29</td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">XCAT</td><td>Mellanöstern (TBA)</td></tr>
+        <tr data-branch="offshore" class="uim"><td>2026-12-11 – 13</td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">XCAT</td><td>UAE, Dubai</td></tr>
+      </tbody>
+    </table>
+    <p class="cal-note">Källa: UIM (uim.sport). Visar offshore, aquabike och circuit. Uppdaterad 2026-02-26.</p>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col"><h3>SVERA</h3><p>Svenska Evenemang &amp; Racerbåtsarkivet</p><p>Oberoende informationsresurs för svensk racerbåtsport.</p></div>
+      <div class="footer-col"><h3>Utforska</h3><ul><li><a href="om.html">Om SVERA</a></li><li><a href="arkivet.html">Arkivet</a></li><li><a href="klasser.html">Klasser &amp; Regler</a></li><li><a href="kalender.html">Kalender</a></li><li><a href="resultat.html">Resultat</a></li><li><a href="nyheter.html">Nyheter</a></li><li><a href="klubbar.html">Klubbar</a></li></ul></div>
+      <div class="footer-col"><h3>Kontakt</h3><p>Har du material att bidra med?</p><p><a href="kontakt.html">Kontakta oss &rarr;</a></p></div>
+    </div>
+    <div class="footer-bottom">
+      <div style="margin-bottom:10px;">
+        <a href="https://buymeacoffee.com/theralley" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#FFDD00;color:#333;padding:8px 18px;border-radius:6px;font-size:0.82rem;font-weight:700;text-decoration:none;transition:all 0.2s;">&#9749; Bjud oss på en kaffe</a>
+      </div>
+      <p style="margin-bottom:6px;font-size:0.8rem;color:#8899aa;">Vi samlar och automatiserar informationen kring svensk båtracing — för att göra den tillgänglig för alla. Hjälp oss göra det ännu bättre.</p>
+      &copy; 2026 SVERA — Svenska Evenemang &amp; Racerbåtsarkivet. Senast uppdaterad 2026-02-25.
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+function filterCal(branch) {
+  document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  event.target.classList.add('active');
+  var rows = document.querySelectorAll('#svemo-events tr, #uim-events tr');
+  rows.forEach(function(row) {
+    if (branch === 'all') {
+      row.style.display = '';
+    } else if (branch === 'uim') {
+      row.style.display = row.classList.contains('uim') ? '' : 'none';
+    } else {
+      row.style.display = row.getAttribute('data-branch') === branch ? '' : 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>

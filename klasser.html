@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Klasser &amp; Regler — SVERA</title>
+  <meta name="description" content="Alla klasser inom svensk båtracing — offshore, rundbana och aquabike. Regelböcker från Svemo och UIM.">
+  <meta property="og:title" content="Klasser &amp; Regler — SVERA">
+  <meta property="og:description" content="Alla klasser inom svensk båtracing — offshore, rundbana och aquabike. Regelböcker från Svemo och UIM.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.svera.nu/klasser.html">
+  <meta property="og:locale" content="sv_SE">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .class-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:30px; }
+    .class-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; transition:all var(--transition); border:1px solid var(--border); }
+    .class-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-hover); }
+    .class-card-header { padding:14px 18px; font-weight:700; font-size:0.88rem; text-transform:uppercase; letter-spacing:0.6px; }
+    .class-card-body { padding:18px; font-size:0.85rem; line-height:1.65; color:var(--text-light); }
+    .class-card-body strong { color:var(--text); }
+    .hdr-offshore { background:linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color:#fff; }
+    .hdr-rundbana { background:linear-gradient(135deg, #1e8449 0%, #27ae60 100%); color:#fff; }
+    .hdr-aquabike { background:linear-gradient(135deg, #b7950b 0%, #d4ac0d 100%); color:#fff; }
+    .hdr-international { background:linear-gradient(135deg, #d35400 0%, #e67e22 100%); color:#fff; }
+    .rules-section { margin-top:36px; }
+    .rules-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:16px; margin-top:16px; }
+    .rule-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px; display:flex; flex-direction:column; gap:8px; border:1px solid var(--border); transition:all var(--transition); }
+    .rule-card:hover { box-shadow:var(--shadow-lg); }
+    .rule-card h4 { font-size:0.88rem; color:var(--primary); margin:0; }
+    .rule-card .rule-meta { font-size:0.75rem; color:var(--text-light); }
+    .rule-card .rule-link { display:inline-flex; align-items:center; gap:4px; padding:7px 16px; background:var(--accent); color:#333; border-radius:5px; font-size:0.78rem; font-weight:700; text-decoration:none; transition:all var(--transition); align-self:flex-start; margin-top:auto; }
+    .rule-card .rule-link:hover { background:var(--primary); color:#fff; transform:translateY(-1px); }
+    .tab-buttons { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+    .tab-btn { padding:9px 20px; border:2px solid var(--border); background:var(--white); color:var(--text); font-size:0.82rem; font-weight:600; cursor:pointer; border-radius:6px; transition:all var(--transition); text-transform:uppercase; letter-spacing:0.5px; font-family:var(--font); }
+    .tab-btn:hover, .tab-btn.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+    .section-intro { font-size:0.92rem; color:var(--text-light); line-height:1.75; margin-bottom:24px; }
+    @media(max-width:768px) { .class-grid { grid-template-columns:1fr; } .rules-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Hoppa till innehåll</a>
+
+<div class="top-bar"><div class="container"><span>Oberoende informationsresurs sedan 2026</span></div></div>
+
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img class="logo-img" src="assets/images/svera-logo.png" alt="SVERA">
+        <div class="logo-text"><h1>SVERA</h1><span class="tagline">Svenska Evenemang &amp; Racerbåtsarkivet</span></div>
+      </a>
+      <button class="hamburger" aria-label="Meny"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <nav class="main-nav">
+    <div class="container">
+      <ul class="nav-list">
+        <li><a href="/">Hem</a></li>
+        <li><a href="om.html">Om SVERA</a></li>
+        <li><a href="arkivet.html">Arkivet</a></li>
+        <li>
+          <a href="klasser.html" class="active">Klasser &amp; Regler</a>
+          <ul class="dropdown">
+            <li><a href="#offshore">Offshore</a></li>
+            <li><a href="#rundbana">Rundbana</a></li>
+            <li><a href="#aquabike">Aquabike</a></li>
+            <li><a href="#regler">Reglementen</a></li>
+          </ul>
+        </li>
+        <li><a href="kalender.html">Kalender</a></li>
+        <li><a href="resultat.html">Resultat</a></li>
+        <li><a href="nyheter.html">Nyheter</a></li>
+        <li><a href="klubbar.html">Klubbar</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" style="padding:30px 0 24px;">
+  <div class="container">
+    <span class="hero-badge">3 grenar</span>
+    <h2>Klasser &amp; Regler</h2>
+    <p>Alla tävlingsklasser inom svensk båtracing — offshore, rundbana och aquabike. Regelböcker, klassindelning och tekniska krav.</p>
+  </div>
+</section>
+
+<div class="container page-content" id="main">
+
+  <!-- OFFSHORE -->
+  <div class="content-block" id="offshore">
+    <h2>Offshore</h2>
+    <p class="section-intro">I Sverige har vi en unik skärgård vilket ger oss speciella förutsättningar för båtliv. Offshoretävlingar körs därför i Sverige både på öppet hav, på insjöar eller i skärgårdsvatten med mer eller mindre avancerad navigering. I Offshore är det två personers besättning — en förare och en navigatör. Ett offshorelopp är mellan 40–100 sjömil långt.</p>
+
+    <h3>Nationella klasser</h3>
+    <div class="class-grid">
+      <div class="class-card">
+        <div class="class-card-header hdr-offshore">Classic Offshore</div>
+        <div class="class-card-body">
+          Klassen för dig som gillar classic offshore racing — enklare båtar, max 60 knop. Äldre båtar som alla har en berättelse med sig. Perfekt för både yngre och äldre besättningar. <strong>Fart: max 60 knop.</strong>
+        </div>
+      </div>
+      <div class="class-card">
+        <div class="class-card-header hdr-offshore">V150</div>
+        <div class="class-card-body">
+          V-botten enskrovsbåtar av traditionell modell (inga stegbottnar). Standardmotorer på <strong>max 150 hk</strong>. Minimivikten gör klassen mindre extrem — mer rolig.
+        </div>
+      </div>
+      <div class="class-card">
+        <div class="class-card-header hdr-offshore">W150</div>
+        <div class="class-card-body">
+          Större katamaraner runt 23–24 fot, oftast utan cockpit. Miljömotorer på 150 hk. <strong>Fart: ca 75 knop.</strong>
+        </div>
+      </div>
+      <div class="class-card">
+        <div class="class-card-header hdr-offshore">K — Inbordare 2000 cc</div>
+        <div class="class-card-body">
+          Meckarnas Mecka! Alla vanliga 2-litermotorer används — populärast är Opel 16-ventilare och Volvo. Varierat utbud på båtsidan, från enskrovare till katamaraner. <strong>Fart: ca 60 knop.</strong>
+        </div>
+      </div>
+      <div class="class-card">
+        <div class="class-card-header hdr-offshore">UL — Inbordare V8</div>
+        <div class="class-card-body">
+          Klassen för "muskelbåtar"! Enskrovsbåtar med V8 standardmotorer. <strong>Toppfart: ca 75 knop.</strong>
+        </div>
+      </div>
+    </div>
+
+    <h3>Internationella klasser</h3>
+    <div class="class-grid">
+      <div class="class-card">
+        <div class="class-card-header hdr-international">Offshore 3A</div>
+        <div class="class-card-body">
+          Internationell enskrovsklass där stegbotten är tillåtet. 115 hk miljömotorer. <strong>Fart: ca 60 knop.</strong>
+        </div>
+      </div>
+      <div class="class-card">
+        <div class="class-card-header hdr-international">Offshore 3B</div>
+        <div class="class-card-body">
+          Internationell flerskrovsklass. Max 115 hk miljömotorer, båtarna runt 20 fot. <strong>Fart: ca 70 knop.</strong>
+        </div>
+      </div>
+      <div class="class-card">
+        <div class="class-card-header hdr-international">Offshore 3J</div>
+        <div class="class-card-body">
+          Offshoreklass som passar både unga och mer mogna ungdomar. Båtarna ska vara snabba och tåla hård sjö. <strong>Fart: ca 50 knop.</strong>
+        </div>
+      </div>
+      <div class="class-card">
+        <div class="class-card-header hdr-international">Offshore C</div>
+        <div class="class-card-body">
+          Världens mest spridda offshoreklass. Enskrov eller katamaraner från 6,5 m, minvikt 845 kg. Max 200 hk miljömotorer. Vanliga båtar: Twister, Argocat, Hydrocat. <strong>Toppfart: ca 90 knop.</strong>
+        </div>
+      </div>
+      <div class="class-card">
+        <div class="class-card-header hdr-international">X-CAT</div>
+        <div class="class-card-body">
+          Toppklassen i Offshore 3. Internationell Super Serie i Dubai &amp; Abu Dhabi. Ca 9 meters katamaraner med två 2,5-liters utbordare på ca 600 hk. <strong>Toppfart: över 100 knop.</strong>
+        </div>
+      </div>
+      <div class="class-card">
+        <div class="class-card-header hdr-international">V24</div>
+        <div class="class-card-body">
+          Enda entypsklassen i Offshore. Enskrovsbåt 24 fot, Volvo Penta 5,7-liters standardmotor 320 hk. Alla båtar identiska — extremt jämn racing. Ritad av svensken Ocke Mannerfelt. <strong>Toppfart: drygt 65 knop.</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RUNDBANA -->
+  <div class="content-block" id="rundbana">
+    <h2>Rundbana</h2>
+    <p class="section-intro">Rundbana (circuit racing) körs på en avgränsad bana, oftast i skyddade vatten. Båtarna kör flera varv runt en definierad bana med bojar. Klasser sträcker sig från nybörjarvänliga till internationella tävlingsklasser.</p>
+
+    <div class="class-grid">
+      <div class="class-card">
+        <div class="class-card-header hdr-rundbana">GT15</div>
+        <div class="class-card-body">
+          Internationell nybörjarklass. 15 hk motorer, tunnelbåtar. Perfekt ingångsklass för unga förare. Körs som EM och SM.
+        </div>
+      </div>
+      <div class="class-card">
+        <div class="class-card-header hdr-rundbana">GT30</div>
+        <div class="class-card-body">
+          Steg upp från GT15. 30 hk motorer, snabbare tunnelbåtar. Internationell klass med EM och VM.
+        </div>
+      </div>
+      <div class="class-card">
+        <div class="class-card-header hdr-rundbana">Formula 4 (F4)</div>
+        <div class="class-card-body">
+          Tunnelbåtar med kraftfullare motorer. Populär klass i nordiska mästerskap.
+        </div>
+      </div>
+      <div class="class-card">
+        <div class="class-card-header hdr-rundbana">OSY-400</div>
+        <div class="class-card-body">
+          Nationell klass med standardiserade utbordare. Fokus på lika förutsättningar och jämn racing.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AQUABIKE -->
+  <div class="content-block" id="aquabike">
+    <h2>Aquabike</h2>
+    <p class="section-intro">Aquabike (vattenskotertävling) är en snabb och spektakulär gren av vattensport. Tävlingarna körs i klasser som Ski, Runabout och Freestyle. Officiella VM-serien sanktioneras av UIM.</p>
+
+    <div class="class-grid">
+      <div class="class-card">
+        <div class="class-card-header hdr-aquabike">Ski GP</div>
+        <div class="class-card-body">
+          Ståande vattenskoter — den klassiska formen av aquabike. Fysiskt krävande med hög fart och intensiv racing.
+        </div>
+      </div>
+      <div class="class-card">
+        <div class="class-card-header hdr-aquabike">Runabout GP</div>
+        <div class="class-card-body">
+          Sittande vattenskoter. Den populäraste klassen med flest deltagare globalt. Körs på rundbana.
+        </div>
+      </div>
+      <div class="class-card">
+        <div class="class-card-header hdr-aquabike">Ski Fun / Ski Junior</div>
+        <div class="class-card-body">
+          Instegsklass för yngre förare som vill börja tävla i aquabike. Anpassade regler och säkerhetskrav.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGLER / REGELBÖCKER -->
+  <div class="content-block rules-section" id="regler">
+    <h2>Regelböcker &amp; Reglementen</h2>
+    <p class="section-intro">Officiella regelböcker från Svenska Motorsportförbundet (Svemo) och Union Internationale Motonautique (UIM).</p>
+
+    <div class="tab-buttons">
+      <button class="tab-btn active" onclick="showRules('svemo')">Svemo (Sverige)</button>
+      <button class="tab-btn" onclick="showRules('uim')">UIM (Internationellt)</button>
+      <button class="tab-btn" onclick="showRules('stadgar')">Stadgar &amp; SPAR</button>
+    </div>
+
+    <!-- Svemo rules -->
+    <div id="rules-svemo" class="rules-tab">
+      <div class="rules-grid">
+        <div class="rule-card">
+          <h4>Vattenracing Regelbok 2026</h4>
+          <div class="rule-meta">Svemo — Komplett digital regelbok för alla vattensporter</div>
+          <a class="rule-link" href="https://regler.svemo.se/regelbocker/vattensport" target="_blank" rel="noopener">Läs regelbok &#8599;</a>
+        </div>
+        <div class="rule-card">
+          <h4>Appendix VA 2026</h4>
+          <div class="rule-meta">Svemo — Tillägg och bilagor för vattenracing</div>
+          <a class="rule-link" href="https://svemocmspr-7e6a0cba035d817d799a-endpoint.azureedge.net/wp-content/uploads/2023/01/appendix-VA-2026-AP.pdf" target="_blank" rel="noopener">Ladda ner PDF &#8599;</a>
+        </div>
+        <div class="rule-card">
+          <h4>Sjukvårdsdokument VA 2026</h4>
+          <div class="rule-meta">Svemo — Bilaga A, sjukvårdsdokumentation</div>
+          <a class="rule-link" href="https://svemocmspr-7e6a0cba035d817d799a-endpoint.azureedge.net/wp-content/uploads/2023/01/Bilaga-A-sjukvardsdok-VA-2026-AP.pdf" target="_blank" rel="noopener">Ladda ner PDF &#8599;</a>
+        </div>
+        <div class="rule-card">
+          <h4>Besiktningsprotokoll nationella klasser</h4>
+          <div class="rule-meta">Svemo — Version 2025</div>
+          <a class="rule-link" href="https://svemocmspr-7e6a0cba035d817d799a-endpoint.azureedge.net/wp-content/uploads/2022/11/Besiktningsprotokoll-nationella-klasser-2025-ver-250520.pdf" target="_blank" rel="noopener">Ladda ner PDF &#8599;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- UIM rules -->
+    <div id="rules-uim" class="rules-tab" style="display:none;">
+      <div class="rules-grid">
+        <div class="rule-card">
+          <h4>UIM Offshore Rulebook 2026</h4>
+          <div class="rule-meta">UIM — Internationella offshore-regler</div>
+          <a class="rule-link" href="https://www.uim.sport/Documents/RuleBookRelease/RuleBookRelease128/2026%20UIM%20Offshore%20Rulebook%20-%20published%20on%2020.12.2025.pdf" target="_blank" rel="noopener">Ladda ner PDF &#8599;</a>
+        </div>
+        <div class="rule-card">
+          <h4>UIM Circuit Rulebook 2026</h4>
+          <div class="rule-meta">UIM — Internationella rundbane-regler</div>
+          <a class="rule-link" href="https://www.uim.sport/Documents/RuleBookRelease/RuleBookRelease130/2026%20UIM%20Circuit%20Rulebook%20-%20published%20on%2020.12.2025.pdf" target="_blank" rel="noopener">Ladda ner PDF &#8599;</a>
+        </div>
+        <div class="rule-card">
+          <h4>UIM Aquabike Rulebook 2026</h4>
+          <div class="rule-meta">UIM — Internationella aquabike-regler</div>
+          <a class="rule-link" href="https://www.uim.sport/Documents/RuleBookRelease/RuleBookRelease131/2026%20UIM%20Aquabike%20Rulebook%20-%20published%20on%2020.12.2025.pdf" target="_blank" rel="noopener">Ladda ner PDF &#8599;</a>
+        </div>
+        <div class="rule-card">
+          <h4>UIM E1 Regulations 2026</h4>
+          <div class="rule-meta">UIM — Elektrisk racing</div>
+          <a class="rule-link" href="https://www.uim.sport/Documents/RuleBookRelease/RuleBookRelease129/2026%20UIM%20E1%20Regulations%20-%20published%20on%2020.12.2025.pdf" target="_blank" rel="noopener">Ladda ner PDF &#8599;</a>
+        </div>
+        <div class="rule-card">
+          <h4>UIM Pleasure Navigation 2026</h4>
+          <div class="rule-meta">UIM — Fritidsnavigering och radiostyrt</div>
+          <a class="rule-link" href="https://www.uim.sport/Documents/RuleBookRelease/RuleBookRelease125/2026%20UIM%20Pleasure%20Navigation%20and%20Radio-Controlled%20Rulebook%20-%20published%20on%2020.12.2025.pdf" target="_blank" rel="noopener">Ladda ner PDF &#8599;</a>
+        </div>
+        <div class="rule-card">
+          <h4>UIM Code of Ethics &amp; Anti-Doping 2026</h4>
+          <div class="rule-meta">UIM — Etik, antidoping och miljökod</div>
+          <a class="rule-link" href="https://www.uim.sport/Documents/RuleBookRelease/RuleBookRelease124/2026%20UIM%20Code%20of%20Ethics,%20Anti-Doping%20Rules,%20Environmental%20Code%20-%20published%20on%2020.12.2025.pdf" target="_blank" rel="noopener">Ladda ner PDF &#8599;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stadgar -->
+    <div id="rules-stadgar" class="rules-tab" style="display:none;">
+      <div class="rules-grid">
+        <div class="rule-card">
+          <h4>SPAR — Svemo Policy och Allmänna Regler 2026</h4>
+          <div class="rule-meta">Svemo — Övergripande policy och administrativa regler</div>
+          <a class="rule-link" href="https://regler.svemo.se/stadgar-och-spar/spar" target="_blank" rel="noopener">Läs SPAR &#8599;</a>
+        </div>
+        <div class="rule-card">
+          <h4>Svemo Stadgar 2026</h4>
+          <div class="rule-meta">Svemo — Förbundets stadgar och organisation</div>
+          <a class="rule-link" href="https://regler.svemo.se/stadgar-och-spar/stadgar" target="_blank" rel="noopener">Läs stadgar &#8599;</a>
+        </div>
+        <div class="rule-card">
+          <h4>Jämställdhetspolicy med riktlinjer</h4>
+          <div class="rule-meta">Svemo — Policy för jämställdhet</div>
+          <a class="rule-link" href="https://svemocmspr-7e6a0cba035d817d799a-endpoint.azureedge.net/wp-content/uploads/2024/09/jamstalldhetspolicy-med-riktlinjer-svemo.pdf" target="_blank" rel="noopener">Ladda ner PDF &#8599;</a>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-intro" style="margin-top:20px; font-size:0.82rem;">
+      Fler regelböcker och historiska versioner finns på <a href="https://regler.svemo.se" target="_blank" rel="noopener">regler.svemo.se</a> och <a href="https://www.uim.sport/RuleBookReleaseList.aspx" target="_blank" rel="noopener">uim.sport</a>.
+    </p>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>SVERA</h3>
+        <p>Svenska Evenemang &amp; Racerbåtsarkivet</p>
+        <p>Oberoende informationsresurs för svensk racerbåtsport.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Utforska</h3>
+        <ul>
+          <li><a href="om.html">Om SVERA</a></li>
+          <li><a href="arkivet.html">Arkivet</a></li>
+          <li><a href="klasser.html">Klasser &amp; Regler</a></li>
+          <li><a href="kalender.html">Kalender</a></li>
+          <li><a href="resultat.html">Resultat</a></li>
+          <li><a href="nyheter.html">Nyheter</a></li>
+          <li><a href="klubbar.html">Klubbar</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Kontakt</h3>
+        <p>Har du material, bilder eller kunskap att bidra med?</p>
+        <p><a href="kontakt.html">Kontakta oss &rarr;</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div style="margin-bottom:10px;">
+        <a href="https://buymeacoffee.com/theralley" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#FFDD00;color:#333;padding:8px 18px;border-radius:6px;font-size:0.82rem;font-weight:700;text-decoration:none;transition:all 0.2s;">&#9749; Bjud oss på en kaffe</a>
+      </div>
+      <p style="margin-bottom:6px;font-size:0.8rem;color:#8899aa;">Vi samlar och automatiserar informationen kring svensk båtracing — för att göra den tillgänglig för alla. Hjälp oss göra det ännu bättre.</p>
+      &copy; 2026 SVERA — Svenska Evenemang &amp; Racerbåtsarkivet. Senast uppdaterad 2026-02-25.
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+function showRules(tab) {
+  document.querySelectorAll('.rules-tab').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('rules-' + tab).style.display = 'block';
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

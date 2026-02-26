@@ -1,0 +1,10 @@
+# Force HTTPS + www
+RewriteEngine On
+
+# 1. HTTP -> HTTPS (any host)
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# 2. Bare domain -> www (already on HTTPS after rule 1)
+RewriteCond %{HTTP_HOST} ^svera\.nu$ [NC]
+RewriteRule ^(.*)$ https://www.svera.nu/$1 [R=301,L]

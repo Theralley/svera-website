@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Klubbar — SVERA</title>
+  <meta name="description" content="Båtracingklubbar i Sverige. Hitta din närmaste klubb för offshore, rundbana eller aquabike.">
+  <meta property="og:title" content="Klubbar — SVERA">
+  <meta property="og:description" content="Båtracingklubbar i Sverige. Hitta din närmaste klubb för offshore, rundbana eller aquabike.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.svera.nu/klubbar.html">
+  <meta property="og:locale" content="sv_SE">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .club-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:20px; margin-bottom:30px; }
+    .club-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; transition:all var(--transition); border:1px solid var(--border); }
+    .club-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-hover); }
+    .club-header { padding:16px 20px; background:linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color:#fff; }
+    .club-header h3 { font-size:1rem; margin:0 0 4px; }
+    .club-header .club-location { font-size:0.78rem; color:#b0bec5; }
+    .club-body { padding:20px; }
+    .club-body p { font-size:0.85rem; color:var(--text-light); line-height:1.65; margin-bottom:12px; }
+    .club-links { display:flex; flex-wrap:wrap; gap:8px; }
+    .club-link { display:inline-flex; align-items:center; gap:4px; padding:7px 16px; border-radius:5px; font-size:0.78rem; font-weight:600; text-decoration:none; transition:all var(--transition); }
+    .club-link-web { background:var(--primary); color:#fff; }
+    .club-link-web:hover { background:#1a2766; color:#fff; transform:translateY(-1px); }
+    .club-link-fb { background:#1877f2; color:#fff; }
+    .club-link-fb:hover { background:#0d65d9; color:#fff; transform:translateY(-1px); }
+    .club-link-doc { background:var(--accent); color:#333; }
+    .club-link-doc:hover { background:var(--primary); color:#fff; transform:translateY(-1px); }
+    .club-tags { display:flex; gap:6px; margin-bottom:10px; }
+    .club-tag { font-size:0.7rem; padding:3px 10px; border-radius:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.3px; }
+    .tag-offshore { background:#e3f2fd; color:#1565c0; }
+    .tag-rundbana { background:#e8f5e9; color:#2e7d32; }
+    .tag-aquabike { background:#fff3e0; color:#e65100; }
+    .missing-club { background:var(--white); border-radius:var(--radius-lg); box-shadow:var(--shadow); padding:36px; text-align:center; margin-top:30px; border:1px solid var(--border); }
+    .missing-club h3 { color:var(--primary); margin-bottom:10px; font-size:1.15rem; }
+    .missing-club p { font-size:0.9rem; color:var(--text-light); line-height:1.65; margin-bottom:16px; }
+    .missing-club a.btn { display:inline-block; padding:11px 28px; background:var(--accent); color:#333; border-radius:6px; font-weight:700; font-size:0.88rem; text-decoration:none; transition:all var(--transition); }
+    .missing-club a.btn:hover { background:var(--primary); color:#fff; transform:translateY(-1px); }
+    @media(max-width:600px) { .club-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Hoppa till innehåll</a>
+
+<div class="top-bar"><div class="container"><span>Oberoende informationsresurs sedan 2026</span></div></div>
+
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img class="logo-img" src="assets/images/svera-logo.png" alt="SVERA">
+        <div class="logo-text"><h1>SVERA</h1><span class="tagline">Svenska Evenemang &amp; Racerbåtsarkivet</span></div>
+      </a>
+      <button class="hamburger" aria-label="Meny"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <nav class="main-nav">
+    <div class="container">
+      <ul class="nav-list">
+        <li><a href="/">Hem</a></li>
+        <li><a href="om.html">Om SVERA</a></li>
+        <li><a href="arkivet.html">Arkivet</a></li>
+        <li><a href="klasser.html">Klasser &amp; Regler</a></li>
+        <li><a href="kalender.html">Kalender</a></li>
+        <li><a href="resultat.html">Resultat</a></li>
+        <li><a href="nyheter.html">Nyheter</a></li>
+        <li><a href="klubbar.html" class="active">Klubbar</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" style="padding:30px 0 24px;">
+  <div class="container">
+    <span class="hero-badge">Klubbar</span>
+    <h2>Båtracingklubbar i Sverige</h2>
+    <p>Hitta din närmaste klubb och kom igång med båtracing — oavsett om du vill köra offshore, rundbana eller aquabike.</p>
+  </div>
+</section>
+
+<div class="container page-content" id="main">
+
+  <div class="club-grid">
+
+    <!-- Roslagen Boat Racing (RBR) -->
+    <div class="club-card">
+      <div class="club-header">
+        <h3>Roslagen Boat Racing (RBR)</h3>
+        <span class="club-location">Roslagen, Uppsala län</span>
+      </div>
+      <div class="club-body">
+        <div class="club-tags">
+          <span class="club-tag tag-offshore">Offshore</span>
+          <span class="club-tag tag-rundbana">Rundbana</span>
+        </div>
+        <p>En pulserande, dynamisk gemenskap som lever och andas båtracing. RBR gör det enkelt att komma in i sporten — du kan låna en båt för antingen rundbana eller offshore under en hel säsong.</p>
+        <p>Klubbordförande Micke Hamrén guidar nya förare genom allt från säkerhetsutrustning (flytväst, hjälm, våtdräkt, tävlingsoverall) till licenskurs via Svemo. Begagnad utrustning finns ofta att få tag på.</p>
+        <div class="club-links">
+          <a class="club-link club-link-web" href="https://www.roslagenboatracing.com" target="_blank" rel="noopener">Hemsida &#8599;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÖRK — Öregrund Racingklubb -->
+    <div class="club-card">
+      <div class="club-header">
+        <h3>ÖRK — Öregrund Racingklubb</h3>
+        <span class="club-location">Öregrund, Uppsala län</span>
+      </div>
+      <div class="club-body">
+        <div class="club-tags">
+          <span class="club-tag tag-offshore">Offshore</span>
+        </div>
+        <p>Arrangerar bland annat Roslagsloppet — en av Sveriges mest klassiska offshoretävlingar. Stark förankring i Öregrund och Roslagen.</p>
+        <div class="club-links">
+          <a class="club-link club-link-web" href="https://www.roslagsloppet.com" target="_blank" rel="noopener">Roslagsloppet &#8599;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- KMKR -->
+    <div class="club-card">
+      <div class="club-header">
+        <h3>KMKR — Kungliga Motorbåt Klubben Racing</h3>
+        <span class="club-location">Stockholm</span>
+      </div>
+      <div class="club-body">
+        <div class="club-tags">
+          <span class="club-tag tag-offshore">Offshore</span>
+          <span class="club-tag tag-rundbana">Rundbana</span>
+        </div>
+        <p>Racingavdelningen inom Kungliga Motorbåt Klubben, en av Sveriges äldsta och mest traditionsrika båtklubbar. Aktiv inom både offshore och rundbana.</p>
+        <div class="club-links">
+          <a class="club-link club-link-web" href="https://www.kmk.se/mec-category/kmkr/" target="_blank" rel="noopener">Hemsida &#8599;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sweden Boat Racing Club -->
+    <div class="club-card">
+      <div class="club-header">
+        <h3>Sweden Boat Racing Club (SBRC)</h3>
+        <span class="club-location">Sverige</span>
+      </div>
+      <div class="club-body">
+        <div class="club-tags">
+          <span class="club-tag tag-offshore">Offshore</span>
+          <span class="club-tag tag-rundbana">Rundbana</span>
+        </div>
+        <p>En aktiv båtracingklubb med medlemmar från hela Sverige. Fokus på gemenskap och att få fler att upptäcka båtracingen.</p>
+        <div class="club-links">
+          <a class="club-link club-link-fb" href="https://www.facebook.com/p/Sweden-Boat-Racing-Club-100063749852329/" target="_blank" rel="noopener">Facebook &#8599;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUK -->
+    <div class="club-card">
+      <div class="club-header">
+        <h3>SUK</h3>
+      </div>
+      <div class="club-body">
+      </div>
+    </div>
+
+    <!-- Smedjebackens Båtklubb -->
+    <div class="club-card">
+      <div class="club-header">
+        <h3>Smedjebackens Båtklubb</h3>
+        <span class="club-location">Smedjebacken, Dalarnas län</span>
+      </div>
+      <div class="club-body">
+        <div class="club-tags">
+          <span class="club-tag tag-offshore">Offshore</span>
+        </div>
+        <p>Arrangerar Smedjebacken Offshore — en populär insjöoffshore på Barkensjön. Aktiv miljö för både nya och erfarna förare.</p>
+        <div class="club-links">
+          <a class="club-link club-link-doc" href="https://www.kmk.se/wp-content/uploads/2025/06/Inbjudan-Smedjebacken-Offshore-2025-v4100.pdf" target="_blank" rel="noopener">Inbjudan 2025 (PDF) &#8599;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÖSS -->
+    <div class="club-card">
+      <div class="club-header">
+        <h3>ÖSS — Öregrund Segelsällskap</h3>
+        <span class="club-location">Öregrund, Uppsala län</span>
+      </div>
+      <div class="club-body">
+        <div class="club-tags">
+          <span class="club-tag tag-offshore">Offshore</span>
+          <span class="club-tag tag-rundbana">Rundbana</span>
+        </div>
+        <p>Arrangerar ÖSS GP — en av Nordeuropas största båtracingevenemang med både offshore- och rundbanelopp. Värd för EM-deltävlingar.</p>
+        <div class="club-links">
+          <a class="club-link club-link-web" href="https://www.roslagenboatracing.com" target="_blank" rel="noopener">Hemsida &#8599;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SBK -->
+    <div class="club-card">
+      <div class="club-header">
+        <h3>SBK — Stockholms Båtklubb</h3>
+        <span class="club-location">Stockholm</span>
+      </div>
+      <div class="club-body">
+        <div class="club-tags">
+          <span class="club-tag tag-offshore">Offshore</span>
+          <span class="club-tag tag-rundbana">Rundbana</span>
+        </div>
+        <p>Traditionell båtklubb med aktiv racingsektion. Deltar regelbundet i SM och EM-tävlingar inom offshore och rundbana.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Missing club CTA -->
+  <div class="missing-club">
+    <h3>Saknar vi din klubb?</h3>
+    <p>Vi vet att vi har missat klubbar — och det beklagar vi! Hjälp oss att göra listan komplett.<br>Mejla oss så lägger vi till er klubb med information och länk.</p>
+    <a class="btn" href="kontakt.html">Kontakta oss om din klubb &#8594;</a>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>SVERA</h3>
+        <p>Svenska Evenemang &amp; Racerbåtsarkivet</p>
+        <p>Oberoende informationsresurs för svensk racerbåtssport.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Utforska</h3>
+        <ul>
+          <li><a href="om.html">Om SVERA</a></li>
+          <li><a href="arkivet.html">Arkivet</a></li>
+          <li><a href="klasser.html">Klasser &amp; Regler</a></li>
+          <li><a href="kalender.html">Kalender</a></li>
+          <li><a href="resultat.html">Resultat</a></li>
+          <li><a href="nyheter.html">Nyheter</a></li>
+          <li><a href="klubbar.html">Klubbar</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Kontakt</h3>
+        <p>Har du material, bilder eller kunskap att bidra med?</p>
+        <p><a href="kontakt.html">Kontakta oss &rarr;</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div style="margin-bottom:10px;">
+        <a href="https://buymeacoffee.com/theralley" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#FFDD00;color:#333;padding:8px 18px;border-radius:6px;font-size:0.82rem;font-weight:700;text-decoration:none;transition:all 0.2s;">&#9749; Bjud oss på en kaffe</a>
+      </div>
+      <p style="margin-bottom:6px;font-size:0.8rem;color:#8899aa;">Vi samlar och automatiserar informationen kring svensk båtracing — för att göra den tillgänglig för alla. Hjälp oss göra det ännu bättre.</p>
+      &copy; 2026 SVERA — Svenska Evenemang &amp; Racerbåtsarkivet. Senast uppdaterad 2026-02-25.
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

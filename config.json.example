@@ -1,0 +1,84 @@
+{
+  "project": "SVERA",
+  "domain": "svera.nu",
+  "design_reference": "https://web.archive.org/web/20210310000057/https://www.svera.org/",
+
+  "hosting": {
+    "provider": "one.com",
+    "plan": "free",
+    "sftp_host": "ssh.XXXXXXX.service.one",
+    "sftp_user": "XXXXXXX_ssh",
+    "sftp_password": "",
+    "sftp_port": 22,
+    "login_email": "",
+    "login_password": "",
+    "dashboard_url": "https://www.one.com/admin/",
+    "editor_url": "",
+    "webroot": "/customers/X/X/X/XXXXXXX/webroots/XXXXXXX",
+    "note": "SFTP credentials from one.com dashboard > Settings > SFTP"
+  },
+
+  "api_keys": {
+    "openrouter": "",
+    "openrouter_model": "deepseek/deepseek-chat-v3-0324",
+    "openrouter_model_fallback": "qwen/qwen-2.5-72b-instruct",
+    "openrouter_base_url": "https://openrouter.ai/api/v1",
+    "note": "Get your API key at https://openrouter.ai/keys"
+  },
+
+  "data_sources": {
+    "svera_archive": "https://web.archive.org/web/20210310000057/https://www.svera.org/",
+    "svemo_tam": {
+      "login_url": "https://tam.svemo.se/Auth/Login",
+      "calendar_url": "https://tam.svemo.se/Competition",
+      "results_url": "https://tam.svemo.se/Result/Competition",
+      "public_results_url": "https://ta.svemo.se/Resultat/Tavling/",
+      "username": "",
+      "password": "",
+      "note": "SVEMO TAM login requires a Swedish personnummer + password"
+    },
+    "uim_calendar": {
+      "url": "https://www.uim.sport/CalendarList.aspx",
+      "filter": "DisciplineCode=OFFS"
+    },
+    "webtracking": {
+      "base_url": "https://webtracking.se/pbl",
+      "auth": "none",
+      "request_types": {
+        "races": "reqType=rc&date=all",
+        "results": "reqType=rs&raceIdx=",
+        "entrants": "reqType=en&raceIdx="
+      },
+      "note": "Public API, no authentication required"
+    }
+  },
+
+  "email": {
+    "address": "",
+    "imap_host": "imap.one.com",
+    "imap_port": 993,
+    "pop3_host": "pop.one.com",
+    "pop3_port": 995,
+    "smtp_host": "send.one.com",
+    "smtp_port": 465,
+    "password": "",
+    "admin_sender": "",
+    "note": "Only emails from admin_sender are processed. This is the trusted address that can trigger AI site updates."
+  },
+
+  "bot": {
+    "name": "Charlie Webber",
+    "auto_fix": true,
+    "auto_deploy": true,
+    "check_interval_minutes": 1,
+    "tasks": []
+  },
+
+  "seo": {
+    "title": "SVERA — Svenska Evenemang & Racerbåtsarkivet",
+    "description": "Sveriges samlade informationsplattform for batracing.",
+    "keywords": "racerbat, batracing, Sverige, SVERA, offshore, rundbana, aquabike",
+    "language": "sv",
+    "og_image": "assets/images/svera-logo.png"
+  }
+}
