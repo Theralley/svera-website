@@ -1,5 +1,7 @@
 # SVERA — Svenska Evenemang & Racerbåtsarkivet
 
+> This runs on a Raspberry Pi — *Charlie Webber*
+
 Sveriges samlade informationsplattform for powerboat racing. Live at [svera.nu](https://www.svera.nu).
 
 ## What is SVERA?
@@ -429,3 +431,5 @@ This project is open source. The scraped data belongs to its respective sources 
 ---
 
 *SVERA — Oberoende informationsresurs sedan 2026*
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-yellow?style=flat&logo=buy-me-a-coffee)](https://buymeacoffee.com/theralley)
