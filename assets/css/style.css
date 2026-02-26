@@ -615,6 +615,32 @@ img {
 .footer-col a:hover {
   color: var(--accent);
 }
+.footer-privacy {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 20px 0;
+  margin-bottom: 0;
+}
+.footer-privacy h4 {
+  color: #fff;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+.footer-privacy p {
+  font-size: 0.76rem;
+  line-height: 1.7;
+  color: #6b7f94;
+  margin-bottom: 6px;
+}
+.footer-privacy a {
+  color: #8da0b8;
+  text-decoration: underline;
+  transition: color var(--transition);
+}
+.footer-privacy a:hover {
+  color: var(--accent);
+}
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.08);
   padding-top: 20px;

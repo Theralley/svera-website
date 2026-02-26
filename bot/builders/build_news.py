@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Build 'Veckans Nyheter' page using DeepSeek.
+"""Build 'Veckans Nyheter' page using DeepSeek or Qwen ZDR.
 
 Reads: bot/data/news_feed.json (from news_aggregator.py)
 Updates: nyheter.html — replaces the weekly digest and article grid sections
-Uses: DeepSeek V3 via OpenRouter for summarization
+Uses: DeepSeek V3 (no names) or Qwen ZDR (when articles contain personal names)
 """
 import json
 import os
@@ -22,6 +22,39 @@ CONFIG_FILE = os.path.join(PROJECT_DIR, "config.json")
 DIGEST_FILE = os.path.join(DATA_DIR, "weekly_digest.json")
 
 
+# Name detection (same logic as email_worker.py)
+_NAME_PATTERN = re.compile(
+    r'\b([A-ZAÄÖÅÉÜ][a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ]+'
+    r'(?:-[A-ZAÄÖÅÉÜ][a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ]+)?)'
+    r'(?:\s+'
+    r'([A-ZAÄÖÅÉÜ][a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ]+'
+    r'(?:-[A-ZAÄÖÅÉÜ][a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ]+)?))'
+)
+_NAME_STOPWORDS = {
+    "Den", "Det", "De", "Denna", "Detta", "Dessa",
+    "Alla", "Andra", "Varje", "Hela", "Samma",
+    "Inte", "Eller", "Utan", "Under", "Efter", "Innan", "Mellan",
+    "The", "This", "That", "These", "Those",
+    "With", "From", "About", "Into", "Your", "Their",
+    "First", "Last", "Grand", "World", "South", "North", "East", "West",
+    "Formula", "Powerboat", "Racing", "Championship", "British", "Masters",
+    "Series", "Round", "Season", "Class", "Team", "River", "Area", "Lake",
+    "January", "February", "March", "April", "June", "July",
+    "August", "September", "October", "November", "December",
+    "Svenska", "Svemo", "Evenemang",
+}
+
+
+def has_names(text):
+    """Check if text contains personal names (First Last patterns)."""
+    if not text:
+        return False
+    for first, last in _NAME_PATTERN.findall(text):
+        if first not in _NAME_STOPWORDS and last not in _NAME_STOPWORDS:
+            return True
+    return False
+
+
 def load_config():
     with open(CONFIG_FILE) as f:
         return json.load(f)
@@ -35,8 +68,8 @@ def load_feed():
         return json.load(f)
 
 
-def summarize_with_deepseek(articles, api_key, model):
-    """Use DeepSeek to write a Swedish weekly digest."""
+def summarize_articles(articles, api_key, model, model_zdr=None):
+    """Summarize articles using DeepSeek or Qwen ZDR (if names detected)."""
     article_text = ""
     for i, a in enumerate(articles[:15], 1):
         article_text += (
@@ -46,6 +79,17 @@ def summarize_with_deepseek(articles, api_key, model):
         if a.get("excerpt"):
             article_text += f"   {a['excerpt'][:200]}\n"
         article_text += f"   {a['url']}\n\n"
+
+    # Check for personal names — route to Qwen ZDR if found
+    names_present = has_names(article_text)
+    use_model = model_zdr if (names_present and model_zdr) else model
+    use_zdr = names_present and model_zdr is not None
+    model_label = "Qwen ZDR" if use_zdr else "DeepSeek"
+
+    if names_present:
+        print(f"[build_news] Names detected in articles — using {model_label}")
+    else:
+        print(f"[build_news] No names detected — using {model_label}")
 
     prompt = (
         "Du ar sportjournalist for SVERA (Sveriges racerbatsarkiv).\n"
@@ -62,11 +106,14 @@ def summarize_with_deepseek(articles, api_key, model):
     )
 
     url = "https://openrouter.ai/api/v1/chat/completions"
-    payload = json.dumps({
-        "model": model,
+    body = {
+        "model": use_model,
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": 1024,
-    }).encode("utf-8")
+    }
+    if use_zdr:
+        body["provider"] = {"zdr": True}
+    payload = json.dumps(body).encode("utf-8")
 
     req = urllib.request.Request(url, data=payload, headers={
         "Authorization": f"Bearer {api_key}",
@@ -80,7 +127,7 @@ def summarize_with_deepseek(articles, api_key, model):
         data = json.loads(resp.read().decode())
         return data["choices"][0]["message"]["content"].strip()
     except Exception as e:
-        print(f"[build_news] DeepSeek summarization failed: {e}")
+        print(f"[build_news] {model_label} summarization failed: {e}")
         return None
 
 
@@ -249,17 +296,19 @@ def build():
         return False
 
     config = load_config()
-    api_key = config.get("api_keys", {}).get("openrouter", "")
-    model = config.get("api_keys", {}).get("openrouter_model", "deepseek/deepseek-chat-v3-0324")
+    api_cfg = config.get("api_keys", {})
+    api_key = api_cfg.get("openrouter", "")
+    model = api_cfg.get("openrouter_model", "deepseek/deepseek-chat-v3-0324")
+    model_zdr = api_cfg.get("openrouter_model_fallback", "qwen/qwen-2.5-72b-instruct")
 
     if not api_key:
         print("[build_news] No OpenRouter API key")
         return False
 
     articles = feed["articles"]
-    print(f"[build_news] Summarizing {len(articles)} articles with DeepSeek...")
+    print(f"[build_news] Summarizing {len(articles)} articles...")
 
-    summary = summarize_with_deepseek(articles, api_key, model)
+    summary = summarize_articles(articles, api_key, model, model_zdr=model_zdr)
     if not summary:
         print("[build_news] Summarization failed")
         return False

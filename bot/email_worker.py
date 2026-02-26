@@ -1,20 +1,22 @@
 #!/usr/bin/env python3
 """SVERA Email Worker — "Charlie Webber, the web developer"
 
-Smart email-to-AI pipeline that classifies tasks and routes them:
-  LOW/MEDIUM → DeepSeek V3 (cheap, fast, good for content edits)
-  HIGH       → Claude Code CLI (powerful, multi-file, design-capable)
+Smart email-to-AI pipeline that classifies tasks and routes them
+with ZDR (Zero Data Retention) compliance for personal data:
 
-For HIGH tasks, DeepSeek first crafts a structured prompt from the
-raw email before handing off to Claude Code.
+  LOW (no names)  → DeepSeek V3 (cheap, fast)
+  LOW (names)     → Qwen ZDR (protects personal data)
+  MEDIUM          → Qwen ZDR (always)
+  HIGH (no names) → DeepSeek crafts prompt → Claude Code CLI
+  HIGH (names)    → Qwen ZDR crafts prompt → mask names → Claude Code CLI
 
 Flow:
   1. IMAP: fetch unread emails from admin (configured in config.json)
   2. Extract subject + body + PDF attachments
   3. DeepSeek classifies: LOW / MEDIUM / HIGH
-  4. LOW/MEDIUM: DeepSeek agent loop (tool-use)
-  5. HIGH: DeepSeek crafts prompt → Claude Code CLI executes
-  6. Always reply with result (persona: Charlie Webber)
+  4. Detect personal names in email content (regex)
+  5. Route based on level + name presence (see table above)
+  6. Always reply with result + engine used (persona: Charlie Webber)
   7. Log task to history
 
 Run: python3 bot/email_worker.py
@@ -27,6 +29,7 @@ from email.utils import parseaddr
 from email.mime.text import MIMEText
 import json
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -59,6 +62,70 @@ def log(msg):
     print(line)
     with open(LOG_FILE, "a") as f:
         f.write(line + "\n")
+
+
+# ==============================================================
+# Name detection — regex-based, supports Swedish characters
+# ==============================================================
+_NAME_PATTERN = re.compile(
+    r'\b([A-ZAÄÖÅÉÜ][a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ]+'
+    r'(?:-[A-ZAÄÖÅÉÜ][a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ]+)?)'
+    r'(?:\s+'
+    r'([A-ZAÄÖÅÉÜ][a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ]+'
+    r'(?:-[A-ZAÄÖÅÉÜ][a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ]+)?))'
+)
+
+_NAME_STOPWORDS = {
+    "Den", "Det", "De", "Denna", "Detta", "Dessa",
+    "Alla", "Andra", "Varje", "Hela", "Samma",
+    "Inte", "Eller", "Utan", "Under", "Efter", "Innan", "Mellan",
+    "Hos", "Genom", "Enligt", "Sedan", "Charlie", "Webber",
+    "The", "This", "That", "These", "Those",
+    "With", "From", "About", "Into", "Your", "Their",
+    "First", "Last", "Grand", "World", "South", "North", "East", "West",
+    "Formula", "Powerboat", "Racing", "Championship", "British", "Masters",
+    "Series", "Round", "Season", "Class", "Team", "River", "Area", "Lake",
+    "January", "February", "March", "April", "June", "July",
+    "August", "September", "October", "November", "December",
+    "Svenska", "Svemo", "Evenemang",
+}
+
+
+def detect_names_regex(text):
+    """Regex-based name detection. Returns list of unique 'First Last' strings."""
+    if not text:
+        return []
+    matches = _NAME_PATTERN.findall(text)
+    names, seen = [], set()
+    for first, last in matches:
+        if first in _NAME_STOPWORDS or last in _NAME_STOPWORDS:
+            continue
+        full = f"{first} {last}"
+        if full not in seen:
+            seen.add(full)
+            names.append(full)
+    return names
+
+
+def has_names(text):
+    """Quick boolean: does text contain personal names?"""
+    return len(detect_names_regex(text)) > 0
+
+
+def mask_names(text, names):
+    """Replace names with [PERSON_1], [PERSON_2] etc.
+    Returns (masked_text, name_map) where name_map = {placeholder: real_name}.
+    """
+    if not names:
+        return text, {}
+    sorted_names = sorted(names, key=len, reverse=True)
+    name_map = {}
+    masked = text
+    for i, name in enumerate(sorted_names, 1):
+        placeholder = f"[PERSON_{i}]"
+        name_map[placeholder] = name
+        masked = masked.replace(name, placeholder)
+    return masked, name_map
 
 
 # ==============================================================
@@ -147,7 +214,12 @@ def send_reply(email_cfg, admin_addr, original_subject, body_text, is_error=Fals
 
 
 def build_success_reply(subject, engine, level):
-    engine_label = "Claude Code" if engine == "claude" else "DeepSeek"
+    engine_labels = {
+        "claude": "Claude Code",
+        "deepseek": "DeepSeek V3",
+        "qwen-zdr": "Qwen ZDR (Zero Data Retention)",
+    }
+    engine_label = engine_labels.get(engine, engine)
     ts = datetime.now().strftime("%Y-%m-%d %H:%M")
     return (
         f"Hej!\n\n"
@@ -266,14 +338,17 @@ def get_attachments(msg, tmpdir):
 # ==============================================================
 # OpenRouter API — shared by classifier, prompt crafter, agent
 # ==============================================================
-def call_openrouter_simple(prompt, api_key, model, max_tokens=256):
+def call_openrouter_simple(prompt, api_key, model, max_tokens=256, zdr=False):
     """Single-turn, no tools. For classifier and prompt crafter."""
     url = "https://openrouter.ai/api/v1/chat/completions"
-    payload = json.dumps({
+    body = {
         "model": model,
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": max_tokens,
-    }).encode("utf-8")
+    }
+    if zdr:
+        body["provider"] = {"zdr": True}
+    payload = json.dumps(body).encode("utf-8")
 
     req = urllib.request.Request(url, data=payload, headers={
         "Authorization": f"Bearer {api_key}",
@@ -291,15 +366,18 @@ def call_openrouter_simple(prompt, api_key, model, max_tokens=256):
         return None
 
 
-def call_openrouter(messages, api_key, model):
-    """Multi-turn with tools. For DeepSeek agent loop."""
+def call_openrouter(messages, api_key, model, zdr=False):
+    """Multi-turn with tools. For agent loop (DeepSeek or Qwen ZDR)."""
     url = "https://openrouter.ai/api/v1/chat/completions"
-    payload = json.dumps({
+    body = {
         "model": model,
         "messages": messages,
         "tools": TOOLS,
         "max_tokens": 4096,
-    }).encode("utf-8")
+    }
+    if zdr:
+        body["provider"] = {"zdr": True}
+    payload = json.dumps(body).encode("utf-8")
 
     req = urllib.request.Request(url, data=payload, headers={
         "Authorization": f"Bearer {api_key}",
@@ -319,6 +397,29 @@ def call_openrouter(messages, api_key, model):
     except Exception as e:
         log(f"  API error: {e}")
         return None
+
+
+# ==============================================================
+# Qwen ZDR name extraction — for HIGH tasks before Claude
+# ==============================================================
+def extract_names_with_qwen(text, api_key, model_zdr):
+    """Use Qwen (ZDR) to extract all personal names from text.
+    Falls back to regex if Qwen fails."""
+    prompt = (
+        "Lista ALLA personnamn (for- och efternamn) som forekommar i foljande text. "
+        "Svara med ETT namn per rad, inget annat. Om inga namn finns, svara INGA.\n\n"
+        f"TEXT:\n{text[:2000]}\n\nNAMN:"
+    )
+    result = call_openrouter_simple(prompt, api_key, model_zdr, max_tokens=256, zdr=True)
+    if not result or "INGA" in result.upper():
+        return []
+    names = []
+    for line in result.strip().split("\n"):
+        line = line.strip().strip("-").strip("*").strip()
+        line = re.sub(r'^\d+[\.\)]\s*', '', line).strip()
+        if line and len(line) > 2 and " " in line:
+            names.append(line)
+    return names if names else detect_names_regex(text)
 
 
 # ==============================================================
@@ -637,9 +738,10 @@ def run_claude(crafted_prompt):
 # ==============================================================
 # DeepSeek agent loop — for LOW / MEDIUM tasks
 # ==============================================================
-def run_agent(prompt, api_key, model):
-    """Tool-use agent loop via DeepSeek. Returns (success, summary)."""
-    log(f"  Starting DeepSeek agent...")
+def run_agent(prompt, api_key, model, zdr=False):
+    """Tool-use agent loop via DeepSeek or Qwen ZDR. Returns (success, summary)."""
+    model_label = "Qwen ZDR" if zdr else "DeepSeek"
+    log(f"  Starting {model_label} agent...")
 
     claude_md = ""
     claude_md_path = os.path.join(PROJECT_DIR, "CLAUDE.md")
@@ -681,7 +783,7 @@ def run_agent(prompt, api_key, model):
     ]
 
     for turn in range(MAX_TURNS):
-        response = call_openrouter(messages, api_key, model)
+        response = call_openrouter(messages, api_key, model, zdr=zdr)
         if response is None:
             log(f"  Agent failed at turn {turn + 1}")
             return False, "API-anrop misslyckades"
@@ -760,6 +862,7 @@ def check_inbox():
 
     api_key = api_cfg.get("openrouter", "")
     model = api_cfg.get("openrouter_model", "deepseek/deepseek-chat-v3-0324")
+    model_zdr = api_cfg.get("openrouter_model_fallback", "qwen/qwen-2.5-72b-instruct")
     if not api_key:
         log("No OpenRouter API key")
         return 0
@@ -824,17 +927,43 @@ def check_inbox():
                 level = classify_task(subject, body, api_key, model)
                 log(f"  Level: {level.upper()}")
 
-                # Step 2: Route
+                # Step 1b: Detect personal names
+                email_text = f"{subject}\n{body}"
+                names_found = detect_names_regex(email_text)
+                if names_found:
+                    log(f"  Names detected ({len(names_found)}): {', '.join(names_found[:5])}")
+
+                # Step 2: Route based on level + name presence
                 if level == "high":
-                    # DeepSeek crafts a structured prompt, Claude executes
-                    log(f"  Crafting prompt for Claude...")
-                    crafted = craft_claude_prompt(subject, body, saved_pdfs, api_key, model)
+                    # HIGH: Qwen ZDR scans for names → mask → Claude executes
+                    log(f"  HIGH task — scanning for names with Qwen ZDR...")
+                    accurate_names = extract_names_with_qwen(email_text, api_key, model_zdr)
+
+                    if accurate_names:
+                        log(f"  Names found — crafting prompt with Qwen ZDR...")
+                        crafted = craft_claude_prompt(subject, body, saved_pdfs, api_key, model_zdr)
+                        log(f"  Masking {len(accurate_names)} name(s) before Claude...")
+                        crafted, name_map = mask_names(crafted, accurate_names)
+                        log(f"  Masked: {list(name_map.keys())}")
+                    else:
+                        log(f"  No names — crafting prompt with DeepSeek...")
+                        crafted = craft_claude_prompt(subject, body, saved_pdfs, api_key, model)
+
                     log(f"  Routing to Claude Code...")
                     engine = "claude"
                     success, result_summary = run_claude(crafted)
+
+                elif level == "medium" or names_found:
+                    # MEDIUM (always) or LOW+names → Qwen ZDR
+                    reason = "medium task" if level == "medium" else "names detected"
+                    log(f"  Routing to Qwen ZDR ({reason})...")
+                    engine = "qwen-zdr"
+                    prompt = build_prompt(subject, body, attachments, saved_pdfs)
+                    success, result_summary = run_agent(prompt, api_key, model_zdr, zdr=True)
+
                 else:
-                    # DeepSeek handles directly
-                    log(f"  Routing to DeepSeek ({level})...")
+                    # LOW + no names → DeepSeek (cheap, fast)
+                    log(f"  Routing to DeepSeek ({level}, no names)...")
                     engine = "deepseek"
                     prompt = build_prompt(subject, body, attachments, saved_pdfs)
                     success, result_summary = run_agent(prompt, api_key, model)

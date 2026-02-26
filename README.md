@@ -25,7 +25,8 @@ The old Svenska Racerbatforbundet (SVERA) was absorbed into Svemo around 2020 an
 
 - **Frontend:** Pure HTML/CSS/JS — no frameworks, works on one.com free hosting
 - **Scrapers:** Python 3 (stdlib only — zero pip dependencies)
-- **AI Agent:** DeepSeek V3 via OpenRouter (low/medium tasks) + Claude Code CLI (high-complexity tasks)
+- **AI Agent:** DeepSeek V3 (general), Qwen ZDR (personal data), Claude Code CLI (complex tasks) — all via OpenRouter
+- **Data Privacy:** ZDR (Zero Data Retention) routing — personal names detected and routed to Qwen ZDR, masked before Claude
 - **Deployment:** SFTP to one.com via `sshpass`
 - **Automation:** systemd user service — starts at boot, checks email every 60s, full scrape weekly
 
@@ -42,6 +43,7 @@ svera-website/
 ├── arkivet.html               Historical archive
 ├── om.html                    About SVERA
 ├── kontakt.html               Contact
+├── policy.html                Data & privacy policy (GDPR)
 ├── .htaccess                  HTTPS + www redirects
 ├── assets/
 │   ├── css/style.css          Stylesheet
@@ -297,7 +299,7 @@ Reads `svemo_calendar.json` and `uim_calendar.json`. Replaces the `<tbody>` cont
 
 ### `build_news.py` — News + AI Digest
 
-Reads `news_feed.json`. Calls **DeepSeek V3 via OpenRouter** to generate a Swedish weekly summary (3–4 paragraphs). Builds article cards (max 15, balanced across sources). Replaces the digest and article grid sections in `nyheter.html`. Requires an OpenRouter API key in `config.json`.
+Reads `news_feed.json`. Scans articles for personal names — if found, uses **Qwen ZDR** (Zero Data Retention); otherwise uses **DeepSeek V3** (cheaper). Generates a Swedish weekly summary (3–4 paragraphs). Builds article cards (max 15, balanced across sources). Replaces the digest and article grid sections in `nyheter.html`. Requires an OpenRouter API key in `config.json`.
 
 ## Scrape Schedule
 
@@ -352,14 +354,26 @@ Send an email from the admin address to the configured email and **Charlie Webbe
 1. Daemon checks inbox every 60 seconds
 2. Only processes emails from `admin_sender` (configured in config.json)
 3. Accepts plain text body + .pdf attachments
-4. DeepSeek classifies the task:
-   - **LOW** — simple text change, add/remove news, swap a link
-   - **MEDIUM** — single-file bug fix, small CSS tweak, minor feature
-   - **HIGH** — multi-file changes, design work, new features, JS changes
-5. **LOW/MEDIUM** — DeepSeek V3 handles directly via tool-use agent loop
-6. **HIGH** — DeepSeek crafts a structured prompt, then Claude Code CLI executes it
+4. DeepSeek classifies the task: **LOW** / **MEDIUM** / **HIGH**
+5. Regex scans email for personal names (Swedish name patterns)
+6. Routes based on level + name presence:
+
+| Level | Names? | Engine | ZDR? |
+|-------|--------|--------|------|
+| LOW | No | DeepSeek V3 | No |
+| LOW | Yes | Qwen | Yes |
+| MEDIUM | Any | Qwen | Yes (always) |
+| HIGH | No | DeepSeek crafts → Claude CLI | No |
+| HIGH | Yes | Qwen ZDR crafts → mask names → Claude CLI | Yes |
+
 7. Deploys to one.com automatically
-8. Always replies with result (success or error)
+8. Always replies with result + which engine was used
+
+### ZDR (Zero Data Retention)
+
+When personal names are detected in email content, the system routes to **Qwen via ZDR-approved API** (`"provider": {"zdr": true}` in the OpenRouter payload). This ensures no personal data is stored by the AI provider.
+
+For HIGH tasks with names, Qwen (ZDR) first extracts all names, then the prompt is masked (`[PERSON_1]`, `[PERSON_2]`) before being sent to Claude Code — Claude never sees real names.
 
 ### Example
 
@@ -368,7 +382,14 @@ Subject: Nytt inlagg om SM i Oregrund
 Body: Lagg till en nyhet om att SM i offshore kors 8-9 augusti i Oregrund.
 Attach: inbjudan-sm-2026.pdf
 
--> Classified LOW -> DeepSeek handles -> reply in ~30s
+-> Classified LOW, no names -> DeepSeek handles -> reply in ~30s
+```
+
+```
+Subject: Lagg till Max Samuelsson i nyheter
+Body: Max Samuelsson vann SM i offshore 2026.
+
+-> Classified LOW, names detected -> Qwen ZDR handles -> reply in ~45s
 ```
 
 ## Data Sources
@@ -394,7 +415,7 @@ Created by `setup.sh` or manually from `config.json.example`. Contains:
 | Section | What | Required for |
 |---------|------|-------------|
 | `hosting` | SFTP host, user, password, webroot | Deployment (`deploy.sh`) |
-| `api_keys` | OpenRouter API key + model | AI digest (`build_news.py`), email worker |
+| `api_keys` | OpenRouter API key, DeepSeek model, Qwen ZDR fallback model | AI digest, email worker, ZDR routing |
 | `email` | IMAP/SMTP credentials, admin sender | Email worker (`email_worker.py`) |
 | `data_sources.svemo_tam` | SVEMO personnummer + password | Calendar + results scraping |
 | `data_sources.webtracking` | (no auth needed) | Race data |
