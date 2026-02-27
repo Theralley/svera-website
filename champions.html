@@ -25,16 +25,14 @@
     .year-tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
 
     .class-block{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:22px;overflow:hidden}
+    .class-block.sm-block{border-left:4px solid #ffd700}
+    .class-block.rm-block{border-left:4px solid rgba(37,54,134,0.4)}
     .class-header{display:flex;align-items:center;gap:12px;padding:16px 22px;border-bottom:2px solid var(--accent);flex-wrap:wrap}
     .class-header h3{font-size:1.1rem;color:var(--primary);margin:0;font-weight:700}
     .status-badge{display:inline-block;padding:3px 12px;border-radius:4px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
     .badge-sm{background:rgba(253,229,6,0.18);color:#9a7b00;border:1px solid rgba(253,229,6,0.4)}
     .badge-rm{background:rgba(37,54,134,0.08);color:var(--primary);border:1px solid rgba(37,54,134,0.2)}
-    .badge-notitle{background:rgba(90,96,112,0.08);color:var(--text-light);border:1px solid rgba(90,96,112,0.2);font-style:italic}
     .class-meta{font-size:.78rem;color:var(--text-light);margin-left:auto}
-    .notitle-block{opacity:.7}
-    .notitle-block:hover{opacity:1}
-    .notitle-separator{padding:18px 0 10px;font-size:.78rem;color:var(--text-light);border-top:1px dashed var(--border);margin-top:8px;text-align:center}
 
     .table-wrap{overflow-x:auto}
     .standings-table{width:100%;border-collapse:collapse;font-size:.88rem}
@@ -136,15 +134,15 @@
   <div class="container">
     <span class="hero-badge">Mästerskap</span>
     <h2>Svenska- och Riksmästare<span class="test-badge">Test Deploy</span></h2>
-    <p>SM- och RM-ställningar för svensk offshore-racing, beräknade från SVEMO:s officiella resultat. Poäng enligt SVEMO:s tävlingsreglemente.</p>
+    <p>SM- och RM-ställningar för svensk offshore-racing, beräknade från SVEMO:s officiella resultat. SM och RM räknas separat — SM-poäng enbart från deltävlingar med 3+ startande, RM-poäng från deltävlingar med färre än 3.</p>
   </div>
 </section>
 
 <div class="container page-content" id="main">
 
   <div class="content-block">
-    <p class="champ-intro">Nedan visas mästerskapsställningar per klass och år. Klicka på en förare för att se detaljerad poängfördelning per deltävling.</p>
-    <p class="champ-intro"><strong>SM</strong> = Svenska Mästerskapet — minst 3 startande ekipage i varje deltävling. <strong>RM</strong> = Riksmästerskapet — färre än 3 i någon deltävling men minst 3 unika ekipage under säsongen (regel 4.4). Startande = alla som ställde upp (inkl. DNF/DSQ). Klasser med färre än 3 unika ekipage saknar mästerskapsstatus.</p>
+    <p class="champ-intro">Nedan visas mästerskapsställningar per klass och år, uppdelade i SM och RM. SM-poäng räknas enbart från deltävlingar med 3+ startande ekipage, och RM-poäng enbart från deltävlingar med färre än 3. Klicka på en förare för att se detaljerad poängfördelning per deltävling.</p>
+    <p class="champ-intro"><strong>SM</strong> = Svenska Mästerskapet (deltävlingar med 3+ startande). <strong>RM</strong> = Riksmästerskapet (deltävlingar med &lt;3 startande). Startande = alla som ställde upp (inkl. DNF/DSQ).</p>
 
     <div class="year-tabs">
         <button class="year-tab active" data-year="2025">2025</button>
@@ -152,11 +150,11 @@
     </div>
 
       <div class="year-content" id="year-2025" style="display:block">
-      <div class="class-block">
+      <div class="class-block sm-block">
         <div class="class-header">
           <h3>Klass A</h3>
-          <span class="status-badge badge-rm">RM</span>
-          <span class="class-meta">7 ekipage &middot; 5 deltävlingar</span>
+          <span class="status-badge badge-sm">SM</span>
+          <span class="class-meta">7 ekipage &middot; 4 deltävlingar</span>
         </div>
         <div class="table-wrap">
           <table class="standings-table">
@@ -170,81 +168,113 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2025-A-1">
+              <tr class="driver-row gold-row" data-detail="detail-2025-A-sm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
-                <td class="col-driver">Anton Kurtén<span class="driver-club">Älvbygdens MK</span></td>
-                <td class="col-pts">62</td>
-                <td class="col-races">5</td>
-                <td class="col-wins">1</td>
-              </tr>
-              <tr class="detail-row" id="detail-2025-A-1">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
-              </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2025-A-2">
-                <td class="col-pos"><span class="medal silver">2</span></td>
                 <td class="col-driver">Lina Hamrén<span class="driver-club">Roslagens BR</span></td>
                 <td class="col-pts">44</td>
                 <td class="col-races">2</td>
                 <td class="col-wins">2</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-A-2">
+              <tr class="detail-row" id="detail-2025-A-sm-1">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row bronze-row" data-detail="detail-2025-A-3">
+              <tr class="driver-row silver-row" data-detail="detail-2025-A-sm-2">
+                <td class="col-pos"><span class="medal silver">2</span></td>
+                <td class="col-driver">Anton Kurtén<span class="driver-club">Älvbygdens MK</span></td>
+                <td class="col-pts">42</td>
+                <td class="col-races">4</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-A-sm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+              <tr class="driver-row bronze-row" data-detail="detail-2025-A-sm-3">
                 <td class="col-pos"><span class="medal bronze">3</span></td>
                 <td class="col-driver">Matilda Wrenkler<span class="driver-club">KMKR</span></td>
                 <td class="col-pts">42</td>
                 <td class="col-races">4</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-A-3">
+              <tr class="detail-row" id="detail-2025-A-sm-3">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDSQ</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2025-A-4">
+              <tr class="driver-row" data-detail="detail-2025-A-sm-4">
                 <td class="col-pos"><span class="rank">4</span></td>
                 <td class="col-driver">Hilmer Wiberg<span class="driver-club">Smedjebackens BK</span></td>
                 <td class="col-pts">41</td>
                 <td class="col-races">3</td>
                 <td class="col-wins">1</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-A-4">
+              <tr class="detail-row" id="detail-2025-A-sm-4">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2025-A-5">
+              <tr class="driver-row" data-detail="detail-2025-A-sm-5">
                 <td class="col-pos"><span class="rank">5</span></td>
                 <td class="col-driver">Anton Modin<span class="driver-club">Kungliga MBK</span></td>
                 <td class="col-pts">22</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">1</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-A-5">
+              <tr class="detail-row" id="detail-2025-A-sm-5">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2025-A-6">
+              <tr class="driver-row" data-detail="detail-2025-A-sm-6">
                 <td class="col-pos"><span class="rank">6</span></td>
                 <td class="col-driver">Gustav Holm<span class="driver-club">X Offshore Racing Club</span></td>
                 <td class="col-pts">19</td>
                 <td class="col-races">2</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-A-6">
+              <tr class="detail-row" id="detail-2025-A-sm-6">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2025-A-7">
+              <tr class="driver-row" data-detail="detail-2025-A-sm-7">
                 <td class="col-pos"><span class="rank">7</span></td>
                 <td class="col-driver">Rikard Ingvarsson<span class="driver-club">Öregrunds RK</span></td>
                 <td class="col-pts">2</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-A-7">
+              <tr class="detail-row" id="detail-2025-A-sm-7">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="class-block">
+      <div class="class-block rm-block">
+        <div class="class-header">
+          <h3>Klass A</h3>
+          <span class="status-badge badge-rm">RM</span>
+          <span class="class-meta">1 ekipage &middot; 1 deltävlingar</span>
+        </div>
+        <div class="table-wrap">
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th class="col-pos">#</th>
+                <th class="col-driver">Förare</th>
+                <th class="col-pts">Poäng</th>
+                <th class="col-races">Starter</th>
+                <th class="col-wins">Segrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="driver-row gold-row" data-detail="detail-2025-A-rm-1">
+                <td class="col-pos"><span class="medal gold">1</span></td>
+                <td class="col-driver">Anton Kurtén<span class="driver-club">Älvbygdens MK</span></td>
+                <td class="col-pts">20</td>
+                <td class="col-races">1</td>
+                <td class="col-wins">1</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-A-rm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="class-block sm-block">
         <div class="class-header">
           <h3>Klass B</h3>
           <span class="status-badge badge-sm">SM</span>
@@ -262,75 +292,75 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2025-B-1">
+              <tr class="driver-row gold-row" data-detail="detail-2025-B-sm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
                 <td class="col-driver">Rasmus Hamrén<span class="driver-club">Roslagens BR</span></td>
                 <td class="col-pts">100</td>
                 <td class="col-races">5</td>
                 <td class="col-wins">3</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-B-1">
+              <tr class="detail-row" id="detail-2025-B-sm-1">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2025-B-2">
+              <tr class="driver-row silver-row" data-detail="detail-2025-B-sm-2">
                 <td class="col-pos"><span class="medal silver">2</span></td>
                 <td class="col-driver">Lovisa Sahlén<span class="driver-club">Roslagens BR</span></td>
                 <td class="col-pts">72</td>
                 <td class="col-races">5</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-B-2">
+              <tr class="detail-row" id="detail-2025-B-sm-2">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P4</span><span class="rd-pts">15p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row bronze-row" data-detail="detail-2025-B-3">
+              <tr class="driver-row bronze-row" data-detail="detail-2025-B-sm-3">
                 <td class="col-pos"><span class="medal bronze">3</span></td>
                 <td class="col-driver">Max Samuelsson<span class="driver-club">Roslagens BR</span></td>
                 <td class="col-pts">65</td>
                 <td class="col-races">4</td>
                 <td class="col-wins">2</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-B-3">
+              <tr class="detail-row" id="detail-2025-B-sm-3">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDSQ</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2025-B-4">
+              <tr class="driver-row" data-detail="detail-2025-B-sm-4">
                 <td class="col-pos"><span class="rank">4</span></td>
                 <td class="col-driver">Urban Lagerström<span class="driver-club">Öregrunds RK</span></td>
                 <td class="col-pts">36</td>
                 <td class="col-races">2</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-B-4">
+              <tr class="detail-row" id="detail-2025-B-sm-4">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2025-B-5">
+              <tr class="driver-row" data-detail="detail-2025-B-sm-5">
                 <td class="col-pos"><span class="rank">5</span></td>
                 <td class="col-driver">Adam Wrenkler<span class="driver-club">Sportbåtsklubben</span></td>
                 <td class="col-pts">21</td>
                 <td class="col-races">2</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-B-5">
+              <tr class="detail-row" id="detail-2025-B-sm-5">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2025-B-6">
+              <tr class="driver-row" data-detail="detail-2025-B-sm-6">
                 <td class="col-pos"><span class="rank">6</span></td>
                 <td class="col-driver">Thomas Wrenkler<span class="driver-club">Sportbåtsklubben</span></td>
                 <td class="col-pts">15</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-B-6">
+              <tr class="detail-row" id="detail-2025-B-sm-6">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P4</span><span class="rd-pts">15p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="class-block">
+      <div class="class-block sm-block">
         <div class="class-header">
           <h3>Klass C</h3>
-          <span class="status-badge badge-rm">RM</span>
-          <span class="class-meta">3 ekipage &middot; 5 deltävlingar</span>
+          <span class="status-badge badge-sm">SM</span>
+          <span class="class-meta">3 ekipage &middot; 3 deltävlingar</span>
         </div>
         <div class="table-wrap">
           <table class="standings-table">
@@ -344,45 +374,45 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2025-C-1">
+              <tr class="driver-row gold-row" data-detail="detail-2025-C-sm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
-                <td class="col-driver">William Söderlind<span class="driver-club">Roslagens BR</span></td>
-                <td class="col-pts">86</td>
-                <td class="col-races">5</td>
-                <td class="col-wins">4</td>
-              </tr>
-              <tr class="detail-row" id="detail-2025-C-1">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
-              </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2025-C-2">
-                <td class="col-pos"><span class="medal silver">2</span></td>
                 <td class="col-driver">Viktor Jansson<span class="driver-club">Öregrunds RK</span></td>
                 <td class="col-pts">60</td>
                 <td class="col-races">3</td>
                 <td class="col-wins">1</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-C-2">
+              <tr class="detail-row" id="detail-2025-C-sm-1">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row bronze-row" data-detail="detail-2025-C-3">
+              <tr class="driver-row silver-row" data-detail="detail-2025-C-sm-2">
+                <td class="col-pos"><span class="medal silver">2</span></td>
+                <td class="col-driver">William Söderlind<span class="driver-club">Roslagens BR</span></td>
+                <td class="col-pts">46</td>
+                <td class="col-races">3</td>
+                <td class="col-wins">2</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-C-sm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+              <tr class="driver-row bronze-row" data-detail="detail-2025-C-sm-3">
                 <td class="col-pos"><span class="medal bronze">3</span></td>
                 <td class="col-driver">Andreas Oskar Engström<span class="driver-club">Sportbåtsklubben</span></td>
-                <td class="col-pts">40</td>
-                <td class="col-races">5</td>
+                <td class="col-pts">6</td>
+                <td class="col-races">3</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-C-3">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
+              <tr class="detail-row" id="detail-2025-C-sm-3">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="class-block">
+      <div class="class-block rm-block">
         <div class="class-header">
-          <h3>Klass J</h3>
+          <h3>Klass C</h3>
           <span class="status-badge badge-rm">RM</span>
-          <span class="class-meta">3 ekipage &middot; 4 deltävlingar</span>
+          <span class="class-meta">2 ekipage &middot; 2 deltävlingar</span>
         </div>
         <div class="table-wrap">
           <table class="standings-table">
@@ -396,45 +426,87 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2025-J-1">
+              <tr class="driver-row gold-row" data-detail="detail-2025-C-rm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
-                <td class="col-driver">Lukas Mehks<span class="driver-club">MK Orion</span></td>
-                <td class="col-pts">84</td>
-                <td class="col-races">4</td>
-                <td class="col-wins">4</td>
+                <td class="col-driver">William Söderlind<span class="driver-club">Roslagens BR</span></td>
+                <td class="col-pts">40</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">2</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-J-1">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
+              <tr class="detail-row" id="detail-2025-C-rm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
               </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2025-J-2">
+              <tr class="driver-row silver-row" data-detail="detail-2025-C-rm-2">
                 <td class="col-pos"><span class="medal silver">2</span></td>
-                <td class="col-driver">Alvin Lindahl<span class="driver-club">Öregrunds RK</span></td>
-                <td class="col-pts">38</td>
-                <td class="col-races">4</td>
+                <td class="col-driver">Andreas Oskar Engström<span class="driver-club">Sportbåtsklubben</span></td>
+                <td class="col-pts">34</td>
+                <td class="col-races">2</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-J-2">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">PDSQ</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDSQ</span><span class="rd-pts">0p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div></div></td>
+              <tr class="detail-row" id="detail-2025-C-rm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div></div></td>
               </tr>
-              <tr class="driver-row bronze-row" data-detail="detail-2025-J-3">
-                <td class="col-pos"><span class="medal bronze">3</span></td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="class-block sm-block">
+        <div class="class-header">
+          <h3>Klass J</h3>
+          <span class="status-badge badge-sm">SM</span>
+          <span class="class-meta">3 ekipage &middot; 2 deltävlingar</span>
+        </div>
+        <div class="table-wrap">
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th class="col-pos">#</th>
+                <th class="col-driver">Förare</th>
+                <th class="col-pts">Poäng</th>
+                <th class="col-races">Starter</th>
+                <th class="col-wins">Segrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="driver-row gold-row" data-detail="detail-2025-J-sm-1">
+                <td class="col-pos"><span class="medal gold">1</span></td>
+                <td class="col-driver">Lukas Mehks<span class="driver-club">MK Orion</span></td>
+                <td class="col-pts">44</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">2</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-J-sm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+              <tr class="driver-row silver-row" data-detail="detail-2025-J-sm-2">
+                <td class="col-pos"><span class="medal silver">2</span></td>
                 <td class="col-driver">Björn Bäckström<span class="driver-club">Sweden BRC</span></td>
                 <td class="col-pts">21</td>
                 <td class="col-races">2</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-J-3">
+              <tr class="detail-row" id="detail-2025-J-sm-2">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">PDSQ</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+              <tr class="driver-row bronze-row" data-detail="detail-2025-J-sm-3">
+                <td class="col-pos"><span class="medal bronze">3</span></td>
+                <td class="col-driver">Alvin Lindahl<span class="driver-club">Öregrunds RK</span></td>
+                <td class="col-pts">21</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-J-sm-3">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">PDSQ</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="class-block">
+      <div class="class-block rm-block">
         <div class="class-header">
-          <h3>Klass K</h3>
+          <h3>Klass J</h3>
           <span class="status-badge badge-rm">RM</span>
-          <span class="class-meta">5 ekipage &middot; 4 deltävlingar</span>
+          <span class="class-meta">2 ekipage &middot; 2 deltävlingar</span>
         </div>
         <div class="table-wrap">
           <table class="standings-table">
@@ -448,207 +520,95 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2025-K-1">
+              <tr class="driver-row gold-row" data-detail="detail-2025-J-rm-1">
+                <td class="col-pos"><span class="medal gold">1</span></td>
+                <td class="col-driver">Lukas Mehks<span class="driver-club">Roslagens BR</span></td>
+                <td class="col-pts">40</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">2</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-J-rm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+              <tr class="driver-row silver-row" data-detail="detail-2025-J-rm-2">
+                <td class="col-pos"><span class="medal silver">2</span></td>
+                <td class="col-driver">Alvin Lindahl<span class="driver-club">Öregrunds RK</span></td>
+                <td class="col-pts">17</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-J-rm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDSQ</span><span class="rd-pts">0p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="class-block sm-block">
+        <div class="class-header">
+          <h3>Klass K</h3>
+          <span class="status-badge badge-sm">SM</span>
+          <span class="class-meta">4 ekipage &middot; 3 deltävlingar</span>
+        </div>
+        <div class="table-wrap">
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th class="col-pos">#</th>
+                <th class="col-driver">Förare</th>
+                <th class="col-pts">Poäng</th>
+                <th class="col-races">Starter</th>
+                <th class="col-wins">Segrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="driver-row gold-row" data-detail="detail-2025-K-sm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
                 <td class="col-driver">Pierre Wärme<span class="driver-club">Sweden BRC</span></td>
                 <td class="col-pts">66</td>
                 <td class="col-races">3</td>
                 <td class="col-wins">3</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-K-1">
+              <tr class="detail-row" id="detail-2025-K-sm-1">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2025-K-2">
+              <tr class="driver-row silver-row" data-detail="detail-2025-K-sm-2">
                 <td class="col-pos"><span class="medal silver">2</span></td>
                 <td class="col-driver">Edward Bergholtz<span class="driver-club">SUK</span></td>
                 <td class="col-pts">53</td>
-                <td class="col-races">4</td>
+                <td class="col-races">3</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-K-2">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDSQ</span><span class="rd-pts">0p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div></div></td>
+              <tr class="detail-row" id="detail-2025-K-sm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row bronze-row" data-detail="detail-2025-K-3">
+              <tr class="driver-row bronze-row" data-detail="detail-2025-K-sm-3">
                 <td class="col-pos"><span class="medal bronze">3</span></td>
                 <td class="col-driver">Torbjörn Jansson<span class="driver-club">Sweden BRC</span></td>
                 <td class="col-pts">51</td>
-                <td class="col-races">4</td>
+                <td class="col-races">3</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-K-3">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDSQ</span><span class="rd-pts">0p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P4</span><span class="rd-pts">15p</span><span class="rd-sm sm">SM</span></div></div></td>
+              <tr class="detail-row" id="detail-2025-K-sm-3">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P4</span><span class="rd-pts">15p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2025-K-4">
+              <tr class="driver-row" data-detail="detail-2025-K-sm-4">
                 <td class="col-pos"><span class="rank">4</span></td>
                 <td class="col-driver">Oliver Mattsson<span class="driver-club">Sweden BRC</span></td>
                 <td class="col-pts">21</td>
                 <td class="col-races">2</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-K-4">
+              <tr class="detail-row" id="detail-2025-K-sm-4">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2025-K-5">
-                <td class="col-pos"><span class="rank">5</span></td>
-                <td class="col-driver">Sebastian Romagnoli<span class="driver-club">Sweden BRC</span></td>
-                <td class="col-pts">0</td>
-                <td class="col-races">1</td>
-                <td class="col-wins">0</td>
-              </tr>
-              <tr class="detail-row" id="detail-2025-K-5">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">PDNF</span><span class="rd-pts">0p</span><span class="rd-sm rm">RM</span></div></div></td>
-              </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="class-block">
+      <div class="class-block rm-block">
         <div class="class-header">
-          <h3>Klass V24</h3>
-          <span class="status-badge badge-rm">RM</span>
-          <span class="class-meta">4 ekipage &middot; 4 deltävlingar</span>
-        </div>
-        <div class="table-wrap">
-          <table class="standings-table">
-            <thead>
-              <tr>
-                <th class="col-pos">#</th>
-                <th class="col-driver">Förare</th>
-                <th class="col-pts">Poäng</th>
-                <th class="col-races">Starter</th>
-                <th class="col-wins">Segrar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2025-V24-1">
-                <td class="col-pos"><span class="medal gold">1</span></td>
-                <td class="col-driver">Dick Johansson<span class="driver-club">Kungliga MBK</span></td>
-                <td class="col-pts">84</td>
-                <td class="col-races">4</td>
-                <td class="col-wins">4</td>
-              </tr>
-              <tr class="detail-row" id="detail-2025-V24-1">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
-              </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2025-V24-2">
-                <td class="col-pos"><span class="medal silver">2</span></td>
-                <td class="col-driver">Tim Johansson<span class="driver-club">Kungliga MBK</span></td>
-                <td class="col-pts">38</td>
-                <td class="col-races">3</td>
-                <td class="col-wins">0</td>
-              </tr>
-              <tr class="detail-row" id="detail-2025-V24-2">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
-              </tr>
-              <tr class="driver-row bronze-row" data-detail="detail-2025-V24-3">
-                <td class="col-pos"><span class="medal bronze">3</span></td>
-                <td class="col-driver">Mathias Länder<span class="driver-club">Öregrunds RK</span></td>
-                <td class="col-pts">34</td>
-                <td class="col-races">2</td>
-                <td class="col-wins">0</td>
-              </tr>
-              <tr class="detail-row" id="detail-2025-V24-3">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div></div></td>
-              </tr>
-              <tr class="driver-row" data-detail="detail-2025-V24-4">
-                <td class="col-pos"><span class="rank">4</span></td>
-                <td class="col-driver">Sven Johansson<span class="driver-club">Kungliga MBK</span></td>
-                <td class="col-pts">21</td>
-                <td class="col-races">3</td>
-                <td class="col-wins">0</td>
-              </tr>
-              <tr class="detail-row" id="detail-2025-V24-4">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDSQ</span><span class="rd-pts">0p</span><span class="rd-sm rm">RM</span></div></div></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="class-block">
-        <div class="class-header">
-          <h3>Klass V90</h3>
-          <span class="status-badge badge-sm">SM</span>
-          <span class="class-meta">6 ekipage &middot; 4 deltävlingar</span>
-        </div>
-        <div class="table-wrap">
-          <table class="standings-table">
-            <thead>
-              <tr>
-                <th class="col-pos">#</th>
-                <th class="col-driver">Förare</th>
-                <th class="col-pts">Poäng</th>
-                <th class="col-races">Starter</th>
-                <th class="col-wins">Segrar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2025-V90-1">
-                <td class="col-pos"><span class="medal gold">1</span></td>
-                <td class="col-driver">Peter Forsberg<span class="driver-club">Roslagens BR</span></td>
-                <td class="col-pts">85</td>
-                <td class="col-races">4</td>
-                <td class="col-wins">3</td>
-              </tr>
-              <tr class="detail-row" id="detail-2025-V90-1">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
-              </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2025-V90-2">
-                <td class="col-pos"><span class="medal silver">2</span></td>
-                <td class="col-driver">Rasmus Westerberg<span class="driver-club">Öregrunds RK</span></td>
-                <td class="col-pts">82</td>
-                <td class="col-races">4</td>
-                <td class="col-wins">2</td>
-              </tr>
-              <tr class="detail-row" id="detail-2025-V90-2">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
-              </tr>
-              <tr class="driver-row bronze-row" data-detail="detail-2025-V90-3">
-                <td class="col-pos"><span class="medal bronze">3</span></td>
-                <td class="col-driver">Magnus Ählström<span class="driver-club">Öregrunds RK</span></td>
-                <td class="col-pts">47</td>
-                <td class="col-races">3</td>
-                <td class="col-wins">0</td>
-              </tr>
-              <tr class="detail-row" id="detail-2025-V90-3">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P4</span><span class="rd-pts">15p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P5</span><span class="rd-pts">13p</span><span class="rd-sm sm">SM</span></div></div></td>
-              </tr>
-              <tr class="driver-row" data-detail="detail-2025-V90-4">
-                <td class="col-pos"><span class="rank">4</span></td>
-                <td class="col-driver">Carl Fransson<span class="driver-club">SUK</span></td>
-                <td class="col-pts">36</td>
-                <td class="col-races">3</td>
-                <td class="col-wins">0</td>
-              </tr>
-              <tr class="detail-row" id="detail-2025-V90-4">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDSQ</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
-              </tr>
-              <tr class="driver-row" data-detail="detail-2025-V90-5">
-                <td class="col-pos"><span class="rank">5</span></td>
-                <td class="col-driver">Edvin Blad<span class="driver-club">SUK</span></td>
-                <td class="col-pts">34</td>
-                <td class="col-races">3</td>
-                <td class="col-wins">0</td>
-              </tr>
-              <tr class="detail-row" id="detail-2025-V90-5">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P4</span><span class="rd-pts">15p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDSQ</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div></div></td>
-              </tr>
-              <tr class="driver-row" data-detail="detail-2025-V90-6">
-                <td class="col-pos"><span class="rank">6</span></td>
-                <td class="col-driver">Tom Sellerholm Samsioe<span class="driver-club">SUK</span></td>
-                <td class="col-pts">15</td>
-                <td class="col-races">2</td>
-                <td class="col-wins">0</td>
-              </tr>
-              <tr class="detail-row" id="detail-2025-V90-6">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P5</span><span class="rd-pts">13p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="class-block">
-        <div class="class-header">
-          <h3>Klass W150</h3>
+          <h3>Klass K</h3>
           <span class="status-badge badge-rm">RM</span>
           <span class="class-meta">3 ekipage &middot; 2 deltävlingar</span>
         </div>
@@ -664,45 +624,44 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2025-W150-1">
+              <tr class="driver-row gold-row" data-detail="detail-2025-K-rm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
-                <td class="col-driver">Mathias Johnson<span class="driver-club">Kungliga MBK</span></td>
-                <td class="col-pts">42</td>
-                <td class="col-races">2</td>
-                <td class="col-wins">2</td>
-              </tr>
-              <tr class="detail-row" id="detail-2025-W150-1">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
-              </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2025-W150-2">
-                <td class="col-pos"><span class="medal silver">2</span></td>
-                <td class="col-driver">Christian Melin<span class="driver-club">Öregrunds RK</span></td>
-                <td class="col-pts">22</td>
-                <td class="col-races">2</td>
-                <td class="col-wins">1</td>
-              </tr>
-              <tr class="detail-row" id="detail-2025-W150-2">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
-              </tr>
-              <tr class="driver-row bronze-row" data-detail="detail-2025-W150-3">
-                <td class="col-pos"><span class="medal bronze">3</span></td>
-                <td class="col-driver">Christer Jobs<span class="driver-club">Roslagens BR</span></td>
-                <td class="col-pts">19</td>
+                <td class="col-driver">Sebastian Romagnoli<span class="driver-club">Sweden BRC</span></td>
+                <td class="col-pts">0</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-W150-3">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
+              <tr class="detail-row" id="detail-2025-K-rm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">PDNF</span><span class="rd-pts">0p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+              <tr class="driver-row silver-row" data-detail="detail-2025-K-rm-2">
+                <td class="col-pos"><span class="medal silver">2</span></td>
+                <td class="col-driver">Torbjörn Jansson<span class="driver-club">Sweden BRC</span></td>
+                <td class="col-pts">0</td>
+                <td class="col-races">1</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-K-rm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDSQ</span><span class="rd-pts">0p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+              <tr class="driver-row bronze-row" data-detail="detail-2025-K-rm-3">
+                <td class="col-pos"><span class="medal bronze">3</span></td>
+                <td class="col-driver">Edward Bergholtz<span class="driver-club">SUK</span></td>
+                <td class="col-pts">0</td>
+                <td class="col-races">1</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-K-rm-3">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDSQ</span><span class="rd-pts">0p</span><span class="rd-sm rm">RM</span></div></div></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="notitle-separator"><span>Klasser utan mästerskapsstatus (&lt;3 unika ekipage under säsongen)</span></div>
-      <div class="class-block notitle-block">
+      <div class="class-block rm-block">
         <div class="class-header">
           <h3>Klass T</h3>
-          <span class="status-badge badge-notitle">Ej mästerskap</span>
+          <span class="status-badge badge-rm">RM</span>
           <span class="class-meta">1 ekipage &middot; 1 deltävlingar</span>
         </div>
         <div class="table-wrap">
@@ -717,24 +676,24 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2025-T-1">
+              <tr class="driver-row gold-row" data-detail="detail-2025-T-rm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
                 <td class="col-driver">Dan Lindahl<span class="driver-club">Öregrunds RK</span></td>
                 <td class="col-pts">20</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">1</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-T-1">
+              <tr class="detail-row" id="detail-2025-T-rm-1">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="class-block notitle-block">
+      <div class="class-block rm-block">
         <div class="class-header">
           <h3>Klass V150</h3>
-          <span class="status-badge badge-notitle">Ej mästerskap</span>
+          <span class="status-badge badge-rm">RM</span>
           <span class="class-meta">2 ekipage &middot; 5 deltävlingar</span>
         </div>
         <div class="table-wrap">
@@ -749,34 +708,324 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2025-V150-1">
+              <tr class="driver-row gold-row" data-detail="detail-2025-V150-rm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
                 <td class="col-driver">Patrik Norlin<span class="driver-club">Öregrunds RK</span></td>
                 <td class="col-pts">97</td>
                 <td class="col-races">5</td>
                 <td class="col-wins">4</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-V150-1">
+              <tr class="detail-row" id="detail-2025-V150-rm-1">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div></div></td>
               </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2025-V150-2">
+              <tr class="driver-row silver-row" data-detail="detail-2025-V150-rm-2">
                 <td class="col-pos"><span class="medal silver">2</span></td>
                 <td class="col-driver">Johan Teodor Kurtén<span class="driver-club">Älvbygdens MK</span></td>
                 <td class="col-pts">54</td>
                 <td class="col-races">5</td>
                 <td class="col-wins">1</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-V150-2">
+              <tr class="detail-row" id="detail-2025-V150-rm-2">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">PDSQ</span><span class="rd-pts">0p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDNF</span><span class="rd-pts">0p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="class-block notitle-block">
+      <div class="class-block sm-block">
+        <div class="class-header">
+          <h3>Klass V24</h3>
+          <span class="status-badge badge-sm">SM</span>
+          <span class="class-meta">4 ekipage &middot; 2 deltävlingar</span>
+        </div>
+        <div class="table-wrap">
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th class="col-pos">#</th>
+                <th class="col-driver">Förare</th>
+                <th class="col-pts">Poäng</th>
+                <th class="col-races">Starter</th>
+                <th class="col-wins">Segrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="driver-row gold-row" data-detail="detail-2025-V24-sm-1">
+                <td class="col-pos"><span class="medal gold">1</span></td>
+                <td class="col-driver">Dick Johansson<span class="driver-club">Kungliga MBK</span></td>
+                <td class="col-pts">44</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">2</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-V24-sm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+              <tr class="driver-row silver-row" data-detail="detail-2025-V24-sm-2">
+                <td class="col-pos"><span class="medal silver">2</span></td>
+                <td class="col-driver">Mathias Länder<span class="driver-club">Öregrunds RK</span></td>
+                <td class="col-pts">34</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-V24-sm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+              <tr class="driver-row bronze-row" data-detail="detail-2025-V24-sm-3">
+                <td class="col-pos"><span class="medal bronze">3</span></td>
+                <td class="col-driver">Sven Johansson<span class="driver-club">Kungliga MBK</span></td>
+                <td class="col-pts">21</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-V24-sm-3">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+              <tr class="driver-row" data-detail="detail-2025-V24-sm-4">
+                <td class="col-pos"><span class="rank">4</span></td>
+                <td class="col-driver">Tim Johansson<span class="driver-club">Kungliga MBK</span></td>
+                <td class="col-pts">21</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-V24-sm-4">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="class-block rm-block">
+        <div class="class-header">
+          <h3>Klass V24</h3>
+          <span class="status-badge badge-rm">RM</span>
+          <span class="class-meta">3 ekipage &middot; 2 deltävlingar</span>
+        </div>
+        <div class="table-wrap">
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th class="col-pos">#</th>
+                <th class="col-driver">Förare</th>
+                <th class="col-pts">Poäng</th>
+                <th class="col-races">Starter</th>
+                <th class="col-wins">Segrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="driver-row gold-row" data-detail="detail-2025-V24-rm-1">
+                <td class="col-pos"><span class="medal gold">1</span></td>
+                <td class="col-driver">Dick Johansson<span class="driver-club">Kungliga MBK</span></td>
+                <td class="col-pts">40</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">2</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-V24-rm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+              <tr class="driver-row silver-row" data-detail="detail-2025-V24-rm-2">
+                <td class="col-pos"><span class="medal silver">2</span></td>
+                <td class="col-driver">Tim Johansson<span class="driver-club">Kungliga MBK</span></td>
+                <td class="col-pts">17</td>
+                <td class="col-races">1</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-V24-rm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+              <tr class="driver-row bronze-row" data-detail="detail-2025-V24-rm-3">
+                <td class="col-pos"><span class="medal bronze">3</span></td>
+                <td class="col-driver">Sven Johansson<span class="driver-club">Kungliga MBK</span></td>
+                <td class="col-pts">0</td>
+                <td class="col-races">1</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-V24-rm-3">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDSQ</span><span class="rd-pts">0p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="class-block sm-block">
+        <div class="class-header">
+          <h3>Klass V90</h3>
+          <span class="status-badge badge-sm">SM</span>
+          <span class="class-meta">6 ekipage &middot; 5 deltävlingar</span>
+        </div>
+        <div class="table-wrap">
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th class="col-pos">#</th>
+                <th class="col-driver">Förare</th>
+                <th class="col-pts">Poäng</th>
+                <th class="col-races">Starter</th>
+                <th class="col-wins">Segrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="driver-row gold-row" data-detail="detail-2025-V90-sm-1">
+                <td class="col-pos"><span class="medal gold">1</span></td>
+                <td class="col-driver">Peter Forsberg<span class="driver-club">Roslagens BR</span></td>
+                <td class="col-pts">85</td>
+                <td class="col-races">4</td>
+                <td class="col-wins">3</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-V90-sm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+              <tr class="driver-row silver-row" data-detail="detail-2025-V90-sm-2">
+                <td class="col-pos"><span class="medal silver">2</span></td>
+                <td class="col-driver">Rasmus Westerberg<span class="driver-club">Öregrunds RK</span></td>
+                <td class="col-pts">82</td>
+                <td class="col-races">4</td>
+                <td class="col-wins">2</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-V90-sm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+              <tr class="driver-row bronze-row" data-detail="detail-2025-V90-sm-3">
+                <td class="col-pos"><span class="medal bronze">3</span></td>
+                <td class="col-driver">Magnus Ählström<span class="driver-club">Öregrunds RK</span></td>
+                <td class="col-pts">47</td>
+                <td class="col-races">3</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-V90-sm-3">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P4</span><span class="rd-pts">15p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P5</span><span class="rd-pts">13p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+              <tr class="driver-row" data-detail="detail-2025-V90-sm-4">
+                <td class="col-pos"><span class="rank">4</span></td>
+                <td class="col-driver">Carl Fransson<span class="driver-club">SUK</span></td>
+                <td class="col-pts">36</td>
+                <td class="col-races">3</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-V90-sm-4">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDSQ</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+              <tr class="driver-row" data-detail="detail-2025-V90-sm-5">
+                <td class="col-pos"><span class="rank">5</span></td>
+                <td class="col-driver">Edvin Blad<span class="driver-club">SUK</span></td>
+                <td class="col-pts">34</td>
+                <td class="col-races">3</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-V90-sm-5">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P4</span><span class="rd-pts">15p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">PDSQ</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 1 Vårracet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+              <tr class="driver-row" data-detail="detail-2025-V90-sm-6">
+                <td class="col-pos"><span class="rank">6</span></td>
+                <td class="col-driver">Tom Sellerholm Samsioe<span class="driver-club">SUK</span></td>
+                <td class="col-pts">15</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-V90-sm-6">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P5</span><span class="rd-pts">13p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Deltävling 6 Saltsjöloppet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="class-block sm-block">
+        <div class="class-header">
+          <h3>Klass W150</h3>
+          <span class="status-badge badge-sm">SM</span>
+          <span class="class-meta">3 ekipage &middot; 1 deltävlingar</span>
+        </div>
+        <div class="table-wrap">
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th class="col-pos">#</th>
+                <th class="col-driver">Förare</th>
+                <th class="col-pts">Poäng</th>
+                <th class="col-races">Starter</th>
+                <th class="col-wins">Segrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="driver-row gold-row" data-detail="detail-2025-W150-sm-1">
+                <td class="col-pos"><span class="medal gold">1</span></td>
+                <td class="col-driver">Mathias Johnson<span class="driver-club">Kungliga MBK</span></td>
+                <td class="col-pts">22</td>
+                <td class="col-races">1</td>
+                <td class="col-wins">1</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-W150-sm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+              <tr class="driver-row silver-row" data-detail="detail-2025-W150-sm-2">
+                <td class="col-pos"><span class="medal silver">2</span></td>
+                <td class="col-driver">Christer Jobs<span class="driver-club">Roslagens BR</span></td>
+                <td class="col-pts">19</td>
+                <td class="col-races">1</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-W150-sm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+              <tr class="driver-row bronze-row" data-detail="detail-2025-W150-sm-3">
+                <td class="col-pos"><span class="medal bronze">3</span></td>
+                <td class="col-driver">Christian Melin<span class="driver-club">Öregrunds RK</span></td>
+                <td class="col-pts">2</td>
+                <td class="col-races">1</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-W150-sm-3">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="class-block rm-block">
+        <div class="class-header">
+          <h3>Klass W150</h3>
+          <span class="status-badge badge-rm">RM</span>
+          <span class="class-meta">2 ekipage &middot; 2 deltävlingar</span>
+        </div>
+        <div class="table-wrap">
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th class="col-pos">#</th>
+                <th class="col-driver">Förare</th>
+                <th class="col-pts">Poäng</th>
+                <th class="col-races">Starter</th>
+                <th class="col-wins">Segrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="driver-row gold-row" data-detail="detail-2025-W150-rm-1">
+                <td class="col-pos"><span class="medal gold">1</span></td>
+                <td class="col-driver">Christian Melin<span class="driver-club">Öregrunds RK</span></td>
+                <td class="col-pts">20</td>
+                <td class="col-races">1</td>
+                <td class="col-wins">1</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-W150-rm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 7 Östhammars GP mot Cancer</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+              <tr class="driver-row silver-row" data-detail="detail-2025-W150-rm-2">
+                <td class="col-pos"><span class="medal silver">2</span></td>
+                <td class="col-driver">Mathias Johnson<span class="driver-club">Kungliga MBK</span></td>
+                <td class="col-pts">20</td>
+                <td class="col-races">1</td>
+                <td class="col-wins">1</td>
+              </tr>
+              <tr class="detail-row" id="detail-2025-W150-rm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 2  Gävlebukten Challange</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="class-block rm-block">
         <div class="class-header">
           <h3>Klass X</h3>
-          <span class="status-badge badge-notitle">Ej mästerskap</span>
+          <span class="status-badge badge-rm">RM</span>
           <span class="class-meta">1 ekipage &middot; 1 deltävlingar</span>
         </div>
         <div class="table-wrap">
@@ -791,14 +1040,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2025-X-1">
+              <tr class="driver-row gold-row" data-detail="detail-2025-X-rm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
                 <td class="col-driver">Johan Torsell<span class="driver-club">Kungliga MBK</span></td>
                 <td class="col-pts">20</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">1</td>
               </tr>
-              <tr class="detail-row" id="detail-2025-X-1">
+              <tr class="detail-row" id="detail-2025-X-rm-1">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Deltävling 5  Roslagsloppet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
               </tr>
             </tbody>
@@ -807,11 +1056,11 @@
       </div>
       </div>
       <div class="year-content" id="year-2024" style="display:none">
-      <div class="class-block">
+      <div class="class-block sm-block">
         <div class="class-header">
           <h3>Klass A</h3>
-          <span class="status-badge badge-rm">RM</span>
-          <span class="class-meta">8 ekipage &middot; 4 deltävlingar</span>
+          <span class="status-badge badge-sm">SM</span>
+          <span class="class-meta">8 ekipage &middot; 3 deltävlingar</span>
         </div>
         <div class="table-wrap">
           <table class="standings-table">
@@ -825,91 +1074,133 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2024-A-1">
+              <tr class="driver-row gold-row" data-detail="detail-2024-A-sm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
-                <td class="col-driver">Lina Hamrén<span class="driver-club">Roslagens BR</span></td>
-                <td class="col-pts">71</td>
-                <td class="col-races">4</td>
-                <td class="col-wins">1</td>
-              </tr>
-              <tr class="detail-row" id="detail-2024-A-1">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P5</span><span class="rd-pts">13p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
-              </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2024-A-2">
-                <td class="col-pos"><span class="medal silver">2</span></td>
-                <td class="col-driver">Anton Kurtén<span class="driver-club">Felix Ljungström</span></td>
-                <td class="col-pts">68</td>
-                <td class="col-races">4</td>
-                <td class="col-wins">0</td>
-              </tr>
-              <tr class="detail-row" id="detail-2024-A-2">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div></div></td>
-              </tr>
-              <tr class="driver-row bronze-row" data-detail="detail-2024-A-3">
-                <td class="col-pos"><span class="medal bronze">3</span></td>
                 <td class="col-driver">Rikard Ingvarsson<span class="driver-club">Öregrunds RK</span></td>
                 <td class="col-pts">59</td>
                 <td class="col-races">3</td>
                 <td class="col-wins">2</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-A-3">
+              <tr class="detail-row" id="detail-2024-A-sm-1">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P4</span><span class="rd-pts">15p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-A-4">
+              <tr class="driver-row silver-row" data-detail="detail-2024-A-sm-2">
+                <td class="col-pos"><span class="medal silver">2</span></td>
+                <td class="col-driver">Lina Hamrén<span class="driver-club">Roslagens BR</span></td>
+                <td class="col-pts">51</td>
+                <td class="col-races">3</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2024-A-sm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P5</span><span class="rd-pts">13p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+              <tr class="driver-row bronze-row" data-detail="detail-2024-A-sm-3">
+                <td class="col-pos"><span class="medal bronze">3</span></td>
+                <td class="col-driver">Anton Kurtén<span class="driver-club">Älvbygdens MK</span></td>
+                <td class="col-pts">51</td>
+                <td class="col-races">3</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2024-A-sm-3">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div></div></td>
+              </tr>
+              <tr class="driver-row" data-detail="detail-2024-A-sm-4">
                 <td class="col-pos"><span class="rank">4</span></td>
                 <td class="col-driver">Matilda Wrenkler<span class="driver-club">Sportbåtsklubben</span></td>
                 <td class="col-pts">27</td>
                 <td class="col-races">2</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-A-4">
+              <tr class="detail-row" id="detail-2024-A-sm-4">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P6</span><span class="rd-pts">12p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P4</span><span class="rd-pts">15p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-A-5">
+              <tr class="driver-row" data-detail="detail-2024-A-sm-5">
                 <td class="col-pos"><span class="rank">5</span></td>
                 <td class="col-driver">Anton Modin<span class="driver-club">PoMo</span></td>
                 <td class="col-pts">22</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">1</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-A-5">
+              <tr class="detail-row" id="detail-2024-A-sm-5">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-A-6">
+              <tr class="driver-row" data-detail="detail-2024-A-sm-6">
                 <td class="col-pos"><span class="rank">6</span></td>
                 <td class="col-driver">Aleksi Mäkinen<span class="driver-club">GMS</span></td>
                 <td class="col-pts">19</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-A-6">
+              <tr class="detail-row" id="detail-2024-A-sm-6">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-A-7">
+              <tr class="driver-row" data-detail="detail-2024-A-sm-7">
                 <td class="col-pos"><span class="rank">7</span></td>
                 <td class="col-driver">Tomi Huuhka<span class="driver-club">Salon Kilpaveneilijät - SKV</span></td>
                 <td class="col-pts">11</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-A-7">
+              <tr class="detail-row" id="detail-2024-A-sm-7">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P7</span><span class="rd-pts">11p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-A-8">
+              <tr class="driver-row" data-detail="detail-2024-A-sm-8">
                 <td class="col-pos"><span class="rank">8</span></td>
                 <td class="col-driver">Marco Witt<span class="driver-club">Kungliga MBK</span></td>
                 <td class="col-pts">2</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-A-8">
+              <tr class="detail-row" id="detail-2024-A-sm-8">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="class-block">
+      <div class="class-block rm-block">
+        <div class="class-header">
+          <h3>Klass A</h3>
+          <span class="status-badge badge-rm">RM</span>
+          <span class="class-meta">2 ekipage &middot; 1 deltävlingar</span>
+        </div>
+        <div class="table-wrap">
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th class="col-pos">#</th>
+                <th class="col-driver">Förare</th>
+                <th class="col-pts">Poäng</th>
+                <th class="col-races">Starter</th>
+                <th class="col-wins">Segrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="driver-row gold-row" data-detail="detail-2024-A-rm-1">
+                <td class="col-pos"><span class="medal gold">1</span></td>
+                <td class="col-driver">Lina Hamrén<span class="driver-club">Wilma Jansson</span></td>
+                <td class="col-pts">20</td>
+                <td class="col-races">1</td>
+                <td class="col-wins">1</td>
+              </tr>
+              <tr class="detail-row" id="detail-2024-A-rm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+              <tr class="driver-row silver-row" data-detail="detail-2024-A-rm-2">
+                <td class="col-pos"><span class="medal silver">2</span></td>
+                <td class="col-driver">Anton Kurtén<span class="driver-club">Felix Ljungström</span></td>
+                <td class="col-pts">17</td>
+                <td class="col-races">1</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2024-A-rm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="class-block sm-block">
         <div class="class-header">
           <h3>Klass B</h3>
           <span class="status-badge badge-sm">SM</span>
@@ -927,95 +1218,95 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2024-B-1">
+              <tr class="driver-row gold-row" data-detail="detail-2024-B-sm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
                 <td class="col-driver">Urban Lagerström<span class="driver-club">Sigge Lind</span></td>
                 <td class="col-pts">63</td>
                 <td class="col-races">3</td>
                 <td class="col-wins">2</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-B-1">
+              <tr class="detail-row" id="detail-2024-B-sm-1">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2024-B-2">
+              <tr class="driver-row silver-row" data-detail="detail-2024-B-sm-2">
                 <td class="col-pos"><span class="medal silver">2</span></td>
                 <td class="col-driver">Rasmus Hamrén<span class="driver-club">Madeleine Samuelsson</span></td>
                 <td class="col-pts">55</td>
                 <td class="col-races">3</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-B-2">
+              <tr class="detail-row" id="detail-2024-B-sm-2">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row bronze-row" data-detail="detail-2024-B-3">
+              <tr class="driver-row bronze-row" data-detail="detail-2024-B-sm-3">
                 <td class="col-pos"><span class="medal bronze">3</span></td>
                 <td class="col-driver">Max Samuelsson<span class="driver-club">Alexander Hellberg</span></td>
                 <td class="col-pts">39</td>
                 <td class="col-races">2</td>
                 <td class="col-wins">1</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-B-3">
+              <tr class="detail-row" id="detail-2024-B-sm-3">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-B-4">
+              <tr class="driver-row" data-detail="detail-2024-B-sm-4">
                 <td class="col-pos"><span class="rank">4</span></td>
                 <td class="col-driver">Lovisa Sahlén<span class="driver-club">Jonna Rudefors</span></td>
                 <td class="col-pts">34</td>
                 <td class="col-races">3</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-B-4">
+              <tr class="detail-row" id="detail-2024-B-sm-4">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P4</span><span class="rd-pts">15p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-B-5">
+              <tr class="driver-row" data-detail="detail-2024-B-sm-5">
                 <td class="col-pos"><span class="rank">5</span></td>
                 <td class="col-driver">Christer Jobs<span class="driver-club">Roslagens BR</span></td>
                 <td class="col-pts">15</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-B-5">
+              <tr class="detail-row" id="detail-2024-B-sm-5">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P4</span><span class="rd-pts">15p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-B-6">
+              <tr class="driver-row" data-detail="detail-2024-B-sm-6">
                 <td class="col-pos"><span class="rank">6</span></td>
                 <td class="col-driver">Thomas Wrenkler<span class="driver-club">Sportbåtsklubben</span></td>
                 <td class="col-pts">13</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-B-6">
+              <tr class="detail-row" id="detail-2024-B-sm-6">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P5</span><span class="rd-pts">13p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-B-7">
+              <tr class="driver-row" data-detail="detail-2024-B-sm-7">
                 <td class="col-pos"><span class="rank">7</span></td>
                 <td class="col-driver">Thomas Braaten<span class="driver-club">TRK</span></td>
                 <td class="col-pts">2</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-B-7">
+              <tr class="detail-row" id="detail-2024-B-sm-7">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-B-8">
+              <tr class="driver-row" data-detail="detail-2024-B-sm-8">
                 <td class="col-pos"><span class="rank">8</span></td>
                 <td class="col-driver">Janne Pirhonen<span class="driver-club">Pomo</span></td>
                 <td class="col-pts">2</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-B-8">
+              <tr class="detail-row" id="detail-2024-B-sm-8">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="class-block">
+      <div class="class-block sm-block">
         <div class="class-header">
           <h3>Klass C</h3>
-          <span class="status-badge badge-rm">RM</span>
-          <span class="class-meta">4 ekipage &middot; 4 deltävlingar</span>
+          <span class="status-badge badge-sm">SM</span>
+          <span class="class-meta">4 ekipage &middot; 2 deltävlingar</span>
         </div>
         <div class="table-wrap">
           <table class="standings-table">
@@ -1029,51 +1320,135 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2024-C-1">
+              <tr class="driver-row gold-row" data-detail="detail-2024-C-sm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
-                <td class="col-driver">Andreas Oskar Engström<span class="driver-club">Krister Gahmberg</span></td>
-                <td class="col-pts">68</td>
-                <td class="col-races">4</td>
-                <td class="col-wins">0</td>
+                <td class="col-driver">Viktor Jansson<span class="driver-club">Sebastian Högberg</span></td>
+                <td class="col-pts">41</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">1</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-C-1">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div></div></td>
+              <tr class="detail-row" id="detail-2024-C-sm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2024-C-2">
+              <tr class="driver-row silver-row" data-detail="detail-2024-C-sm-2">
                 <td class="col-pos"><span class="medal silver">2</span></td>
                 <td class="col-driver">William Söderlind<span class="driver-club">Jonatan Rindar</span></td>
-                <td class="col-pts">61</td>
-                <td class="col-races">3</td>
-                <td class="col-wins">2</td>
+                <td class="col-pts">41</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">1</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-C-2">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
+              <tr class="detail-row" id="detail-2024-C-sm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row bronze-row" data-detail="detail-2024-C-3">
+              <tr class="driver-row bronze-row" data-detail="detail-2024-C-sm-3">
                 <td class="col-pos"><span class="medal bronze">3</span></td>
-                <td class="col-driver">Viktor Jansson<span class="driver-club">Sebastian Högberg</span></td>
-                <td class="col-pts">61</td>
-                <td class="col-races">3</td>
-                <td class="col-wins">2</td>
+                <td class="col-driver">Andreas Oskar Engström<span class="driver-club">Krister Gahmberg</span></td>
+                <td class="col-pts">34</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-C-3">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
+              <tr class="detail-row" id="detail-2024-C-sm-3">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-C-4">
+              <tr class="driver-row" data-detail="detail-2024-C-sm-4">
                 <td class="col-pos"><span class="rank">4</span></td>
                 <td class="col-driver">Sebastian Groth<span class="driver-club">Josefin Due-Boje</span></td>
                 <td class="col-pts">2</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-C-4">
+              <tr class="detail-row" id="detail-2024-C-sm-4">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="class-block">
+      <div class="class-block rm-block">
+        <div class="class-header">
+          <h3>Klass C</h3>
+          <span class="status-badge badge-rm">RM</span>
+          <span class="class-meta">3 ekipage &middot; 2 deltävlingar</span>
+        </div>
+        <div class="table-wrap">
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th class="col-pos">#</th>
+                <th class="col-driver">Förare</th>
+                <th class="col-pts">Poäng</th>
+                <th class="col-races">Starter</th>
+                <th class="col-wins">Segrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="driver-row gold-row" data-detail="detail-2024-C-rm-1">
+                <td class="col-pos"><span class="medal gold">1</span></td>
+                <td class="col-driver">Andreas Oskar Engström<span class="driver-club">Sportbåtsklubben</span></td>
+                <td class="col-pts">34</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2024-C-rm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+              <tr class="driver-row silver-row" data-detail="detail-2024-C-rm-2">
+                <td class="col-pos"><span class="medal silver">2</span></td>
+                <td class="col-driver">William Söderlind<span class="driver-club">Roslagens BR</span></td>
+                <td class="col-pts">20</td>
+                <td class="col-races">1</td>
+                <td class="col-wins">1</td>
+              </tr>
+              <tr class="detail-row" id="detail-2024-C-rm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+              <tr class="driver-row bronze-row" data-detail="detail-2024-C-rm-3">
+                <td class="col-pos"><span class="medal bronze">3</span></td>
+                <td class="col-driver">Viktor Jansson<span class="driver-club">Öregrunds RK</span></td>
+                <td class="col-pts">20</td>
+                <td class="col-races">1</td>
+                <td class="col-wins">1</td>
+              </tr>
+              <tr class="detail-row" id="detail-2024-C-rm-3">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="class-block rm-block">
+        <div class="class-header">
+          <h3>Klass D</h3>
+          <span class="status-badge badge-rm">RM</span>
+          <span class="class-meta">1 ekipage &middot; 2 deltävlingar</span>
+        </div>
+        <div class="table-wrap">
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th class="col-pos">#</th>
+                <th class="col-driver">Förare</th>
+                <th class="col-pts">Poäng</th>
+                <th class="col-races">Starter</th>
+                <th class="col-wins">Segrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="driver-row gold-row" data-detail="detail-2024-D-rm-1">
+                <td class="col-pos"><span class="medal gold">1</span></td>
+                <td class="col-driver">Fredrik Groth Fyrö<span class="driver-club">Filip Ericsson</span></td>
+                <td class="col-pts">40</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">2</td>
+              </tr>
+              <tr class="detail-row" id="detail-2024-D-rm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="class-block sm-block">
         <div class="class-header">
           <h3>Klass J</h3>
           <span class="status-badge badge-sm">SM</span>
@@ -1091,51 +1466,51 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2024-J-1">
+              <tr class="driver-row gold-row" data-detail="detail-2024-J-sm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
                 <td class="col-driver">Alvin Lindahl<span class="driver-club">Vincent Lauri</span></td>
                 <td class="col-pts">66</td>
                 <td class="col-races">3</td>
                 <td class="col-wins">3</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-J-1">
+              <tr class="detail-row" id="detail-2024-J-sm-1">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2024-J-2">
+              <tr class="driver-row silver-row" data-detail="detail-2024-J-sm-2">
                 <td class="col-pos"><span class="medal silver">2</span></td>
                 <td class="col-driver">Viktor Arneklint<span class="driver-club">Valter Arneklint</span></td>
                 <td class="col-pts">55</td>
                 <td class="col-races">3</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-J-2">
+              <tr class="detail-row" id="detail-2024-J-sm-2">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row bronze-row" data-detail="detail-2024-J-3">
+              <tr class="driver-row bronze-row" data-detail="detail-2024-J-sm-3">
                 <td class="col-pos"><span class="medal bronze">3</span></td>
                 <td class="col-driver">Björn Bäckström<span class="driver-club">Sweden BRC</span></td>
                 <td class="col-pts">19</td>
                 <td class="col-races">2</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-J-3">
+              <tr class="detail-row" id="detail-2024-J-sm-3">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-J-4">
+              <tr class="driver-row" data-detail="detail-2024-J-sm-4">
                 <td class="col-pos"><span class="rank">4</span></td>
                 <td class="col-driver">Aurora Senum<span class="driver-club">TRK</span></td>
                 <td class="col-pts">19</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-J-4">
+              <tr class="detail-row" id="detail-2024-J-sm-4">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="class-block">
+      <div class="class-block sm-block">
         <div class="class-header">
           <h3>Klass K</h3>
           <span class="status-badge badge-sm">SM</span>
@@ -1153,65 +1528,65 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2024-K-1">
+              <tr class="driver-row gold-row" data-detail="detail-2024-K-sm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
                 <td class="col-driver">Edward Bergholtz<span class="driver-club">Philip Bergholtz</span></td>
                 <td class="col-pts">37</td>
                 <td class="col-races">2</td>
                 <td class="col-wins">1</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-K-1">
+              <tr class="detail-row" id="detail-2024-K-sm-1">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P4</span><span class="rd-pts">15p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2024-K-2">
+              <tr class="driver-row silver-row" data-detail="detail-2024-K-sm-2">
                 <td class="col-pos"><span class="medal silver">2</span></td>
                 <td class="col-driver">Gustaf Thulin<span class="driver-club">Emil Manfredsson</span></td>
                 <td class="col-pts">34</td>
                 <td class="col-races">2</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-K-2">
+              <tr class="detail-row" id="detail-2024-K-sm-2">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row bronze-row" data-detail="detail-2024-K-3">
+              <tr class="driver-row bronze-row" data-detail="detail-2024-K-sm-3">
                 <td class="col-pos"><span class="medal bronze">3</span></td>
                 <td class="col-driver">Torbjörn Jansson<span class="driver-club">Anders Fredrikson</span></td>
                 <td class="col-pts">32</td>
                 <td class="col-races">2</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-K-3">
+              <tr class="detail-row" id="detail-2024-K-sm-3">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P5</span><span class="rd-pts">13p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-K-4">
+              <tr class="driver-row" data-detail="detail-2024-K-sm-4">
                 <td class="col-pos"><span class="rank">4</span></td>
                 <td class="col-driver">Pierre Wärme<span class="driver-club">Karl Fredriksson</span></td>
                 <td class="col-pts">22</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">1</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-K-4">
+              <tr class="detail-row" id="detail-2024-K-sm-4">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-K-5">
+              <tr class="driver-row" data-detail="detail-2024-K-sm-5">
                 <td class="col-pos"><span class="rank">5</span></td>
                 <td class="col-driver">Mathias Kyller<span class="driver-club">Oscar Thulin</span></td>
                 <td class="col-pts">19</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-K-5">
+              <tr class="detail-row" id="detail-2024-K-sm-5">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="class-block">
+      <div class="class-block rm-block">
         <div class="class-header">
-          <h3>Klass V24</h3>
+          <h3>Klass V150</h3>
           <span class="status-badge badge-rm">RM</span>
-          <span class="class-meta">4 ekipage &middot; 4 deltävlingar</span>
+          <span class="class-meta">1 ekipage &middot; 1 deltävlingar</span>
         </div>
         <div class="table-wrap">
           <table class="standings-table">
@@ -1225,51 +1600,125 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2024-V24-1">
+              <tr class="driver-row gold-row" data-detail="detail-2024-V150-rm-1">
+                <td class="col-pos"><span class="medal gold">1</span></td>
+                <td class="col-driver">Mathias Länder<span class="driver-club">Felicia Länder</span></td>
+                <td class="col-pts">20</td>
+                <td class="col-races">1</td>
+                <td class="col-wins">1</td>
+              </tr>
+              <tr class="detail-row" id="detail-2024-V150-rm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="class-block sm-block">
+        <div class="class-header">
+          <h3>Klass V24</h3>
+          <span class="status-badge badge-sm">SM</span>
+          <span class="class-meta">4 ekipage &middot; 2 deltävlingar</span>
+        </div>
+        <div class="table-wrap">
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th class="col-pos">#</th>
+                <th class="col-driver">Förare</th>
+                <th class="col-pts">Poäng</th>
+                <th class="col-races">Starter</th>
+                <th class="col-wins">Segrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="driver-row gold-row" data-detail="detail-2024-V24-sm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
                 <td class="col-driver">Dick Johansson<span class="driver-club">Kungliga MBK</span></td>
-                <td class="col-pts">84</td>
-                <td class="col-races">4</td>
-                <td class="col-wins">4</td>
+                <td class="col-pts">44</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">2</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-V24-1">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
+              <tr class="detail-row" id="detail-2024-V24-sm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2024-V24-2">
+              <tr class="driver-row silver-row" data-detail="detail-2024-V24-sm-2">
                 <td class="col-pos"><span class="medal silver">2</span></td>
                 <td class="col-driver">Sven Johansson<span class="driver-club">Kungliga MBK</span></td>
-                <td class="col-pts">72</td>
-                <td class="col-races">4</td>
+                <td class="col-pts">38</td>
+                <td class="col-races">2</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-V24-2">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
+              <tr class="detail-row" id="detail-2024-V24-sm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row bronze-row" data-detail="detail-2024-V24-3">
+              <tr class="driver-row bronze-row" data-detail="detail-2024-V24-sm-3">
                 <td class="col-pos"><span class="medal bronze">3</span></td>
                 <td class="col-driver">Tim Johansson<span class="driver-club">Daniel Asplund</span></td>
                 <td class="col-pts">32</td>
                 <td class="col-races">2</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-V24-3">
+              <tr class="detail-row" id="detail-2024-V24-sm-3">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Smedjebacken</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P4</span><span class="rd-pts">15p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-V24-4">
+              <tr class="driver-row" data-detail="detail-2024-V24-sm-4">
                 <td class="col-pos"><span class="rank">4</span></td>
                 <td class="col-driver">Dan Lindahl<span class="driver-club">Anders Arneklint</span></td>
                 <td class="col-pts">17</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-V24-4">
+              <tr class="detail-row" id="detail-2024-V24-sm-4">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="class-block">
+      <div class="class-block rm-block">
+        <div class="class-header">
+          <h3>Klass V24</h3>
+          <span class="status-badge badge-rm">RM</span>
+          <span class="class-meta">2 ekipage &middot; 2 deltävlingar</span>
+        </div>
+        <div class="table-wrap">
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th class="col-pos">#</th>
+                <th class="col-driver">Förare</th>
+                <th class="col-pts">Poäng</th>
+                <th class="col-races">Starter</th>
+                <th class="col-wins">Segrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="driver-row gold-row" data-detail="detail-2024-V24-rm-1">
+                <td class="col-pos"><span class="medal gold">1</span></td>
+                <td class="col-driver">Dick Johansson<span class="driver-club">Kungliga MBK</span></td>
+                <td class="col-pts">40</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">2</td>
+              </tr>
+              <tr class="detail-row" id="detail-2024-V24-rm-1">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+              <tr class="driver-row silver-row" data-detail="detail-2024-V24-rm-2">
+                <td class="col-pos"><span class="medal silver">2</span></td>
+                <td class="col-driver">Sven Johansson<span class="driver-club">Kungliga MBK</span></td>
+                <td class="col-pts">34</td>
+                <td class="col-races">2</td>
+                <td class="col-wins">0</td>
+              </tr>
+              <tr class="detail-row" id="detail-2024-V24-rm-2">
+                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P2</span><span class="rd-pts">17p</span><span class="rd-sm rm">RM</span></div></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="class-block sm-block">
         <div class="class-header">
           <h3>Klass V90</h3>
           <span class="status-badge badge-sm">SM</span>
@@ -1287,129 +1736,64 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2024-V90-1">
+              <tr class="driver-row gold-row" data-detail="detail-2024-V90-sm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
                 <td class="col-driver">Tom Sellerholm Samsioe<span class="driver-club">Johan Mellström</span></td>
                 <td class="col-pts">60</td>
                 <td class="col-races">3</td>
                 <td class="col-wins">1</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-V90-1">
+              <tr class="detail-row" id="detail-2024-V90-sm-1">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2024-V90-2">
+              <tr class="driver-row silver-row" data-detail="detail-2024-V90-sm-2">
                 <td class="col-pos"><span class="medal silver">2</span></td>
                 <td class="col-driver">Peter Forsberg<span class="driver-club">Föreningen Sweden Powerboat RT</span></td>
                 <td class="col-pts">44</td>
                 <td class="col-races">2</td>
                 <td class="col-wins">2</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-V90-2">
+              <tr class="detail-row" id="detail-2024-V90-sm-2">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P1</span><span class="rd-pts">22p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row bronze-row" data-detail="detail-2024-V90-3">
+              <tr class="driver-row bronze-row" data-detail="detail-2024-V90-sm-3">
                 <td class="col-pos"><span class="medal bronze">3</span></td>
                 <td class="col-driver">Magnus Ählström<span class="driver-club">Elisabeth Ählström</span></td>
                 <td class="col-pts">21</td>
                 <td class="col-races">2</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-V90-3">
+              <tr class="detail-row" id="detail-2024-V90-sm-3">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P2</span><span class="rd-pts">19p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-V90-4">
+              <tr class="driver-row" data-detail="detail-2024-V90-sm-4">
                 <td class="col-pos"><span class="rank">4</span></td>
                 <td class="col-driver">Edvin Blad<span class="driver-club">SUK</span></td>
                 <td class="col-pts">17</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-V90-4">
+              <tr class="detail-row" id="detail-2024-V90-sm-4">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P3</span><span class="rd-pts">17p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
-              <tr class="driver-row" data-detail="detail-2024-V90-5">
+              <tr class="driver-row" data-detail="detail-2024-V90-sm-5">
                 <td class="col-pos"><span class="rank">5</span></td>
                 <td class="col-driver">Rasmus Westerberg<span class="driver-club">Erik Lejman</span></td>
                 <td class="col-pts">2</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">0</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-V90-5">
+              <tr class="detail-row" id="detail-2024-V90-sm-5">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">PDNF</span><span class="rd-pts">2p</span><span class="rd-sm sm">SM</span></div></div></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="notitle-separator"><span>Klasser utan mästerskapsstatus (&lt;3 unika ekipage under säsongen)</span></div>
-      <div class="class-block notitle-block">
-        <div class="class-header">
-          <h3>Klass D</h3>
-          <span class="status-badge badge-notitle">Ej mästerskap</span>
-          <span class="class-meta">1 ekipage &middot; 2 deltävlingar</span>
-        </div>
-        <div class="table-wrap">
-          <table class="standings-table">
-            <thead>
-              <tr>
-                <th class="col-pos">#</th>
-                <th class="col-driver">Förare</th>
-                <th class="col-pts">Poäng</th>
-                <th class="col-races">Starter</th>
-                <th class="col-wins">Segrar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2024-D-1">
-                <td class="col-pos"><span class="medal gold">1</span></td>
-                <td class="col-driver">Fredrik Groth Fyrö<span class="driver-club">Filip Ericsson</span></td>
-                <td class="col-pts">40</td>
-                <td class="col-races">2</td>
-                <td class="col-wins">2</td>
-              </tr>
-              <tr class="detail-row" id="detail-2024-D-1">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="class-block notitle-block">
-        <div class="class-header">
-          <h3>Klass V150</h3>
-          <span class="status-badge badge-notitle">Ej mästerskap</span>
-          <span class="class-meta">1 ekipage &middot; 1 deltävlingar</span>
-        </div>
-        <div class="table-wrap">
-          <table class="standings-table">
-            <thead>
-              <tr>
-                <th class="col-pos">#</th>
-                <th class="col-driver">Förare</th>
-                <th class="col-pts">Poäng</th>
-                <th class="col-races">Starter</th>
-                <th class="col-wins">Segrar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2024-V150-1">
-                <td class="col-pos"><span class="medal gold">1</span></td>
-                <td class="col-driver">Mathias Länder<span class="driver-club">Felicia Länder</span></td>
-                <td class="col-pts">20</td>
-                <td class="col-races">1</td>
-                <td class="col-wins">1</td>
-              </tr>
-              <tr class="detail-row" id="detail-2024-V150-1">
-                <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Vårracet</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="class-block notitle-block">
+      <div class="class-block rm-block">
         <div class="class-header">
           <h3>Klass W150</h3>
-          <span class="status-badge badge-notitle">Ej mästerskap</span>
+          <span class="status-badge badge-rm">RM</span>
           <span class="class-meta">1 ekipage &middot; 2 deltävlingar</span>
         </div>
         <div class="table-wrap">
@@ -1424,25 +1808,25 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2024-W150-1">
+              <tr class="driver-row gold-row" data-detail="detail-2024-W150-rm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
                 <td class="col-driver">Christian Melin<span class="driver-club">Öregrunds RK</span></td>
                 <td class="col-pts">40</td>
                 <td class="col-races">2</td>
                 <td class="col-wins">2</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-W150-1">
+              <tr class="detail-row" id="detail-2024-W150-rm-1">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="class-block notitle-block">
+      <div class="class-block rm-block">
         <div class="class-header">
           <h3>Klass X</h3>
-          <span class="status-badge badge-notitle">Ej mästerskap</span>
-          <span class="class-meta">2 ekipage &middot; 1 deltävlingar</span>
+          <span class="status-badge badge-rm">RM</span>
+          <span class="class-meta">2 ekipage &middot; 2 deltävlingar</span>
         </div>
         <div class="table-wrap">
           <table class="standings-table">
@@ -1456,24 +1840,24 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="driver-row gold-row" data-detail="detail-2024-X-1">
+              <tr class="driver-row gold-row" data-detail="detail-2024-X-rm-1">
                 <td class="col-pos"><span class="medal gold">1</span></td>
                 <td class="col-driver">Jonas Gustafsson<span class="driver-club">Västkustens Racing o MBK</span></td>
                 <td class="col-pts">20</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">1</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-X-1">
+              <tr class="detail-row" id="detail-2024-X-rm-1">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Östhammars GP mot cancer</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
               </tr>
-              <tr class="driver-row silver-row" data-detail="detail-2024-X-2">
+              <tr class="driver-row silver-row" data-detail="detail-2024-X-rm-2">
                 <td class="col-pos"><span class="medal silver">2</span></td>
                 <td class="col-driver">Johan Torsell<span class="driver-club">Västkustens Racing o MBK</span></td>
                 <td class="col-pts">20</td>
                 <td class="col-races">1</td>
                 <td class="col-wins">1</td>
               </tr>
-              <tr class="detail-row" id="detail-2024-X-2">
+              <tr class="detail-row" id="detail-2024-X-rm-2">
                 <td colspan="5"><div class="race-details"><div class="race-detail"><span class="rd-race">Saltsjöloppet 2024</span><span class="rd-pos">P1</span><span class="rd-pts">20p</span><span class="rd-sm rm">RM</span></div></div></td>
               </tr>
             </tbody>
@@ -1486,7 +1870,7 @@
 
   <div class="points-info">
     <h3>Poängsystem</h3>
-    <p>Poäng tilldelas enligt SVEMO:s tävlingsreglemente för Offshore. SM-status ger +2 bonuspoäng (teknisk besiktning + förarmöte) utöver baspoängen. "Startande" räknas som alla ekipage som ställde upp vid tävlingen — inklusive DNF och DSQ.</p>
+    <p>Poäng tilldelas enligt SVEMO:s tävlingsreglemente för Offshore. SM-poäng (+2 bonus) gäller bara deltävlingar där 3+ ekipage startade. RM-poäng (utan bonus) från deltävlingar med &lt;3 startande. SM och RM är separata mästerskap — poängen blandas aldrig.</p>
     <table class="points-table">
       <thead>
         <tr><th>Plac.</th><th>SM (3+ startande)</th><th>RM (&lt;3 startande)</th></tr>
@@ -1501,7 +1885,7 @@
         <tr><td>DNF/DSQ</td><td>2</td><td>0</td></tr>
       </tbody>
     </table>
-    <p style="font-size:.78rem;color:var(--text-light);margin-top:12px;">SM-status: 3+ startande (inkl. DNF/DSQ) vid varje deltävling. RM: &lt;3 vid någon deltävling men 3+ unika ekipage under säsongen. Tiebreaker: flest 1:a-platser. Källa: SVEMO:s Tävlingsreglemente, kapitel 4.4.</p>
+    <p style="font-size:.78rem;color:var(--text-light);margin-top:12px;">SM-status: 3+ startande (inkl. DNF/DSQ) vid deltävlingen. RM: &lt;3 startande vid deltävlingen. Tiebreaker: flest 1:a-platser. Källa: SVEMO:s Tävlingsreglemente, kapitel 4.4.</p>
   </div>
 
   <div class="wip-notice" style="margin-top:24px;padding:18px 22px;background:#fff8e1;border:1px solid #ffe082;border-left:4px solid #ffc107;border-radius:var(--radius);font-size:.85rem;line-height:1.7;color:#5d4037;">
@@ -1544,7 +1928,7 @@
         <a href="https://buymeacoffee.com/theralley" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#FFDD00;color:#333;padding:8px 18px;border-radius:6px;font-size:0.82rem;font-weight:700;text-decoration:none;transition:all 0.2s;">&#9749; Bjud oss på en kaffe</a>
       </div>
       <p style="margin-bottom:6px;font-size:0.8rem;color:#8899aa;">Vi samlar och automatiserar informationen kring svensk båtracing — för att göra den tillgänglig för alla. Hjälp oss göra det ännu bättre.</p>
-      &copy; 2026 SVERA — Svenska Evenemang &amp; Racerbåtsarkivet. Senast uppdaterad 2026-02-26.
+      &copy; 2026 SVERA — Svenska Evenemang &amp; Racerbåtsarkivet. Senast uppdaterad 2026-02-27.
     </div>
   </div>
 </footer>

@@ -58,4 +58,37 @@
       }
     }
   });
+
+  // Progressive "Show More" for news cards
+  var VISIBLE_STEP = 3;
+  var cards = document.querySelectorAll('.news-list > .news-card');
+  var btn = document.getElementById('show-more-news');
+  var wrap = btn ? btn.parentElement : null;
+
+  if (cards.length && btn) {
+    // Hide cards beyond initial batch
+    for (var i = VISIBLE_STEP; i < cards.length; i++) {
+      cards[i].style.display = 'none';
+    }
+    // Hide button if all cards already visible
+    if (cards.length <= VISIBLE_STEP) {
+      wrap.style.display = 'none';
+    }
+    btn.addEventListener('click', function() {
+      var shown = 0;
+      for (var j = 0; j < cards.length; j++) {
+        if (cards[j].style.display === 'none') {
+          cards[j].style.display = '';
+          shown++;
+          if (shown >= VISIBLE_STEP) break;
+        }
+      }
+      // Check if any remain hidden
+      var anyHidden = false;
+      for (var k = 0; k < cards.length; k++) {
+        if (cards[k].style.display === 'none') { anyHidden = true; break; }
+      }
+      if (!anyHidden) wrap.style.display = 'none';
+    });
+  }
 })();

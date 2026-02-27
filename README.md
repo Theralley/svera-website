@@ -17,6 +17,7 @@ The old Svenska Racerbatforbundet (SVERA) was absorbed into Svemo around 2020 an
 - **Calendar** — Upcoming events from SVEMO TA and UIM Sport
 - **Classes & Rules** — All offshore, circuit, and aquabike classes with links to official rule books
 - **Clubs** — Swedish boat racing clubs with contact info
+- **SM/RM Champions** — Auto-calculated Swedish Championship and Riksmästerskap standings from SVEMO results
 - **Archive** — Historical timeline from the first race in Marstrand 1904
 - **Email-to-AI Worker** — Send an email and an AI agent updates the site automatically
 - **Automated Updates** — Weekly scraping, incremental caching, deploy-on-change
@@ -37,6 +38,7 @@ svera-website/
 ├── index.html                 Homepage
 ├── nyheter.html               News + weekly AI digest
 ├── resultat.html              Race results (auto-generated, gitignored)
+├── champions.html             SM/RM standings (auto-generated)
 ├── kalender.html              Event calendar
 ├── klasser.html               Classes & rules
 ├── klubbar.html               Clubs directory
@@ -68,7 +70,8 @@ svera-website/
 │   ├── builders/
 │   │   ├── build_resultat.py        Generates resultat.html
 │   │   ├── build_kalender.py        Updates kalender.html
-│   │   └── build_news.py            Updates nyheter.html + AI digest
+│   │   ├── build_news.py            Updates nyheter.html + AI digest
+│   │   └── build_champions.py       Generates champions.html (SM/RM standings)
 │   └── data/                        Cached JSON from scrapers (gitignored)
 ├── config.json                Credentials (gitignored, never commit)
 ├── config.json.example        Template — copy and fill in your values
@@ -154,7 +157,8 @@ WebTracking.se  ──────────►  webtracking.py      ┐
                              webtracking_results  ├──► build_resultat ──► resultat.html
                                                   │
 SVEMO TAM       ──────────►  svemo_calendar.py   ├──► build_kalender ──► kalender.html
-                             svemo_results.py     ┘
+                             svemo_results.py    ┤
+                                                 └──► build_champions ─► champions.html
                                                                           deploy.sh
 UIM Sport       ──────────►  uim_calendar.py     ────► build_kalender     ──► one.com
                                                                               (SFTP)
@@ -301,6 +305,10 @@ Reads `svemo_calendar.json` and `uim_calendar.json`. Replaces the `<tbody>` cont
 
 Reads `news_feed.json`. Scans articles for personal names — if found, uses **Qwen ZDR** (Zero Data Retention); otherwise uses **DeepSeek V3** (cheaper). Generates a Swedish weekly summary (3–4 paragraphs). Builds article cards (max 15, balanced across sources). Replaces the digest and article grid sections in `nyheter.html`. Requires an OpenRouter API key in `config.json`.
 
+### `build_champions.py` — SM/RM Championship Standings
+
+Reads `svemo_results.json` and calculates championship standings per class per year. Applies the official SVEMO points system (20-17-15-13-11-10-9-8-7-6-5-4-3-2-1 base + 2 bonus for SM). Determines SM vs RM vs no-title status per class based on starter counts (3+ starters at all races = SM; <3 at some but 3+ unique crews across season = RM; otherwise no title). Handles class name normalization across different naming conventions, Heat/Total disambiguation, misaligned scraper data, and DNF/DSQ entries. Generates `champions.html` with year tabs, per-class standings, and expandable per-race breakdowns.
+
 ## Scrape Schedule
 
 The daemon (`svera_daemon.sh`) runs a full scrape every **7 days**. Between cycles, individual scrapers respect their own intervals via `scrape_tracker.py`:
@@ -340,6 +348,7 @@ python3 bot/scrapers/webtracking_results.py --full --force
 python3 bot/builders/build_resultat.py
 python3 bot/builders/build_kalender.py
 python3 bot/builders/build_news.py
+python3 bot/builders/build_champions.py
 
 # Deploy
 bash bot/deploy.sh
@@ -437,6 +446,7 @@ python3 bot/scrapers/news_aggregator.py
 # Build pages from scraped data:
 python3 bot/builders/build_resultat.py
 python3 bot/builders/build_kalender.py
+python3 bot/builders/build_champions.py
 # (build_news.py requires OpenRouter API key for AI summary)
 ```
 

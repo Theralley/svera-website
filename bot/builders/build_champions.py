@@ -265,7 +265,12 @@ def process_race(entries, is_sm_race):
 
 
 def build_standings():
-    """Main logic: load data, calculate standings, return structured results."""
+    """Main logic: load data, calculate standings with SM/RM split.
+
+    SM and RM are separate championships:
+    - SM standings: only points from races where 3+ starters showed up
+    - RM standings: only points from races where <3 starters showed up
+    """
     data = load_data()
     if not data:
         return None
@@ -274,20 +279,18 @@ def build_standings():
     sm_comps = [c for c in competitions if is_sm_competition(c)]
     print(f"[build_champions] Found {len(sm_comps)} SM/RM competitions")
 
-    # Structure: year → class → driver → {points_list, positions, clubs, races}
-    standings = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: {
-        "total_points": 0,
-        "race_points": [],
-        "positions": [],
-        "clubs": set(),
-        "nrs": set(),
-        "race_count": 0,
-    })))
+    def make_driver():
+        return {
+            "total_points": 0, "race_points": [], "positions": [],
+            "clubs": set(), "nrs": set(), "race_count": 0,
+        }
 
-    # Track starters per class per race for SM/RM determination
-    # year → class → list of starter_counts per race
+    # Separate tracking for SM-status races and RM-status races
+    sm_data = defaultdict(lambda: defaultdict(lambda: defaultdict(make_driver)))
+    rm_data = defaultdict(lambda: defaultdict(lambda: defaultdict(make_driver)))
+
+    # Track starters per class per race
     class_race_starters = defaultdict(lambda: defaultdict(list))
-    # year → class → set of unique crew identifiers
     class_unique_crews = defaultdict(lambda: defaultdict(set))
 
     for comp in sm_comps:
@@ -326,10 +329,11 @@ def build_standings():
                 continue
 
             race_label = f"{comp_date} {comp_name}"
+            target = sm_data if is_sm_race else rm_data
 
             for r in results:
                 driver = r["driver"]
-                d = standings[year][norm_class][driver]
+                d = target[year][norm_class][driver]
                 d["total_points"] += r["points"]
                 d["race_points"].append({
                     "race": race_label,
@@ -347,49 +351,50 @@ def build_standings():
 
         print(f"  [{comp_date}] {comp_name}: {len(selected)} classes processed")
 
-    # Determine SM vs RM vs no-title per class per year
-    class_status = {}  # (year, class) → "SM", "RM", or "–"
-    for year in standings:
-        for cls in standings[year]:
+    def make_driver_list(driver_dict):
+        """Convert driver defaultdict to sorted list."""
+        drivers = []
+        for driver, d in driver_dict.items():
+            first_places = sum(1 for p in d["positions"] if p == 1)
+            clubs_list = sorted(d["clubs"])
+            drivers.append({
+                "driver": driver,
+                "club": clubs_list[0] if clubs_list else "",
+                "clubs": clubs_list,
+                "nr": sorted(d["nrs"])[0] if d["nrs"] else "",
+                "total_points": d["total_points"],
+                "race_count": d["race_count"],
+                "first_places": first_places,
+                "race_details": d["race_points"],
+            })
+        drivers.sort(key=lambda x: (-x["total_points"], -x["first_places"]))
+        return drivers
+
+    # Build final output
+    all_years = sorted(set(list(sm_data.keys()) + list(rm_data.keys())), reverse=True)
+    final = {}
+
+    for year in all_years:
+        final[year] = {}
+        all_classes = sorted(set(
+            list(sm_data[year].keys()) + list(rm_data[year].keys())
+        ))
+
+        for cls in all_classes:
             starter_counts = class_race_starters[year][cls]
             unique_count = len(class_unique_crews[year][cls])
+            sm_race_count = sum(1 for s in starter_counts if s >= SM_STARTER_THRESHOLD)
+            rm_race_count = sum(1 for s in starter_counts if s < SM_STARTER_THRESHOLD)
 
-            if all(s >= SM_STARTER_THRESHOLD for s in starter_counts) and starter_counts:
-                class_status[(year, cls)] = "SM"
-            elif unique_count >= SM_STARTER_THRESHOLD:
-                class_status[(year, cls)] = "RM"
-            else:
-                class_status[(year, cls)] = "\u2013"  # no championship title
+            sm_drivers = make_driver_list(sm_data[year][cls])
+            rm_drivers = make_driver_list(rm_data[year][cls])
 
-    # Build final sorted standings
-    final = {}
-    for year in sorted(standings.keys(), reverse=True):
-        final[year] = {}
-        for cls in sorted(standings[year].keys()):
-            drivers = []
-            for driver, d in standings[year][cls].items():
-                first_places = sum(1 for p in d["positions"] if p == 1)
-                clubs_list = sorted(d["clubs"])
-                drivers.append({
-                    "driver": driver,
-                    "club": clubs_list[0] if clubs_list else "",
-                    "clubs": clubs_list,
-                    "nr": sorted(d["nrs"])[0] if d["nrs"] else "",
-                    "total_points": d["total_points"],
-                    "race_count": d["race_count"],
-                    "first_places": first_places,
-                    "race_details": d["race_points"],
-                })
-
-            # Sort: total points desc, then first places desc (tiebreaker)
-            drivers.sort(key=lambda x: (-x["total_points"], -x["first_places"]))
-
-            status = class_status.get((year, cls), "RM")
             final[year][cls] = {
-                "status": status,
-                "drivers": drivers,
-                "race_count": max((d["race_count"] for d in drivers), default=0),
-                "unique_crews": len(class_unique_crews[year][cls]),
+                "sm_drivers": sm_drivers,
+                "rm_drivers": rm_drivers,
+                "sm_race_count": sm_race_count,
+                "rm_race_count": rm_race_count,
+                "unique_crews": unique_count,
             }
 
     return final
@@ -402,8 +407,88 @@ def html_escape(s):
 
 
 def generate_html(standings):
-    """Generate the champions.html page."""
+    """Generate the champions.html page with separate SM/RM standings."""
     years = sorted(standings.keys(), reverse=True)
+
+    def make_table_rows(drivers, year, cls_name, suffix):
+        """Generate table rows for a driver list."""
+        rows = ""
+        for rank, d in enumerate(drivers, 1):
+            medal = ""
+            row_class = ""
+            if rank == 1:
+                medal = '<span class="medal gold">1</span>'
+                row_class = " gold-row"
+            elif rank == 2:
+                medal = '<span class="medal silver">2</span>'
+                row_class = " silver-row"
+            elif rank == 3:
+                medal = '<span class="medal bronze">3</span>'
+                row_class = " bronze-row"
+            else:
+                medal = f'<span class="rank">{rank}</span>'
+
+            driver_esc = html_escape(d["driver"])
+            club_esc = html_escape(d["club"])
+
+            details = ""
+            for rd in d["race_details"]:
+                race_short = rd["race"]
+                race_short = re.sub(r"^\d{4}-\d{2}-\d{2}\s+", "", race_short)
+                race_short = re.sub(r"SM/RM Offshore \d{4}\s+", "", race_short)
+                race_short = re.sub(r"^SM \d+ - ", "", race_short)
+                race_esc = html_escape(race_short)
+                pos_str = str(rd["position"]) if rd["position"] else rd["status"].upper()
+                sm_tag = "SM" if rd["is_sm"] else "RM"
+                details += (
+                    f'<div class="race-detail">'
+                    f'<span class="rd-race">{race_esc}</span>'
+                    f'<span class="rd-pos">P{pos_str}</span>'
+                    f'<span class="rd-pts">{rd["points"]}p</span>'
+                    f'<span class="rd-sm {sm_tag.lower()}">{sm_tag}</span>'
+                    f'</div>'
+                )
+
+            detail_id = f"detail-{year}-{cls_name}-{suffix}-{rank}"
+            rows += f"""              <tr class="driver-row{row_class}" data-detail="{detail_id}">
+                <td class="col-pos">{medal}</td>
+                <td class="col-driver">{driver_esc}<span class="driver-club">{club_esc}</span></td>
+                <td class="col-pts">{d["total_points"]}</td>
+                <td class="col-races">{d["race_count"]}</td>
+                <td class="col-wins">{d["first_places"]}</td>
+              </tr>
+              <tr class="detail-row" id="{detail_id}">
+                <td colspan="5"><div class="race-details">{details}</div></td>
+              </tr>
+"""
+        return rows
+
+    def make_class_block(cls_name, badge_class, badge_label, meta_text, rows, extra_class=""):
+        """Generate a class block HTML."""
+        cls_esc = html_escape(cls_name)
+        return f"""      <div class="class-block{extra_class}">
+        <div class="class-header">
+          <h3>Klass {cls_esc}</h3>
+          <span class="status-badge {badge_class}">{badge_label}</span>
+          <span class="class-meta">{meta_text}</span>
+        </div>
+        <div class="table-wrap">
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th class="col-pos">#</th>
+                <th class="col-driver">F\u00f6rare</th>
+                <th class="col-pts">Po\u00e4ng</th>
+                <th class="col-races">Starter</th>
+                <th class="col-wins">Segrar</th>
+              </tr>
+            </thead>
+            <tbody>
+{rows}            </tbody>
+          </table>
+        </div>
+      </div>
+"""
 
     # Build year tabs and content
     year_tabs = ""
@@ -418,120 +503,22 @@ def generate_html(standings):
         year_data = standings[year]
 
         if not year_data:
-            classes_html = '<p class="no-data">Inga mästerskapsdata tillgängliga för detta år.</p>'
+            classes_html = '<p class="no-data">Inga m\u00e4sterskapsdata tillg\u00e4ngliga f\u00f6r detta \u00e5r.</p>'
         else:
-            # Split into championship classes and no-title classes
-            champ_classes = []
-            notitle_classes = []
-            for cn in sorted(year_data.keys()):
-                if year_data[cn]["status"] in ("SM", "RM"):
-                    champ_classes.append(cn)
-                else:
-                    notitle_classes.append(cn)
-
-            all_ordered = champ_classes + notitle_classes
-            notitle_header_added = False
-
-            for cls_name in all_ordered:
+            for cls_name in sorted(year_data.keys()):
                 cls = year_data[cls_name]
-                status = cls["status"]
-                is_notitle = status not in ("SM", "RM")
 
-                if is_notitle:
-                    badge_class = "badge-notitle"
-                elif status == "SM":
-                    badge_class = "badge-sm"
-                else:
-                    badge_class = "badge-rm"
+                # SM block
+                if cls["sm_drivers"]:
+                    rows = make_table_rows(cls["sm_drivers"], year, cls_name, "sm")
+                    meta = f'{len(cls["sm_drivers"])} ekipage &middot; {cls["sm_race_count"]} delt\u00e4vlingar'
+                    classes_html += make_class_block(cls_name, "badge-sm", "SM", meta, rows, " sm-block")
 
-                drivers = cls["drivers"]
-
-                if not drivers:
-                    continue
-
-                # Add a separator before no-title classes
-                if is_notitle and not notitle_header_added and notitle_classes:
-                    notitle_header_added = True
-                    classes_html += '      <div class="notitle-separator"><span>Klasser utan mästerskapsstatus (&lt;3 unika ekipage under säsongen)</span></div>\n'
-
-                rows = ""
-                for rank, d in enumerate(drivers, 1):
-                    medal = ""
-                    row_class = ""
-                    if rank == 1:
-                        medal = '<span class="medal gold">1</span>'
-                        row_class = " gold-row"
-                    elif rank == 2:
-                        medal = '<span class="medal silver">2</span>'
-                        row_class = " silver-row"
-                    elif rank == 3:
-                        medal = '<span class="medal bronze">3</span>'
-                        row_class = " bronze-row"
-                    else:
-                        medal = f'<span class="rank">{rank}</span>'
-
-                    driver_esc = html_escape(d["driver"])
-                    club_esc = html_escape(d["club"])
-
-                    # Race details for expandable row
-                    details = ""
-                    for rd in d["race_details"]:
-                        race_short = rd["race"]
-                        # Shorten race name
-                        race_short = re.sub(r"^\d{4}-\d{2}-\d{2}\s+", "", race_short)
-                        race_short = re.sub(r"SM/RM Offshore \d{4}\s+", "", race_short)
-                        race_short = re.sub(r"^SM \d+ - ", "", race_short)
-                        race_esc = html_escape(race_short)
-                        pos_str = str(rd["position"]) if rd["position"] else rd["status"].upper()
-                        sm_tag = "SM" if rd["is_sm"] else "RM"
-                        details += (
-                            f'<div class="race-detail">'
-                            f'<span class="rd-race">{race_esc}</span>'
-                            f'<span class="rd-pos">P{pos_str}</span>'
-                            f'<span class="rd-pts">{rd["points"]}p</span>'
-                            f'<span class="rd-sm {sm_tag.lower()}">{sm_tag}</span>'
-                            f'</div>'
-                        )
-
-                    detail_id = f"detail-{year}-{cls_name}-{rank}"
-                    rows += f"""              <tr class="driver-row{row_class}" data-detail="{detail_id}">
-                <td class="col-pos">{medal}</td>
-                <td class="col-driver">{driver_esc}<span class="driver-club">{club_esc}</span></td>
-                <td class="col-pts">{d["total_points"]}</td>
-                <td class="col-races">{d["race_count"]}</td>
-                <td class="col-wins">{d["first_places"]}</td>
-              </tr>
-              <tr class="detail-row" id="{detail_id}">
-                <td colspan="5"><div class="race-details">{details}</div></td>
-              </tr>
-"""
-
-                cls_esc = html_escape(cls_name)
-                status_label = status if status in ("SM", "RM") else "Ej m\u00e4sterskap"
-                block_extra = " notitle-block" if is_notitle else ""
-                classes_html += f"""      <div class="class-block{block_extra}">
-        <div class="class-header">
-          <h3>Klass {cls_esc}</h3>
-          <span class="status-badge {badge_class}">{status_label}</span>
-          <span class="class-meta">{cls["unique_crews"]} ekipage &middot; {cls["race_count"]} deltävlingar</span>
-        </div>
-        <div class="table-wrap">
-          <table class="standings-table">
-            <thead>
-              <tr>
-                <th class="col-pos">#</th>
-                <th class="col-driver">Förare</th>
-                <th class="col-pts">Poäng</th>
-                <th class="col-races">Starter</th>
-                <th class="col-wins">Segrar</th>
-              </tr>
-            </thead>
-            <tbody>
-{rows}            </tbody>
-          </table>
-        </div>
-      </div>
-"""
+                # RM block
+                if cls["rm_drivers"]:
+                    rows = make_table_rows(cls["rm_drivers"], year, cls_name, "rm")
+                    meta = f'{len(cls["rm_drivers"])} ekipage &middot; {cls["rm_race_count"]} delt\u00e4vlingar'
+                    classes_html += make_class_block(cls_name, "badge-rm", "RM", meta, rows, " rm-block")
 
         year_content += f'      <div class="year-content" id="year-{year}" style="display:{display}">\n{classes_html}      </div>\n'
 
@@ -542,10 +529,10 @@ def generate_html(standings):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Svenska- och Riksmästare — SVERA</title>
-  <meta name="description" content="SM och RM-ställningar för svensk offshore-racing. Mästerskapsresultat beräknade från SVEMO:s officiella resultat.">
-  <meta property="og:title" content="Champions — SVERA">
-  <meta property="og:description" content="SM och RM-ställningar för svensk offshore-racing.">
+  <title>Svenska- och Riksm\u00e4stare \u2014 SVERA</title>
+  <meta name="description" content="SM och RM-st\u00e4llningar f\u00f6r svensk offshore-racing. M\u00e4sterskapsresultat ber\u00e4knade fr\u00e5n SVEMO:s officiella resultat.">
+  <meta property="og:title" content="Champions \u2014 SVERA">
+  <meta property="og:description" content="SM och RM-st\u00e4llningar f\u00f6r svensk offshore-racing.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.svera.nu/champions.html">
   <meta property="og:locale" content="sv_SE">
@@ -564,16 +551,14 @@ def generate_html(standings):
     .year-tab.active{{background:var(--primary);color:#fff;border-color:var(--primary)}}
 
     .class-block{{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:22px;overflow:hidden}}
+    .class-block.sm-block{{border-left:4px solid #ffd700}}
+    .class-block.rm-block{{border-left:4px solid rgba(37,54,134,0.4)}}
     .class-header{{display:flex;align-items:center;gap:12px;padding:16px 22px;border-bottom:2px solid var(--accent);flex-wrap:wrap}}
     .class-header h3{{font-size:1.1rem;color:var(--primary);margin:0;font-weight:700}}
     .status-badge{{display:inline-block;padding:3px 12px;border-radius:4px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}}
     .badge-sm{{background:rgba(253,229,6,0.18);color:#9a7b00;border:1px solid rgba(253,229,6,0.4)}}
     .badge-rm{{background:rgba(37,54,134,0.08);color:var(--primary);border:1px solid rgba(37,54,134,0.2)}}
-    .badge-notitle{{background:rgba(90,96,112,0.08);color:var(--text-light);border:1px solid rgba(90,96,112,0.2);font-style:italic}}
     .class-meta{{font-size:.78rem;color:var(--text-light);margin-left:auto}}
-    .notitle-block{{opacity:.7}}
-    .notitle-block:hover{{opacity:1}}
-    .notitle-separator{{padding:18px 0 10px;font-size:.78rem;color:var(--text-light);border-top:1px dashed var(--border);margin-top:8px;text-align:center}}
 
     .table-wrap{{overflow-x:auto}}
     .standings-table{{width:100%;border-collapse:collapse;font-size:.88rem}}
@@ -635,7 +620,7 @@ def generate_html(standings):
 </head>
 <body>
 
-<a href="#main" class="skip-link">Hoppa till innehåll</a>
+<a href="#main" class="skip-link">Hoppa till inneh\u00e5ll</a>
 <div class="top-bar"><div class="container"><span>Oberoende informationsresurs sedan 2026</span></div></div>
 
 <header class="site-header">
@@ -643,7 +628,7 @@ def generate_html(standings):
     <div class="header-inner">
       <a href="/" class="logo">
         <img class="logo-img" src="assets/images/svera-logo.png" alt="SVERA">
-        <div class="logo-text"><h1>SVERA</h1><span class="tagline">Svenska Evenemang &amp; Racerbåtsarkivet</span></div>
+        <div class="logo-text"><h1>SVERA</h1><span class="tagline">Svenska Evenemang &amp; Racerb\u00e5tsarkivet</span></div>
       </a>
       <button class="hamburger" aria-label="Meny"><span></span><span></span><span></span></button>
     </div>
@@ -659,8 +644,8 @@ def generate_html(standings):
         <li>
           <a href="resultat.html" class="active">Resultat</a>
           <ul class="dropdown">
-            <li><a href="resultat.html">Tävlingsresultat</a></li>
-            <li><a href="champions.html">Svenska- och Riksmästare</a></li>
+            <li><a href="resultat.html">T\u00e4vlingsresultat</a></li>
+            <li><a href="champions.html">Svenska- och Riksm\u00e4stare</a></li>
           </ul>
         </li>
         <li><a href="nyheter.html">Nyheter</a></li>
@@ -673,17 +658,17 @@ def generate_html(standings):
 
 <section class="hero" style="padding:30px 0 24px;">
   <div class="container">
-    <span class="hero-badge">Mästerskap</span>
-    <h2>Svenska- och Riksmästare<span class="test-badge">Test Deploy</span></h2>
-    <p>SM- och RM-ställningar för svensk offshore-racing, beräknade från SVEMO:s officiella resultat. Poäng enligt SVEMO:s tävlingsreglemente.</p>
+    <span class="hero-badge">M\u00e4sterskap</span>
+    <h2>Svenska- och Riksm\u00e4stare<span class="test-badge">Test Deploy</span></h2>
+    <p>SM- och RM-st\u00e4llningar f\u00f6r svensk offshore-racing, ber\u00e4knade fr\u00e5n SVEMO:s officiella resultat. SM och RM r\u00e4knas separat \u2014 SM-po\u00e4ng enbart fr\u00e5n delt\u00e4vlingar med 3+ startande, RM-po\u00e4ng fr\u00e5n delt\u00e4vlingar med f\u00e4rre \u00e4n 3.</p>
   </div>
 </section>
 
 <div class="container page-content" id="main">
 
   <div class="content-block">
-    <p class="champ-intro">Nedan visas mästerskapsställningar per klass och år. Klicka på en förare för att se detaljerad poängfördelning per deltävling.</p>
-    <p class="champ-intro"><strong>SM</strong> = Svenska Mästerskapet — minst 3 startande ekipage i varje deltävling. <strong>RM</strong> = Riksmästerskapet — färre än 3 i någon deltävling men minst 3 unika ekipage under säsongen (regel 4.4). Startande = alla som ställde upp (inkl. DNF/DSQ). Klasser med färre än 3 unika ekipage saknar mästerskapsstatus.</p>
+    <p class="champ-intro">Nedan visas m\u00e4sterskapsst\u00e4llningar per klass och \u00e5r, uppdelade i SM och RM. SM-po\u00e4ng r\u00e4knas enbart fr\u00e5n delt\u00e4vlingar med 3+ startande ekipage, och RM-po\u00e4ng enbart fr\u00e5n delt\u00e4vlingar med f\u00e4rre \u00e4n 3. Klicka p\u00e5 en f\u00f6rare f\u00f6r att se detaljerad po\u00e4ngf\u00f6rdelning per delt\u00e4vling.</p>
+    <p class="champ-intro"><strong>SM</strong> = Svenska M\u00e4sterskapet (delt\u00e4vlingar med 3+ startande). <strong>RM</strong> = Riksm\u00e4sterskapet (delt\u00e4vlingar med &lt;3 startande). Startande = alla som st\u00e4llde upp (inkl. DNF/DSQ).</p>
 
     <div class="year-tabs">
 {year_tabs}    </div>
@@ -692,8 +677,8 @@ def generate_html(standings):
   </div>
 
   <div class="points-info">
-    <h3>Poängsystem</h3>
-    <p>Poäng tilldelas enligt SVEMO:s tävlingsreglemente för Offshore. SM-status ger +2 bonuspoäng (teknisk besiktning + förarmöte) utöver baspoängen. "Startande" räknas som alla ekipage som ställde upp vid tävlingen — inklusive DNF och DSQ.</p>
+    <h3>Po\u00e4ngsystem</h3>
+    <p>Po\u00e4ng tilldelas enligt SVEMO:s t\u00e4vlingsreglemente f\u00f6r Offshore. SM-po\u00e4ng (+2 bonus) g\u00e4ller bara delt\u00e4vlingar d\u00e4r 3+ ekipage startade. RM-po\u00e4ng (utan bonus) fr\u00e5n delt\u00e4vlingar med &lt;3 startande. SM och RM \u00e4r separata m\u00e4sterskap \u2014 po\u00e4ngen blandas aldrig.</p>
     <table class="points-table">
       <thead>
         <tr><th>Plac.</th><th>SM (3+ startande)</th><th>RM (&lt;3 startande)</th></tr>
@@ -708,11 +693,11 @@ def generate_html(standings):
         <tr><td>DNF/DSQ</td><td>2</td><td>0</td></tr>
       </tbody>
     </table>
-    <p style="font-size:.78rem;color:var(--text-light);margin-top:12px;">SM-status: 3+ startande (inkl. DNF/DSQ) vid varje deltävling. RM: &lt;3 vid någon deltävling men 3+ unika ekipage under säsongen. Tiebreaker: flest 1:a-platser. Källa: SVEMO:s Tävlingsreglemente, kapitel 4.4.</p>
+    <p style="font-size:.78rem;color:var(--text-light);margin-top:12px;">SM-status: 3+ startande (inkl. DNF/DSQ) vid delt\u00e4vlingen. RM: &lt;3 startande vid delt\u00e4vlingen. Tiebreaker: flest 1:a-platser. K\u00e4lla: SVEMO:s T\u00e4vlingsreglemente, kapitel 4.4.</p>
   </div>
 
   <div class="wip-notice" style="margin-top:24px;padding:18px 22px;background:#fff8e1;border:1px solid #ffe082;border-left:4px solid #ffc107;border-radius:var(--radius);font-size:.85rem;line-height:1.7;color:#5d4037;">
-    <strong>OBS — Work in progress.</strong> Ta inte denna sida för given. Ställningarna hämtas automatiskt från SVEMO:s officiella resultat och borde stämma, men logiken för att avgöra SM- respektive RM-status är inte perfekt. Hittar du fel? <a href="kontakt.html" style="color:#e65100;font-weight:600;">Hör av dig!</a>
+    <strong>OBS \u2014 Work in progress.</strong> Ta inte denna sida f\u00f6r given. St\u00e4llningarna h\u00e4mtas automatiskt fr\u00e5n SVEMO:s officiella resultat och borde st\u00e4mma, men logiken f\u00f6r att avg\u00f6ra SM- respektive RM-status \u00e4r inte perfekt. Hittar du fel? <a href="kontakt.html" style="color:#e65100;font-weight:600;">H\u00f6r av dig!</a>
   </div>
 
 </div>
@@ -722,8 +707,8 @@ def generate_html(standings):
     <div class="footer-grid">
       <div class="footer-col">
         <h3>SVERA</h3>
-        <p>Svenska Evenemang &amp; Racerbåtsarkivet</p>
-        <p>Oberoende informationsresurs för svensk racerbåtssport.</p>
+        <p>Svenska Evenemang &amp; Racerb\u00e5tsarkivet</p>
+        <p>Oberoende informationsresurs f\u00f6r svensk racerb\u00e5tssport.</p>
         <p style="margin-top:10px;"><a href="policy.html" style="display:inline-block;background:rgba(255,255,255,0.08);color:#fde506;padding:6px 14px;border-radius:4px;font-size:0.76rem;font-weight:600;text-decoration:none;border:1px solid rgba(253,229,6,0.25);transition:all 0.2s;">Data &amp; Integritet &rarr;</a></p>
       </div>
       <div class="footer-col">
@@ -734,7 +719,7 @@ def generate_html(standings):
           <li><a href="klasser.html">Klasser &amp; Regler</a></li>
           <li><a href="kalender.html">Kalender</a></li>
           <li><a href="resultat.html">Resultat</a></li>
-          <li><a href="champions.html">Svenska- och Riksmästare</a></li>
+          <li><a href="champions.html">Svenska- och Riksm\u00e4stare</a></li>
           <li><a href="nyheter.html">Nyheter</a></li>
           <li><a href="klubbar.html">Klubbar</a></li>
         </ul>
@@ -748,10 +733,10 @@ def generate_html(standings):
 
     <div class="footer-bottom">
       <div style="margin-bottom:10px;">
-        <a href="https://buymeacoffee.com/theralley" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#FFDD00;color:#333;padding:8px 18px;border-radius:6px;font-size:0.82rem;font-weight:700;text-decoration:none;transition:all 0.2s;">&#9749; Bjud oss på en kaffe</a>
+        <a href="https://buymeacoffee.com/theralley" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#FFDD00;color:#333;padding:8px 18px;border-radius:6px;font-size:0.82rem;font-weight:700;text-decoration:none;transition:all 0.2s;">&#9749; Bjud oss p\u00e5 en kaffe</a>
       </div>
-      <p style="margin-bottom:6px;font-size:0.8rem;color:#8899aa;">Vi samlar och automatiserar informationen kring svensk båtracing — för att göra den tillgänglig för alla. Hjälp oss göra det ännu bättre.</p>
-      &copy; 2026 SVERA — Svenska Evenemang &amp; Racerbåtsarkivet. Senast uppdaterad {today}.
+      <p style="margin-bottom:6px;font-size:0.8rem;color:#8899aa;">Vi samlar och automatiserar informationen kring svensk b\u00e5tracing \u2014 f\u00f6r att g\u00f6ra den tillg\u00e4nglig f\u00f6r alla. Hj\u00e4lp oss g\u00f6ra det \u00e4nnu b\u00e4ttre.</p>
+      &copy; 2026 SVERA \u2014 Svenska Evenemang &amp; Racerb\u00e5tsarkivet. Senast uppdaterad {today}.
     </div>
   </div>
 </footer>
@@ -805,9 +790,13 @@ def build():
         print(f"\n  {year}: {len(classes)} classes")
         for cls in sorted(classes.keys()):
             data = classes[cls]
-            top = data["drivers"][0] if data["drivers"] else None
-            if top:
-                print(f"    {cls} ({data['status']}): {top['driver']} — {top['total_points']}p "
+            if data["sm_drivers"]:
+                top = data["sm_drivers"][0]
+                print(f"    {cls} SM: {top['driver']} — {top['total_points']}p "
+                      f"({top['race_count']} races, {top['first_places']} wins)")
+            if data["rm_drivers"]:
+                top = data["rm_drivers"][0]
+                print(f"    {cls} RM: {top['driver']} — {top['total_points']}p "
                       f"({top['race_count']} races, {top['first_places']} wins)")
 
     print(f"\n[build_champions] Generated {out_path}")

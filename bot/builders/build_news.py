@@ -140,12 +140,15 @@ def build_digest_html(summary_text, articles):
 
     summary_html = ""
     for p in paragraphs:
-        # Skip headings
-        if p.startswith("Veckans") or p.startswith("#"):
+        # Strip markdown heading markers
+        p = re.sub(r"^#{1,4}\s+", "", p).strip()
+        if not p:
+            continue
+        # Skip standalone heading-like lines (short titles, not content)
+        if len(p) < 50 and ("nyheter" in p.lower() or "sammanfattning" in p.lower()):
             continue
         # Convert markdown bold to <strong>
         p = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", p)
-        p = re.sub(r"^#{1,4}\s+", "", p)
         summary_html += f"      <p>{p}</p>\n"
 
     # Build source links (max 5 unique)

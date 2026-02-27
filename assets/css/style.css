@@ -456,6 +456,31 @@ img {
   gap: 8px;
 }
 
+/* Show more button */
+.show-more-wrap {
+  text-align: center;
+  margin-top: 24px;
+}
+.show-more-btn {
+  display: inline-block;
+  padding: 12px 32px;
+  background: var(--primary);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 0.88rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+.show-more-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
 /* === SIDEBAR === */
 .sidebar {
   display: flex;
