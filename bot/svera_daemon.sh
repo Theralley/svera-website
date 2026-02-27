@@ -20,8 +20,10 @@ PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 LOG="$SCRIPT_DIR/daemon.log"
 LAST_SCRAPE="$SCRIPT_DIR/.last_scrape"
 LAST_DEPLOY_HASH="$SCRIPT_DIR/.last_deploy_hash"
+LAST_NEWS="$SCRIPT_DIR/.last_news"
 SCRAPE_INTERVAL=604800  # 7 days in seconds
 EMAIL_INTERVAL=60       # check email every 60 seconds (lightweight IMAP poll)
+NEWS_DAY=5              # Friday (1=Mon ... 5=Fri, per date +%u)
 
 # ---- Logging ----
 log() { echo "[$(date '+%Y-%m-%d %H:%M')] $*" | tee -a "$LOG"; }
@@ -116,6 +118,26 @@ run_scrape() {
     log "========== SCRAPE DONE =========="
 }
 
+# ---- Friday news refresh ----
+needs_news_refresh() {
+    # Only run on Fridays
+    [ "$(date +%u)" -ne "$NEWS_DAY" ] && return 1
+    # Check if already ran today
+    [ -f "$LAST_NEWS" ] && [ "$(cat "$LAST_NEWS")" = "$(date +%F)" ] && return 1
+    return 0
+}
+
+run_news_refresh() {
+    log "========== FRIDAY NEWS REFRESH =========="
+    cd "$PROJECT_DIR"
+    python3 "$SCRIPT_DIR/scrapers/news_aggregator.py" 2>&1 | tee -a "$LOG" || true
+    python3 "$SCRIPT_DIR/builders/build_news.py" 2>&1 | tee -a "$LOG" || true
+    python3 "$SCRIPT_DIR/update_footer.py" 2>&1 | tee -a "$LOG" || true
+    date +%F > "$LAST_NEWS"
+    deploy_if_changed
+    log "========== NEWS REFRESH DONE =========="
+}
+
 # ---- Check email for tasks ----
 check_email() {
     python3 "$SCRIPT_DIR/email_worker.py" 2>&1 | tee -a "$LOG"
@@ -135,6 +157,7 @@ log "###################################"
 log "# SVERA Daemon started"
 log "# Email:  every ${EMAIL_INTERVAL}s"
 log "# Scrape: every ${SCRAPE_INTERVAL}s (7 days)"
+log "# News:   every Friday"
 log "###################################"
 
 LOOPS_SINCE_STATUS=0
@@ -145,6 +168,11 @@ while true; do
 
     # 1. Check email — every loop (60s)
     check_email
+
+    # 1.5. Friday news refresh
+    if needs_news_refresh; then
+        run_news_refresh
+    fi
 
     # 2. Weekly scrape if due
     if needs_scrape; then

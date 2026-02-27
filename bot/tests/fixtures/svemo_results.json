@@ -1,0 +1,59 @@
+{
+  "competitions": [
+    {
+      "id": 16918,
+      "name": "SM/RM Offshore 2025 Deltavling 7",
+      "date": "2025-09-27",
+      "branch": "Offshore",
+      "classes": {
+        "3A": [
+          {"pos": "1", "nr": "A-35", "driver": "Anton Kurten", "club": "Alvbygdens MK", "boat": "Smuggler RS", "class": "A", "nat": "SE", "points": "20"}
+        ],
+        "3B": [
+          {"pos": "1", "nr": "B-32", "driver": "Rasmus Hamren", "club": "Roslagens BR", "boat": "Twister", "class": "B", "nat": "SE", "points": "22"},
+          {"pos": "2", "nr": "B-85", "driver": "Max Samuelsson", "club": "Roslagens BR", "boat": "", "class": "B", "nat": "SE", "points": "19"},
+          {"pos": "3", "nr": "B-62", "driver": "Lovisa Sahlen", "club": "Roslagens BR", "boat": "", "class": "B", "nat": "SE", "points": "17"}
+        ],
+        "Offshore 3A Total": [
+          {"pos": "1", "nr": "A-35", "driver": "Anton Kurten", "club": "Alvbygdens MK", "boat": "", "class": "A", "nat": "SE", "points": "20"}
+        ],
+        "Offshore 3A Heat 1": [
+          {"pos": "1", "nr": "A-35", "driver": "Anton Kurten", "club": "Alvbygdens MK", "boat": "", "class": "A", "nat": "SE", "points": "20"}
+        ],
+        "SM TABELL 3B": [
+          {"pos": "1", "nr": "B-32", "driver": "Rasmus Hamren", "club": "Roslagens BR", "boat": "", "class": "B", "nat": "SE", "points": "66"}
+        ],
+        "Classic Cup": [
+          {"pos": "1", "nr": "CC-1", "driver": "Test Driver", "club": "Test Club", "boat": "", "class": "", "nat": "SE", "points": "20"}
+        ]
+      }
+    },
+    {
+      "id": 16800,
+      "name": "SM/RM Offshore 2025 Deltavling 1",
+      "date": "2025-05-17",
+      "branch": "Offshore",
+      "classes": {
+        "3B": [
+          {"pos": "1", "nr": "B-32", "driver": "Rasmus Hamren", "club": "Roslagens BR", "boat": "Twister", "class": "B", "nat": "SE", "points": "22"},
+          {"pos": "2", "nr": "B-85", "driver": "Max Samuelsson", "club": "Roslagens BR", "boat": "", "class": "B", "nat": "SE", "points": "19"},
+          {"pos": "DNF", "nr": "B-62", "driver": "Lovisa Sahlen", "club": "Roslagens BR", "boat": "", "class": "B", "nat": "SE", "points": "2"}
+        ],
+        "V90 (Offshore, >16)": [
+          {"pos": "1", "nr": "V-10", "driver": "Osten Aberg", "club": "Stockholms MK", "boat": "", "class": "V90", "nat": "SE", "points": "20"}
+        ]
+      }
+    },
+    {
+      "id": 15000,
+      "name": "Roslagsloppet 2025",
+      "date": "2025-06-01",
+      "branch": "Offshore",
+      "classes": {
+        "A": [
+          {"pos": "1", "nr": "A-35", "driver": "Anton Kurten", "club": "Alvbygdens MK", "boat": "", "class": "A", "nat": "SE", "points": "20"}
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "idx": 284,
+    "name": "Saltsjoloppet 2024",
+    "date": "2024-05-25",
+    "year": "2024",
+    "type": "Offshore"
+  },
+  {
+    "idx": 290,
+    "name": "Osthammars GP 2024",
+    "date": "2024-09-21",
+    "year": "2024",
+    "type": "Offshore"
+  },
+  {
+    "idx": 275,
+    "name": "Rundbana SM 2024",
+    "date": "2024-06-15",
+    "year": "2024",
+    "type": "Rundbana"
+  },
+  {
+    "idx": 300,
+    "name": "Test Race 2025",
+    "date": "2025-07-12",
+    "year": "2025",
+    "type": "Tavling"
+  }
+]

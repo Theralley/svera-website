@@ -18,6 +18,7 @@ bot/processed_emails.json
 bot/task_history.json
 bot/.last_deploy_hash
 bot/.last_scrape
+bot/.last_news
 
 # =========================
 # Logs

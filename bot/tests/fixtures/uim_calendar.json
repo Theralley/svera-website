@@ -1,0 +1,23 @@
+[
+  {
+    "date": "2026-03-15",
+    "name": "Circuit",
+    "venue": "Sharjah",
+    "country": "UAE",
+    "discipline": "Offshore"
+  },
+  {
+    "date": "2026-05-20",
+    "name": "Aquabike",
+    "venue": "Olbia",
+    "country": "Italy",
+    "discipline": "Aquabike"
+  },
+  {
+    "date": "2026",
+    "name": "Circuit",
+    "venue": "TBD",
+    "country": "TBD",
+    "discipline": "Circuit"
+  }
+]

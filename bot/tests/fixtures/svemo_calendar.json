@@ -1,0 +1,38 @@
+[
+  {
+    "date": "2026-05-24",
+    "name": "Saltsjoloppet 2026",
+    "branch": "Offshore",
+    "location": "Stockholm",
+    "organizer": "Stockholms MK",
+    "status": "Planerad",
+    "classes": "A, B, C"
+  },
+  {
+    "date": "2026-06-14",
+    "name": "Rundbana SM 2026",
+    "branch": "Rundbana",
+    "location": "Lidkoping",
+    "organizer": "Lidkopings BK",
+    "status": "Planerad",
+    "classes": "V24, W150"
+  },
+  {
+    "date": "2025-09-27",
+    "name": "Old Event 2025",
+    "branch": "Offshore",
+    "location": "Osthammars",
+    "organizer": "Roslagens BR",
+    "status": "Genomford",
+    "classes": "A, B"
+  },
+  {
+    "date": "2026-08-15",
+    "name": "Aquabike SM 2026",
+    "branch": "Aquabike",
+    "location": "Norrkoping",
+    "organizer": "Norrkopings BK",
+    "status": "Planerad",
+    "classes": "Runabout"
+  }
+]

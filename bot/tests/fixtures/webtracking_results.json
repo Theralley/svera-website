@@ -1,0 +1,18 @@
+{
+  "284": {
+    "A": [
+      {"nr": "A-35", "p": "Anton Kurten", "cp": "Erik Lund", "laps": 15, "ts": 3600.50, "t": "60:00.50"},
+      {"nr": "A-12", "p": "Johan Svensson", "cp": "Karl Berg", "laps": 15, "ts": 3660.25, "t": "61:00.25"},
+      {"nr": "A-7", "p": "Nils Lindberg", "cp": "", "laps": 14, "ts": 3580.10, "t": "59:40.10"}
+    ],
+    "B": [
+      {"nr": "B-32", "p": "Rasmus Hamren", "cp": "", "laps": 12, "ts": 2880.00, "t": "48:00.00"},
+      {"nr": "B-85", "p": "Max Samuelsson", "cp": "", "laps": 12, "ts": 2920.50, "t": "48:40.50"}
+    ]
+  },
+  "290": {
+    "A": [
+      {"nr": "A-35", "p": "Anton Kurten", "cp": "Erik Lund", "laps": 18, "ts": 4320.00, "t": "72:00.00"}
+    ]
+  }
+}
