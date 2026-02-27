@@ -43,14 +43,17 @@ python3 "$SCRIPT_DIR/scrapers/news_aggregator.py" || echo "WARNING: news aggrega
 echo ""
 echo "--- Step 2: Rebuilding pages ---"
 
-echo "[1/3] Rebuilding resultat.html..."
+echo "[1/4] Rebuilding resultat.html..."
 python3 "$SCRIPT_DIR/builders/build_resultat.py" || echo "WARNING: resultat builder failed"
 
-echo "[2/3] Rebuilding kalender.html..."
+echo "[2/4] Rebuilding kalender.html..."
 python3 "$SCRIPT_DIR/builders/build_kalender.py" || echo "WARNING: kalender builder failed"
 
-echo "[3/3] Building nyheter.html (news + AI summary)..."
+echo "[3/4] Building nyheter.html (news + AI summary)..."
 python3 "$SCRIPT_DIR/builders/build_news.py" || echo "WARNING: news builder failed"
+
+echo "[4/4] Building champions.html (SM/RM standings)..."
+python3 "$SCRIPT_DIR/builders/build_champions.py" || echo "WARNING: champions builder failed"
 
 # Step 3: Update footer dates
 echo ""

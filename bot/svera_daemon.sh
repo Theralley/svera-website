@@ -106,6 +106,7 @@ run_scrape() {
     log "Rebuilding pages..."
     python3 "$SCRIPT_DIR/builders/build_resultat.py" 2>&1 | tee -a "$LOG" || true
     python3 "$SCRIPT_DIR/builders/build_kalender.py" 2>&1 | tee -a "$LOG" || true
+    python3 "$SCRIPT_DIR/builders/build_champions.py" 2>&1 | tee -a "$LOG" || true
 
     log "Updating footers..."
     python3 "$SCRIPT_DIR/update_footer.py" 2>&1 | tee -a "$LOG" || true
