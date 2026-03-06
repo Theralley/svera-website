@@ -491,6 +491,12 @@ def generate_html(standings):
 """
 
     # Build year tabs and content
+    # Always include current year even if no data yet
+    import datetime
+    current_year = str(datetime.date.today().year)
+    if current_year not in years:
+        years.insert(0, current_year)
+
     year_tabs = ""
     year_content = ""
 
@@ -500,10 +506,16 @@ def generate_html(standings):
         year_tabs += f'        <button class="year-tab{active}" data-year="{year}">{year}</button>\n'
 
         classes_html = ""
-        year_data = standings[year]
+        year_data = standings.get(year, {})
 
         if not year_data:
-            classes_html = '<p class="no-data">Inga m\u00e4sterskapsdata tillg\u00e4ngliga f\u00f6r detta \u00e5r.</p>'
+            classes_html = (
+                f'<div class="season-placeholder">'
+                f'<h3>S\u00e4songen {year}</h3>'
+                f'<p>S\u00e4songen har inte startat \u00e4nnu. F\u00f6rsta delt\u00e4vlingarna brukar k\u00f6ras i maj/juni.</p>'
+                f'<p>St\u00e4llningarna uppdateras automatiskt n\u00e4r resultat publiceras p\u00e5 SVEMO.</p>'
+                f'</div>\n'
+            )
         else:
             for cls_name in sorted(year_data.keys()):
                 cls = year_data[cls_name]
@@ -560,7 +572,7 @@ def generate_html(standings):
     .badge-rm{{background:rgba(37,54,134,0.08);color:var(--primary);border:1px solid rgba(37,54,134,0.2)}}
     .class-meta{{font-size:.78rem;color:var(--text-light);margin-left:auto}}
 
-    .table-wrap{{overflow-x:auto}}
+    .table-wrap{{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}}
     .standings-table{{width:100%;border-collapse:collapse;font-size:.88rem}}
     .standings-table th{{text-align:left;padding:10px 14px;font-size:.74rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text-light);border-bottom:1px solid var(--border);font-weight:700}}
     .standings-table td{{padding:12px 14px;border-bottom:1px solid var(--border)}}
@@ -604,17 +616,38 @@ def generate_html(standings):
     .points-table th,.points-table td{{padding:6px 12px;border:1px solid var(--border);text-align:center}}
     .points-table th{{background:var(--bg);font-weight:700;color:var(--text)}}
 
+    .season-placeholder{{text-align:center;padding:40px 20px;color:var(--text-light)}}
+    .season-placeholder h3{{font-size:1.1rem;color:var(--primary);margin-bottom:12px}}
+    .season-placeholder p{{font-size:.9rem;line-height:1.7;max-width:500px;margin:0 auto 8px}}
+
     @media(max-width:600px){{
-      .class-header{{padding:12px 16px}}
-      .class-header h3{{font-size:.95rem}}
-      .class-meta{{width:100%;margin-left:0;margin-top:4px}}
-      .standings-table th,.standings-table td{{padding:8px 8px;font-size:.8rem}}
-      .col-pos{{width:36px}}
-      .col-pts,.col-races,.col-wins{{width:50px}}
-      .medal{{width:24px;height:24px;font-size:.7rem}}
-      .race-detail{{flex-direction:column;gap:2px;align-items:flex-start}}
-      .rd-race{{max-width:160px}}
-      .year-tab{{padding:8px 16px;font-size:.82rem}}
+      .class-header{{padding:12px 14px;gap:8px}}
+      .class-header h3{{font-size:.92rem}}
+      .class-meta{{width:100%;margin-left:0;margin-top:4px;font-size:.72rem}}
+      .standings-table th,.standings-table td{{padding:6px 6px;font-size:.75rem}}
+      .col-pos{{width:30px}}
+      .col-driver{{min-width:100px}}
+      .col-pts,.col-races,.col-wins{{width:40px;font-size:.72rem}}
+      .medal{{width:22px;height:22px;font-size:.65rem}}
+      .race-details{{gap:6px}}
+      .race-detail{{flex-direction:column;gap:2px;align-items:flex-start;padding:5px 8px;font-size:.72rem}}
+      .rd-race{{max-width:140px;white-space:normal}}
+      .year-tab{{padding:8px 14px;font-size:.8rem}}
+      .champ-intro{{font-size:.82rem}}
+      .points-info{{padding:16px}}
+      .points-table{{max-width:100%;font-size:.75rem}}
+      .points-table th,.points-table td{{padding:4px 6px}}
+      .driver-club{{font-size:.68rem}}
+    }}
+    @media(max-width:380px){{
+      .standings-table th,.standings-table td{{padding:5px 4px;font-size:.7rem}}
+      .col-driver{{min-width:80px}}
+      .col-pts,.col-races,.col-wins{{width:34px;font-size:.68rem}}
+      .col-pos{{width:26px}}
+      .medal{{width:20px;height:20px;font-size:.6rem}}
+      .year-tab{{padding:6px 10px;font-size:.75rem}}
+      .class-header{{padding:10px 12px}}
+      .class-header h3{{font-size:.85rem}}
     }}
   </style>
 </head>

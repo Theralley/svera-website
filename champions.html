@@ -78,6 +78,10 @@
     .points-table th,.points-table td{padding:6px 12px;border:1px solid var(--border);text-align:center}
     .points-table th{background:var(--bg);font-weight:700;color:var(--text)}
 
+    .season-placeholder{text-align:center;padding:40px 20px;color:var(--text-light)}
+    .season-placeholder h3{font-size:1.1rem;color:var(--primary);margin-bottom:12px}
+    .season-placeholder p{font-size:.9rem;line-height:1.7;max-width:500px;margin:0 auto 8px}
+
     @media(max-width:600px){
       .class-header{padding:12px 14px;gap:8px}
       .class-header h3{font-size:.92rem}
@@ -162,11 +166,15 @@
     <p class="champ-intro"><strong>SM</strong> = Svenska Mästerskapet (deltävlingar med 3+ startande). <strong>RM</strong> = Riksmästerskapet (deltävlingar med &lt;3 startande). Startande = alla som ställde upp (inkl. DNF/DSQ).</p>
 
     <div class="year-tabs">
-        <button class="year-tab active" data-year="2025">2025</button>
+        <button class="year-tab active" data-year="2026">2026</button>
+        <button class="year-tab" data-year="2025">2025</button>
         <button class="year-tab" data-year="2024">2024</button>
     </div>
 
-      <div class="year-content" id="year-2025" style="display:block">
+      <div class="year-content" id="year-2026" style="display:block">
+<div class="season-placeholder"><h3>Säsongen 2026</h3><p>Säsongen har inte startat ännu. Första deltävlingarna brukar köras i maj/juni.</p><p>Ställningarna uppdateras automatiskt när resultat publiceras på SVEMO.</p></div>
+      </div>
+      <div class="year-content" id="year-2025" style="display:none">
       <div class="class-block sm-block">
         <div class="class-header">
           <h3>Klass A</h3>
@@ -1945,7 +1953,7 @@
         <a href="https://buymeacoffee.com/theralley" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#FFDD00;color:#333;padding:8px 18px;border-radius:6px;font-size:0.82rem;font-weight:700;text-decoration:none;transition:all 0.2s;">&#9749; Bjud oss på en kaffe</a>
       </div>
       <p style="margin-bottom:6px;font-size:0.8rem;color:#8899aa;">Vi samlar och automatiserar informationen kring svensk båtracing — för att göra den tillgänglig för alla. Hjälp oss göra det ännu bättre.</p>
-      &copy; 2026 SVERA — Svenska Evenemang &amp; Racerbåtsarkivet. Senast uppdaterad 2026-03-04.
+      &copy; 2026 SVERA — Svenska Evenemang &amp; Racerbåtsarkivet. Senast uppdaterad 2026-03-06.
     </div>
   </div>
 </footer>
