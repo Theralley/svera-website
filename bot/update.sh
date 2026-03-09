@@ -55,8 +55,11 @@ python3 "$SCRIPT_DIR/builders/build_kalender.py" || echo "WARNING: kalender buil
 echo "[3/4] Building nyheter.html (news + AI summary)..."
 python3 "$SCRIPT_DIR/builders/build_news.py" || echo "WARNING: news builder failed"
 
-echo "[4/4] Building champions.html (SM/RM standings)..."
+echo "[4/5] Building champions.html (SM/RM standings)..."
 python3 "$SCRIPT_DIR/builders/build_champions.py" || echo "WARNING: champions builder failed"
+
+echo "[5/5] Building rss.xml (news RSS feed)..."
+python3 "$SCRIPT_DIR/builders/build_rss.py" || echo "WARNING: RSS builder failed"
 
 # Step 3: Update footer dates
 echo ""

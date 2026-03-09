@@ -104,6 +104,7 @@ run_scrape() {
     log "[7/7] News aggregator + weekly digest..."
     python3 "$SCRIPT_DIR/scrapers/news_aggregator.py" 2>&1 | tee -a "$LOG" || true
     python3 "$SCRIPT_DIR/builders/build_news.py" 2>&1 | tee -a "$LOG" || true
+    python3 "$SCRIPT_DIR/builders/build_rss.py" 2>&1 | tee -a "$LOG" || true
 
     log "Rebuilding pages..."
     python3 "$SCRIPT_DIR/builders/build_resultat.py" 2>&1 | tee -a "$LOG" || true
@@ -132,6 +133,7 @@ run_news_refresh() {
     cd "$PROJECT_DIR"
     python3 "$SCRIPT_DIR/scrapers/news_aggregator.py" 2>&1 | tee -a "$LOG" || true
     python3 "$SCRIPT_DIR/builders/build_news.py" 2>&1 | tee -a "$LOG" || true
+    python3 "$SCRIPT_DIR/builders/build_rss.py" 2>&1 | tee -a "$LOG" || true
     python3 "$SCRIPT_DIR/update_footer.py" 2>&1 | tee -a "$LOG" || true
     date +%F > "$LAST_NEWS"
     deploy_if_changed

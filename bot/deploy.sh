@@ -55,6 +55,14 @@ put $PROJECT_DIR/assets/css/style.css $WEBROOT/assets/css/style.css
 put $PROJECT_DIR/assets/js/main.js $WEBROOT/assets/js/main.js
 "
 
+# Add RSS feeds
+for rssfile in "$PROJECT_DIR"/rss*.xml; do
+  if [ -f "$rssfile" ]; then
+    CMDS+="put $rssfile $WEBROOT/$(basename "$rssfile")
+"
+  fi
+done
+
 # Add ALL HTML files in project root
 for html in "$PROJECT_DIR"/*.html; do
   if [ -f "$html" ]; then
