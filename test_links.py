@@ -24,6 +24,7 @@ EXPECTED_PAGES = [
     'champions.html',
     'policy.html',
     'team.html',
+    'api.html',
 ]
 
 

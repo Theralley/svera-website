@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API &amp; Datak&auml;llor &mdash; SVERA</title>
+  <meta name="description" content="Dokumentation &ouml;ver SVERAs datak&auml;llor, uppdateringsintervall och dataformat. F&ouml;r utvecklare och tredjeparter som vill integrera med svensk b&aring;tracingdata.">
+  <meta property="og:title" content="API &amp; Datak&auml;llor &mdash; SVERA">
+  <meta property="og:description" content="SVERAs datak&auml;llor och API-dokumentation f&ouml;r svensk b&aring;tracingdata.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.svera.nu/api.html">
+  <meta property="og:locale" content="sv_SE">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .api-section { background:var(--white); border-radius:var(--radius-lg); box-shadow:var(--shadow); padding:32px; margin-bottom:24px; border:1px solid var(--border); }
+    .api-section h3 { color:var(--primary); font-size:1.05rem; margin-bottom:12px; }
+    .api-section h4 { color:var(--text); font-size:0.92rem; margin:18px 0 8px; }
+    .api-table { width:100%; border-collapse:collapse; font-size:0.84rem; margin:12px 0; }
+    .api-table thead { background:var(--primary); color:#fff; }
+    .api-table th { padding:8px 14px; text-align:left; font-size:0.76rem; text-transform:uppercase; letter-spacing:0.5px; font-weight:700; }
+    .api-table td { padding:8px 14px; border-bottom:1px solid var(--border); color:var(--text); }
+    .api-table tbody tr:hover { background:rgba(37,54,134,0.03); }
+    .api-table code { background:#f0f2f5; padding:2px 6px; border-radius:3px; font-size:0.8rem; color:#c0392b; }
+    .code-block { background:#1e2530; color:#e0e6ed; padding:18px 20px; border-radius:8px; font-size:0.82rem; line-height:1.6; overflow-x:auto; margin:12px 0; font-family:'Courier New',monospace; }
+    .code-block .key { color:#f0c674; }
+    .code-block .str { color:#b5bd68; }
+    .code-block .num { color:#de935f; }
+    .code-block .comment { color:#969896; }
+    .badge-source { display:inline-block; padding:3px 10px; border-radius:12px; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+    .badge-public { background:#27ae60; color:#fff; }
+    .badge-auth { background:#e67e22; color:#fff; }
+    .badge-interval { background:var(--primary); color:#fff; display:inline-block; padding:2px 8px; border-radius:4px; font-size:0.72rem; font-weight:600; }
+    .contact-box { background:linear-gradient(135deg,#253686 0%,#1a2660 100%); color:#fff; border-radius:var(--radius-lg); padding:32px; text-align:center; margin-top:30px; }
+    .contact-box h3 { color:#fde506; margin-bottom:10px; font-size:1.15rem; }
+    .contact-box p { font-size:0.9rem; color:#c8d0e0; line-height:1.65; margin-bottom:16px; }
+    .contact-box a.btn { display:inline-block; padding:11px 28px; background:var(--accent); color:#333; border-radius:6px; font-weight:700; font-size:0.88rem; text-decoration:none; transition:all var(--transition); }
+    .contact-box a.btn:hover { background:#fff; color:var(--primary); transform:translateY(-1px); }
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Hoppa till inneh&aring;ll</a>
+<div class="top-bar"><div class="container"><span>Oberoende informationsresurs sedan 2026</span></div></div>
+
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img class="logo-img" src="assets/images/svera-logo.png" alt="SVERA">
+        <div class="logo-text"><h1>SVERA</h1><span class="tagline">Svenska Evenemang &amp; Racerb&aring;tsarkivet</span></div>
+      </a>
+      <button class="hamburger" aria-label="Meny"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <nav class="main-nav">
+    <div class="container">
+      <ul class="nav-list">
+        <li><a href="/">Hem</a></li>
+        <li><a href="om.html">Om SVERA</a></li>
+        <li><a href="arkivet.html">Arkivet</a></li>
+        <li><a href="klasser.html">Klasser &amp; Regler</a></li>
+        <li><a href="kalender.html">Kalender</a></li>
+        <li><a href="resultat.html">Resultat</a></li>
+        <li><a href="nyheter.html">Nyheter</a></li>
+        <li>
+          <a href="klubbar.html">Klubbar</a>
+          <ul class="dropdown">
+            <li><a href="klubbar.html">Klubbar</a></li>
+            <li><a href="team.html">Aktiva Team</a></li>
+          </ul>
+        </li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" style="padding:30px 0 24px;">
+  <div class="container">
+    <span class="hero-badge">Utvecklare</span>
+    <h2>API &amp; Datak&auml;llor</h2>
+    <p>Dokumentation &ouml;ver SVERAs datak&auml;llor, dataformat och uppdateringsintervall. F&ouml;r utvecklare och tredjeparter som vill anv&auml;nda eller integrera med svensk b&aring;tracingdata.</p>
+  </div>
+</section>
+
+<div class="container page-content" id="main">
+
+  <!-- Overview -->
+  <div class="api-section">
+    <h3>Hur SVERA samlar data</h3>
+    <p style="font-size:0.9rem;color:var(--text-light);line-height:1.7;">SVERA samlar automatiskt in data fr&aring;n flera publika k&auml;llor med egenutvecklade scrapers. Datan cachas lokalt som JSON, bearbetas av builders som genererar statiska HTML-sidor, och publiceras via SFTP. Alla k&auml;llor &auml;r &ouml;ppna och publika &mdash; vi lagrar inga personuppgifter ut&ouml;ver vad som redan publicerats av officiella f&ouml;rbund.</p>
+
+    <h4>Datafl&ouml;de</h4>
+    <div class="code-block">
+<span class="comment">// 1. Scrapers h&auml;mtar r&aring;data fr&aring;n externa k&auml;llor</span>
+Scraper &rarr; bot/data/*.json
+
+<span class="comment">// 2. Builders l&auml;ser cachad JSON och genererar HTML</span>
+Builder &rarr; *.html
+
+<span class="comment">// 3. Deploy laddar upp till webbhotellet</span>
+deploy.sh &rarr; svera.nu
+    </div>
+  </div>
+
+  <!-- Data Sources -->
+  <div class="api-section">
+    <h3>Datak&auml;llor</h3>
+
+    <table class="api-table">
+      <thead><tr><th>K&auml;lla</th><th>&Aring;tkomst</th><th>Intervall</th><th>Beskrivning</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>WebTracking.se</strong><br><code>/pbl</code></td>
+          <td><span class="badge-source badge-public">Publik</span></td>
+          <td><span class="badge-interval">48h</span></td>
+          <td>T&auml;vlingslogg f&ouml;r svensk offshore-racing. Inkluderar race-id, b&aring;t, f&ouml;rare, klubb, tider och placeringar. Prim&auml;r k&auml;lla f&ouml;r resultat.html.</td>
+        </tr>
+        <tr>
+          <td><strong>SVEMO TAM</strong><br><code>tam.svemo.se</code></td>
+          <td><span class="badge-source badge-auth">Autentiserad</span></td>
+          <td><span class="badge-interval">48h</span></td>
+          <td>Svenska Motorb&aring;tsf&ouml;rbundets t&auml;vlingsadministration. Kalender med datum, plats, arrang&ouml;r, grenar och status. Kr&auml;ver inloggning (ASP.NET + CSRF).</td>
+        </tr>
+        <tr>
+          <td><strong>SVEMO TA</strong><br><code>ta.svemo.se</code></td>
+          <td><span class="badge-source badge-public">Publik</span></td>
+          <td><span class="badge-interval">48h</span></td>
+          <td>Publika resultatlistor fr&aring;n SVEMO. Parseade HTML-tabeller med position, f&ouml;rare, klubb, b&aring;t, klass, nationalitet och po&auml;ng.</td>
+        </tr>
+        <tr>
+          <td><strong>UIM Sport</strong><br><code>uim.sport</code></td>
+          <td><span class="badge-source badge-public">Publik</span></td>
+          <td><span class="badge-interval">48h</span></td>
+          <td>Internationella motorb&aring;tsf&ouml;rbundets kalender. WebForms med Telerik-grid. Datum, namn, plats, land och disciplin.</td>
+        </tr>
+        <tr>
+          <td><strong>SVEMO Regler</strong><br><code>svemo.se</code></td>
+          <td><span class="badge-source badge-public">Publik</span></td>
+          <td><span class="badge-interval">168h</span></td>
+          <td>Regelsamling och bestämmelser för svensk b&aring;tracing. &Auml;ndras s&auml;llan.</td>
+        </tr>
+        <tr>
+          <td><strong>Nyheter</strong><br><code>Flera k&auml;llor</code></td>
+          <td><span class="badge-source badge-public">Publik</span></td>
+          <td><span class="badge-interval">168h</span></td>
+          <td>Internationella powerboat-nyheter fr&aring;n PRW, F1H2O och PBN. AI-sammanfattning p&aring; svenska.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- JSON Formats -->
+  <div class="api-section">
+    <h3>Dataformat (JSON)</h3>
+    <p style="font-size:0.88rem;color:var(--text-light);margin-bottom:16px;">Alla scrapers sparar data som JSON i <code>bot/data/</code>. Nedan visas strukturen f&ouml;r varje datak&auml;lla.</p>
+
+    <h4>svemo_calendar.json &mdash; SVEMO Kalender</h4>
+    <div class="code-block">
+[
+  {
+    <span class="key">"name"</span>: <span class="str">"&Ouml;sthammars GP mot cancer"</span>,
+    <span class="key">"date"</span>: <span class="str">"2026-09-26"</span>,
+    <span class="key">"end_date"</span>: <span class="str">"2026-09-26"</span>,
+    <span class="key">"location"</span>: <span class="str">"&Ouml;sthammar"</span>,
+    <span class="key">"organizer"</span>: <span class="str">"&Ouml;sthammars SS"</span>,
+    <span class="key">"branch"</span>: <span class="str">"Offshore"</span>,       <span class="comment">// Offshore | Rundbana | Aquabike</span>
+    <span class="key">"branch_id"</span>: <span class="num">27</span>,             <span class="comment">// 22=Rundbana, 26=Aquabike, 27=Offshore</span>
+    <span class="key">"status"</span>: <span class="str">"Planerad"</span>
+  }
+]
+    </div>
+
+    <h4>uim_calendar.json &mdash; UIM Kalender</h4>
+    <div class="code-block">
+[
+  {
+    <span class="key">"name"</span>: <span class="str">"Offshore WC &mdash; 3D"</span>,
+    <span class="key">"date"</span>: <span class="str">"2026-06-18 &ndash; 21"</span>,
+    <span class="key">"venue"</span>: <span class="str">"Rodi Garganico"</span>,
+    <span class="key">"country"</span>: <span class="str">"Italien"</span>,
+    <span class="key">"discipline"</span>: <span class="str">"Offshore"</span>,   <span class="comment">// Offshore | Aquabike | Circuit</span>
+    <span class="key">"classes"</span>: <span class="str">"3D"</span>
+  }
+]
+    </div>
+
+    <h4>webtracking_races.json &mdash; Race-logg</h4>
+    <div class="code-block">
+[
+  {
+    <span class="key">"id"</span>: <span class="num">1234</span>,
+    <span class="key">"name"</span>: <span class="str">"Roslagsloppet"</span>,
+    <span class="key">"date"</span>: <span class="str">"2025-08-09"</span>,
+    <span class="key">"location"</span>: <span class="str">"&Ouml;regrund"</span>,
+    <span class="key">"organizer"</span>: <span class="str">"&Ouml;regrunds RK"</span>,
+    <span class="key">"class"</span>: <span class="str">"3B"</span>
+  }
+]
+    </div>
+
+    <h4>webtracking_results.json &mdash; Resultat</h4>
+    <div class="code-block">
+{
+  <span class="key">"races"</span>: [
+    {
+      <span class="key">"race_id"</span>: <span class="num">1234</span>,
+      <span class="key">"results"</span>: [
+        {
+          <span class="key">"position"</span>: <span class="num">1</span>,
+          <span class="key">"boat"</span>: <span class="str">"B-85"</span>,
+          <span class="key">"driver"</span>: <span class="str">"Max Samuelsson"</span>,
+          <span class="key">"codriver"</span>: <span class="str">"Joel Sch&ouml;neberg"</span>,
+          <span class="key">"club"</span>: <span class="str">"RBR"</span>,
+          <span class="key">"time"</span>: <span class="str">"01:23:45"</span>,
+          <span class="key">"class"</span>: <span class="str">"3B"</span>
+        }
+      ]
+    }
+  ]
+}
+    </div>
+  </div>
+
+  <!-- Merge Logic -->
+  <div class="api-section">
+    <h3>Databearbetning</h3>
+
+    <h4>Event-sammanslagning (kalender)</h4>
+    <p style="font-size:0.88rem;color:var(--text-light);line-height:1.7;">SVEMO TAM returnerar separata poster f&ouml;r varje gren (Rundbana, Offshore, Aquabike) &auml;ven n&auml;r de h&aring;lls p&aring; samma plats och datum. SVERAs builder sl&aring;r ihop dessa till en rad med flera gren-badges. Matchning sker p&aring; <code>date</code> + <code>location</code>.</p>
+
+    <h4>SM/RM-po&auml;ngber&auml;kning</h4>
+    <p style="font-size:0.88rem;color:var(--text-light);line-height:1.7;">SM-po&auml;ng r&auml;knas enbart fr&aring;n delt&auml;vlingar med 3 eller fler startande ekipage i klassen. Delt&auml;vlingar med f&auml;rre &auml;n 3 ger RM-po&auml;ng. Po&auml;ngskalan: 25, 20, 16, 13, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1.</p>
+
+    <h4>Resultatfiltrering</h4>
+    <p style="font-size:0.88rem;color:var(--text-light);line-height:1.7;">Klasser <code>PB</code> (Patrullb&aring;t) och <code>R</code> (R&auml;ddning) filtreras bort fr&aring;n resultatvisningen d&aring; de inte &auml;r t&auml;vlingsklasser.</p>
+  </div>
+
+  <!-- Rate Limits & Best Practices -->
+  <div class="api-section">
+    <h3>F&ouml;r tredjeparter</h3>
+    <p style="font-size:0.88rem;color:var(--text-light);line-height:1.7;">SVERA erbjuder i nul&auml;get inget publikt REST-API, men v&aring;ra datak&auml;llor och format &auml;r &ouml;ppet dokumenterade f&ouml;r transparens. Om du vill bygga en tj&auml;nst som anv&auml;nder samma datak&auml;llor:</p>
+
+    <table class="api-table">
+      <thead><tr><th>Riktlinje</th><th>Beskrivning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Respektera intervaller</strong></td><td>Scrapa inte oftare &auml;n var 48:e timme fr&aring;n samma k&auml;lla. Regler och nyheter r&auml;cker med veckovis.</td></tr>
+        <tr><td><strong>Identifiera din bot</strong></td><td>Anv&auml;nd en tydlig User-Agent, t.ex. <code>MinApp-Bot/1.0 (kontakt@example.com)</code>.</td></tr>
+        <tr><td><strong>Cacha lokalt</strong></td><td>Spara data lokalt och undvik redundanta anrop. Anv&auml;nd tidsstämplar f&ouml;r att avg&ouml;ra om ny data beh&ouml;vs.</td></tr>
+        <tr><td><strong>Anv&auml;nd publika k&auml;llor</strong></td><td>Prioritera publika endpoints (ta.svemo.se, uim.sport, webtracking.se) framf&ouml;r autentiserade.</td></tr>
+        <tr><td><strong>K&auml;llh&auml;nvisning</strong></td><td>Ange k&auml;lla om du visar data vidare, t.ex. <em>&rdquo;Data fr&aring;n SVEMO via SVERA&rdquo;</em>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Contact -->
+  <div class="contact-box">
+    <h3>Vill du integrera med SVERA?</h3>
+    <p>Vi &auml;r &ouml;ppna f&ouml;r samarbeten och datadelning. Kontakta oss om du bygger en tj&auml;nst eller app kring svensk b&aring;tracing.</p>
+    <a class="btn" href="kontakt.html">Kontakta oss &#8594;</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>SVERA</h3>
+        <p>Svenska Evenemang &amp; Racerb&aring;tsarkivet</p>
+        <p>Oberoende informationsresurs f&ouml;r svensk racerb&aring;tssport.</p>
+        <p style="margin-top:10px;"><a href="policy.html" style="display:inline-block;background:rgba(255,255,255,0.08);color:#fde506;padding:6px 14px;border-radius:4px;font-size:0.76rem;font-weight:600;text-decoration:none;border:1px solid rgba(253,229,6,0.25);transition:all 0.2s;">Data &amp; Integritet &rarr;</a></p>
+      </div>
+      <div class="footer-col">
+        <h3>Utforska</h3>
+        <ul>
+          <li><a href="om.html">Om SVERA</a></li>
+          <li><a href="arkivet.html">Arkivet</a></li>
+          <li><a href="klasser.html">Klasser &amp; Regler</a></li>
+          <li><a href="kalender.html">Kalender</a></li>
+          <li><a href="resultat.html">Resultat</a></li>
+          <li><a href="nyheter.html">Nyheter</a></li>
+          <li><a href="klubbar.html">Klubbar</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Kontakt</h3>
+        <p>Har du material, bilder eller kunskap att bidra med?</p>
+        <p><a href="kontakt.html">Kontakta oss &rarr;</a></p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div style="margin-bottom:10px;">
+        <a href="https://buymeacoffee.com/theralley" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#FFDD00;color:#333;padding:8px 18px;border-radius:6px;font-size:0.82rem;font-weight:700;text-decoration:none;transition:all 0.2s;">&#9749; Bjud oss p&aring; en kaffe</a>
+      </div>
+      <p style="margin-bottom:6px;font-size:0.8rem;color:#8899aa;">Vi samlar och automatiserar informationen kring svensk b&aring;tracing &mdash; f&ouml;r att g&ouml;ra den tillg&auml;nglig f&ouml;r alla. Hj&auml;lp oss g&ouml;ra det &auml;nnu b&auml;ttre.</p>
+      &copy; 2026 SVERA &mdash; Svenska Evenemang &amp; Racerb&aring;tsarkivet. Senast uppdaterad 2026-03-09.
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

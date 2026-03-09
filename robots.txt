@@ -1,0 +1,12 @@
+# SVERA — Svenska Evenemang & Racerbåtsarkivet
+# https://www.svera.nu
+
+User-agent: *
+Allow: /
+
+# Sitemap (future)
+# Sitemap: https://www.svera.nu/sitemap.xml
+
+# Bot directory is not public
+Disallow: /bot/
+Disallow: /config.json

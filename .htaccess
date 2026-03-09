@@ -8,3 +8,23 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 # 2. Bare domain -> www (already on HTTPS after rule 1)
 RewriteCond %{HTTP_HOST} ^svera\.nu$ [NC]
 RewriteRule ^(.*)$ https://www.svera.nu/$1 [R=301,L]
+
+# --- Cache Control ---
+# HTML: always revalidate (so Safari/browsers fetch latest)
+<FilesMatch "\.html$">
+  Header set Cache-Control "no-cache, must-revalidate"
+  Header set Pragma "no-cache"
+</FilesMatch>
+
+# CSS/JS: short cache + must-revalidate (fresh within 10 min, then check)
+<FilesMatch "\.(css|js)$">
+  Header set Cache-Control "public, max-age=600, must-revalidate"
+</FilesMatch>
+
+# Images/PDF: cache longer (1 week) — these rarely change
+<FilesMatch "\.(png|jpg|jpeg|gif|ico|svg|pdf)$">
+  Header set Cache-Control "public, max-age=604800"
+</FilesMatch>
+
+# Enable ETags for conditional requests
+FileETag MTime Size

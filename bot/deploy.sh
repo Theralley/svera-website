@@ -47,8 +47,9 @@ echo "Deploying SVERA to one.com..."
 echo "Host: $SFTP_HOST"
 echo "Webroot: $WEBROOT"
 
-# Build SFTP commands — .htaccess + favicon + CSS + JS
+# Build SFTP commands — .htaccess + robots.txt + favicon + CSS + JS
 CMDS="put $PROJECT_DIR/.htaccess $WEBROOT/.htaccess
+put $PROJECT_DIR/robots.txt $WEBROOT/robots.txt
 put $PROJECT_DIR/favicon.ico $WEBROOT/favicon.ico
 put $PROJECT_DIR/assets/css/style.css $WEBROOT/assets/css/style.css
 put $PROJECT_DIR/assets/js/main.js $WEBROOT/assets/js/main.js
