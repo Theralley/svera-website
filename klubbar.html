@@ -71,7 +71,13 @@
         <li><a href="kalender.html">Kalender</a></li>
         <li><a href="resultat.html">Resultat</a></li>
         <li><a href="nyheter.html">Nyheter</a></li>
-        <li><a href="klubbar.html" class="active">Klubbar</a></li>
+        <li>
+          <a href="klubbar.html" class="active">Klubbar</a>
+          <ul class="dropdown">
+            <li><a href="klubbar.html">Klubbar</a></li>
+            <li><a href="team.html">Aktiva Team</a></li>
+          </ul>
+        </li>
         <li><a href="kontakt.html">Kontakt</a></li>
       </ul>
     </div>
@@ -230,7 +236,7 @@
   </div>
 
   <!-- Missing club CTA -->
-  <div class="missing-club">
+  <div class="missing-club" id="saknar-klubb">
     <h3>Saknar vi din klubb?</h3>
     <p>Vi vet att vi har missat klubbar — och det beklagar vi! Hjälp oss att göra listan komplett.<br>Mejla oss så lägger vi till er klubb med information och länk.</p>
     <a class="btn" href="kontakt.html">Kontakta oss om din klubb &#8594;</a>

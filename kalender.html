@@ -14,6 +14,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+  <meta name="format-detection" content="telephone=no">
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
     .calendar-filter { display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
@@ -68,7 +69,13 @@
         <li><a href="kalender.html" class="active">Kalender</a></li>
         <li><a href="resultat.html">Resultat</a></li>
         <li><a href="nyheter.html">Nyheter</a></li>
-        <li><a href="klubbar.html">Klubbar</a></li>
+        <li>
+          <a href="klubbar.html">Klubbar</a>
+          <ul class="dropdown">
+            <li><a href="klubbar.html">Klubbar</a></li>
+            <li><a href="team.html">Aktiva Team</a></li>
+          </ul>
+        </li>
         <li><a href="kontakt.html">Kontakt</a></li>
       </ul>
     </div>
@@ -102,21 +109,23 @@
           <th>Datum</th>
           <th>Tävling</th>
           <th>Gren</th>
+          <th>Plats</th>
           <th class="hide-mobile">Arrangör</th>
           <th class="hide-mobile">Klasser</th>
-          <th>Status</th>
+          <th class="hide-mobile">Status</th>
         </tr>
       </thead>
       <tbody id="svemo-events">
-        <tr data-branch="rundbana"><td>2026-05-23</td><td>Träningsläger</td><td><span class="badge badge-rundbana">Rundbana</span></td><td class="hide-mobile">Östhammars SS</td><td class="hide-mobile">Träning</td><td></td></tr>
-        <tr data-branch="offshore"><td>2026-05-23</td><td>Träning Offshore + Aquabike</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">Östhammars SS</td><td class="hide-mobile">Offshore + Aquabike träning</td><td></td></tr>
-        <tr data-branch="offshore"><td>2026-06-13</td><td>Vårracet</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">Öregrunds RK</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td></td></tr>
-        <tr data-branch="offshore"><td>2026-07-04</td><td>Oskarshamn Offshore</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">SUK</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td></td></tr>
-        <tr data-branch="offshore"><td>2026-08-08</td><td>Roslagsloppet</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">Öregrunds RK</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td></td></tr>
-        <tr data-branch="rundbana"><td>2026-08-29</td><td>Dalälvstrofén 2026</td><td><span class="badge badge-rundbana">Rundbana</span></td><td class="hide-mobile">RBK Ruskprickarna</td><td class="hide-mobile">F125, F4, GT15, GT30, OSY400, Thundercat</td><td></td></tr>
-        <tr data-branch="offshore"><td>2026-09-05</td><td>Saltsjöloppet 2026</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">Sportbåtsklubben</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150</td><td></td></tr>
-        <tr data-branch="rundbana"><td>2026-09-26</td><td>Östhammars GP mot cancer</td><td><span class="badge badge-rundbana">Rundbana</span></td><td class="hide-mobile">Östhammars SS</td><td class="hide-mobile">F4, GT15, GT30, OSY400, Thundercat</td><td></td></tr>
-        <tr data-branch="offshore"><td>2026-09-26</td><td>Östhammars GP mot cancer</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">Östhammars SS</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td></td></tr>
+        <tr data-branch="offshore"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-05-01 – 02</span></td><td>Avrostning</td><td><span class="badge badge-offshore">Offshore</span></td><td>Loftahammar</td><td class="hide-mobile">Kungliga MBK</td><td class="hide-mobile">Träningsläger (Offshore)</td><td class="hide-mobile"><span class="badge badge-open">Träning</span></td></tr>
+        <tr data-branch="rundbana"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-05-23</span></td><td>Träningsläger</td><td><span class="badge badge-rundbana">Rundbana</span></td><td>Östhammar</td><td class="hide-mobile">Östhammars SS</td><td class="hide-mobile">Träning</td><td class="hide-mobile"></td></tr>
+        <tr data-branch="offshore"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-05-23</span></td><td>Träning Offshore + Aquabike</td><td><span class="badge badge-offshore">Offshore</span></td><td>Östhammar</td><td class="hide-mobile">Östhammars SS</td><td class="hide-mobile">Offshore + Aquabike träning</td><td class="hide-mobile"></td></tr>
+        <tr data-branch="offshore"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-06-13</span></td><td>Vårracet</td><td><span class="badge badge-offshore">Offshore</span></td><td>Öregrund</td><td class="hide-mobile">Öregrunds RK</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td class="hide-mobile"></td></tr>
+        <tr data-branch="offshore"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-07-04</span></td><td>Oskarshamn Offshore</td><td><span class="badge badge-offshore">Offshore</span></td><td>Oskarshamn</td><td class="hide-mobile">SUK</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td class="hide-mobile"></td></tr>
+        <tr data-branch="offshore"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-08-08</span></td><td>Roslagsloppet</td><td><span class="badge badge-offshore">Offshore</span></td><td>Öregrund</td><td class="hide-mobile">Öregrunds RK</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td class="hide-mobile"></td></tr>
+        <tr data-branch="rundbana"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-08-29</span></td><td>Dalälvstrofén 2026</td><td><span class="badge badge-rundbana">Rundbana</span></td><td>Avesta</td><td class="hide-mobile">RBK Ruskprickarna</td><td class="hide-mobile">F125, F4, GT15, GT30, OSY400, Thundercat</td><td class="hide-mobile"></td></tr>
+        <tr data-branch="offshore"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-09-05</span></td><td>Saltsjöloppet 2026</td><td><span class="badge badge-offshore">Offshore</span></td><td>Stockholm</td><td class="hide-mobile">Sportbåtsklubben</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150</td><td class="hide-mobile"></td></tr>
+        <tr data-branch="rundbana"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-09-26</span></td><td>Östhammars GP mot cancer</td><td><span class="badge badge-rundbana">Rundbana</span></td><td>Östhammar</td><td class="hide-mobile">Östhammars SS</td><td class="hide-mobile">F4, GT15, GT30, OSY400, Thundercat</td><td class="hide-mobile"></td></tr>
+        <tr data-branch="offshore"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-09-26</span></td><td>Östhammars GP mot cancer</td><td><span class="badge badge-offshore">Offshore</span></td><td>Östhammar</td><td class="hide-mobile">Östhammars SS</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td class="hide-mobile"></td></tr>
       </tbody>
     </table>
     <p class="cal-note">Källa: SVEMO TA (tam.svemo.se). Uppdaterad 2026-02-26.</p>
@@ -131,34 +140,34 @@
           <th>Datum</th>
           <th>Tävling</th>
           <th>Gren</th>
+          <th>Plats</th>
           <th class="hide-mobile">Klasser</th>
-          <th>Land</th>
         </tr>
       </thead>
       <tbody id="uim-events">
-        <tr data-branch="aquabike" class="uim"><td>2026-04-01 – 04</td><td>Aquabike World Series</td><td><span class="badge badge-aquabike">Aquabike</span></td><td class="hide-mobile">Runabout GP1, Ski GP1, Ladies, Freestyle</td><td>TBA</td></tr>
-        <tr data-branch="aquabike" class="uim"><td>2026-04-01 – 04</td><td>Aquabike WC — Endurance</td><td><span class="badge badge-aquabike">Aquabike</span></td><td class="hide-mobile">Endurance</td><td>TBA</td></tr>
-        <tr data-branch="offshore" class="uim"><td>2026-04-17 – 19</td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">XCAT</td><td>UAE, Fujairah</td></tr>
-        <tr data-branch="aquabike" class="uim"><td>2026-04-25 – 26</td><td>Aquabike International — Rijeka</td><td><span class="badge badge-aquabike">Aquabike</span></td><td class="hide-mobile">Circuit, Endurance</td><td>Kroatien</td></tr>
-        <tr data-branch="aquabike" class="uim"><td>2026-05-02 – 03</td><td>Aquabike International — Zagreb</td><td><span class="badge badge-aquabike">Aquabike</span></td><td class="hide-mobile">Circuit, Endurance</td><td>Kroatien</td></tr>
-        <tr data-branch="rundbana" class="uim"><td>2026-05-15 – 17</td><td>Formula WC — Jedovnice</td><td><span class="badge badge-circuit">Circuit</span></td><td class="hide-mobile">F125, F250, F500</td><td>Tjeckien</td></tr>
-        <tr data-branch="aquabike" class="uim"><td>2026-05-22 – 24</td><td>Aquabike International — Matylda Lake</td><td><span class="badge badge-aquabike">Aquabike</span></td><td class="hide-mobile">Circuit</td><td>Tjeckien</td></tr>
-        <tr data-branch="offshore" class="uim"><td>2026-05-29 – 31</td><td>International Raid Pavia–Venezia</td><td><span class="badge badge-offshore">Offshore</span> <span class="badge badge-aquabike">Aquabike</span></td><td class="hide-mobile">Alla discipliner</td><td>Italien</td></tr>
-        <tr data-branch="rundbana" class="uim"><td>2026-05-29 – 31</td><td>Formula WC — Znin</td><td><span class="badge badge-circuit">Circuit</span></td><td class="hide-mobile">F125, F250, F500</td><td>Polen</td></tr>
-        <tr data-branch="rundbana" class="uim"><td>2026-06-05 – 07</td><td>Formula WC — Klaipeda</td><td><span class="badge badge-circuit">Circuit</span></td><td class="hide-mobile">F2, F4</td><td>Litauen</td></tr>
-        <tr data-branch="aquabike" class="uim"><td>2026-06-06 – 07</td><td>Aquabike International — Vodice</td><td><span class="badge badge-aquabike">Aquabike</span></td><td class="hide-mobile">Circuit, Endurance</td><td>Kroatien</td></tr>
-        <tr data-branch="rundbana" class="uim"><td>2026-06-12 – 14</td><td>Formula WC — Boretto</td><td><span class="badge badge-circuit">Circuit</span></td><td class="hide-mobile">F125, F250, F500</td><td>Italien</td></tr>
-        <tr data-branch="offshore" class="uim"><td>2026-06-18 – 21</td><td>Offshore WC — 3D</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">3D</td><td>Italien, Rodi Garganico</td></tr>
-        <tr data-branch="offshore" class="uim"><td>2026-06-19 – 21</td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">XCAT</td><td>Europa (TBA)</td></tr>
-        <tr data-branch="offshore" class="uim"><td>2026-07-08 – 11</td><td>Offshore EC — 3B, 3C, 3J</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">3B, 3C, 3J</td><td>Norge, Tvedestrand</td></tr>
-        <tr data-branch="offshore" class="uim"><td>2026-07-30 – 02/08</td><td>Offshore WC — 3B, 3D, 3J</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">3B, 3D, 3J</td><td>Norge, Arendal</td></tr>
-        <tr data-branch="offshore" class="uim" style="background:#eef0f8;"><td>2026-08-04 – 06</td><td>Offshore WC — 3D, 3J &#127480;&#127466;</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">3D, 3J</td><td><strong>Sverige, Öregrund</strong></td></tr>
-        <tr data-branch="offshore" class="uim"><td>2026-08-28 – 30</td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">XCAT</td><td>Europa (TBA)</td></tr>
-        <tr data-branch="offshore" class="uim"><td>2026-09-09 – 13</td><td>Offshore WC — 3D</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">3D</td><td>Italien, Trani</td></tr>
-        <tr data-branch="offshore" class="uim"><td>2026-10-09 – 11</td><td>Offshore EC — 3D</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">3D</td><td>Italien, Como</td></tr>
-        <tr data-branch="offshore" class="uim"><td>2026-10-29 – 31</td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">XCAT</td><td>Kuwait, Salmiya</td></tr>
-        <tr data-branch="offshore" class="uim"><td>2026-11-27 – 29</td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">XCAT</td><td>Mellanöstern (TBA)</td></tr>
-        <tr data-branch="offshore" class="uim"><td>2026-12-11 – 13</td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td class="hide-mobile">XCAT</td><td>UAE, Dubai</td></tr>
+        <tr data-branch="aquabike" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-04-01 – 04</span></td><td>Aquabike World Series</td><td><span class="badge badge-aquabike">Aquabike</span></td><td>TBA</td><td class="hide-mobile">Runabout GP1, Ski GP1, Ladies, Freestyle</td></tr>
+        <tr data-branch="aquabike" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-04-01 – 04</span></td><td>Aquabike WC — Endurance</td><td><span class="badge badge-aquabike">Aquabike</span></td><td>TBA</td><td class="hide-mobile">Endurance</td></tr>
+        <tr data-branch="offshore" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-04-17 – 19</span></td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td>Fujairah, UAE</td><td class="hide-mobile">XCAT</td></tr>
+        <tr data-branch="aquabike" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-04-25 – 26</span></td><td>Aquabike International — Rijeka</td><td><span class="badge badge-aquabike">Aquabike</span></td><td>Rijeka, Kroatien</td><td class="hide-mobile">Circuit, Endurance</td></tr>
+        <tr data-branch="aquabike" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-05-02 – 03</span></td><td>Aquabike International — Zagreb</td><td><span class="badge badge-aquabike">Aquabike</span></td><td>Zagreb, Kroatien</td><td class="hide-mobile">Circuit, Endurance</td></tr>
+        <tr data-branch="rundbana" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-05-15 – 17</span></td><td>Formula WC — Jedovnice</td><td><span class="badge badge-circuit">Circuit</span></td><td>Jedovnice, Tjeckien</td><td class="hide-mobile">F125, F250, F500</td></tr>
+        <tr data-branch="aquabike" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-05-22 – 24</span></td><td>Aquabike International — Matylda Lake</td><td><span class="badge badge-aquabike">Aquabike</span></td><td>Matylda Lake, Tjeckien</td><td class="hide-mobile">Circuit</td></tr>
+        <tr data-branch="offshore" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-05-29 – 31</span></td><td>International Raid Pavia–Venezia</td><td><span class="badge badge-offshore">Offshore</span> <span class="badge badge-aquabike">Aquabike</span></td><td>Pavia–Venezia, Italien</td><td class="hide-mobile">Alla discipliner</td></tr>
+        <tr data-branch="rundbana" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-05-29 – 31</span></td><td>Formula WC — Znin</td><td><span class="badge badge-circuit">Circuit</span></td><td>Znin, Polen</td><td class="hide-mobile">F125, F250, F500</td></tr>
+        <tr data-branch="rundbana" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-06-05 – 07</span></td><td>Formula WC — Klaipeda</td><td><span class="badge badge-circuit">Circuit</span></td><td>Klaipeda, Litauen</td><td class="hide-mobile">F2, F4</td></tr>
+        <tr data-branch="aquabike" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-06-06 – 07</span></td><td>Aquabike International — Vodice</td><td><span class="badge badge-aquabike">Aquabike</span></td><td>Vodice, Kroatien</td><td class="hide-mobile">Circuit, Endurance</td></tr>
+        <tr data-branch="rundbana" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-06-12 – 14</span></td><td>Formula WC — Boretto</td><td><span class="badge badge-circuit">Circuit</span></td><td>Boretto, Italien</td><td class="hide-mobile">F125, F250, F500</td></tr>
+        <tr data-branch="offshore" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-06-18 – 21</span></td><td>Offshore WC — 3D</td><td><span class="badge badge-offshore">Offshore</span></td><td>Rodi Garganico, Italien</td><td class="hide-mobile">3D</td></tr>
+        <tr data-branch="offshore" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-06-19 – 21</span></td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td>Europa (TBA)</td><td class="hide-mobile">XCAT</td></tr>
+        <tr data-branch="offshore" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-07-08 – 11</span></td><td>Offshore EC — 3B, 3C, 3J</td><td><span class="badge badge-offshore">Offshore</span></td><td>Tvedestrand, Norge</td><td class="hide-mobile">3B, 3C, 3J</td></tr>
+        <tr data-branch="offshore" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-07-30 – 02/08</span></td><td>Offshore WC — 3B, 3D, 3J</td><td><span class="badge badge-offshore">Offshore</span></td><td>Arendal, Norge</td><td class="hide-mobile">3B, 3D, 3J</td></tr>
+        <tr data-branch="offshore" class="uim" style="background:#eef0f8;"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-08-04 – 06</span></td><td>Offshore WC — 3D, 3J &#127480;&#127466;</td><td><span class="badge badge-offshore">Offshore</span></td><td><strong>Öregrund, Sverige</strong></td><td class="hide-mobile">3D, 3J</td></tr>
+        <tr data-branch="offshore" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-08-28 – 30</span></td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td>Europa (TBA)</td><td class="hide-mobile">XCAT</td></tr>
+        <tr data-branch="offshore" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-09-09 – 13</span></td><td>Offshore WC — 3D</td><td><span class="badge badge-offshore">Offshore</span></td><td>Trani, Italien</td><td class="hide-mobile">3D</td></tr>
+        <tr data-branch="offshore" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-10-09 – 11</span></td><td>Offshore EC — 3D</td><td><span class="badge badge-offshore">Offshore</span></td><td>Como, Italien</td><td class="hide-mobile">3D</td></tr>
+        <tr data-branch="offshore" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-10-29 – 31</span></td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td>Salmiya, Kuwait</td><td class="hide-mobile">XCAT</td></tr>
+        <tr data-branch="offshore" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-11-27 – 29</span></td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td>Mellanöstern (TBA)</td><td class="hide-mobile">XCAT</td></tr>
+        <tr data-branch="offshore" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-12-11 – 13</span></td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td>Dubai, UAE</td><td class="hide-mobile">XCAT</td></tr>
       </tbody>
     </table>
     <p class="cal-note">Källa: UIM (uim.sport). Visar offshore, aquabike och circuit. Uppdaterad 2026-02-26.</p>

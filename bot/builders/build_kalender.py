@@ -54,19 +54,24 @@ def build_svemo_table(events):
             "Aquabike": "badge-aquabike",
         }.get(e.get("branch", ""), "badge-open")
 
+        # Format date to prevent phone detection on iOS
+        date_str = e.get('date', '')
+        date_cell = f'<span style="white-space:nowrap;" x-apple-data-detectors="false">{date_str}</span>'
+
         rows += f"""<tr data-type="{e.get('branch', '').lower()}">
-  <td>{e.get('date', '')}</td>
+  <td>{date_cell}</td>
   <td>{e.get('name', '')}</td>
   <td><span class="badge {badge_class}">{e.get('branch', '')}</span></td>
   <td>{e.get('location', '')}</td>
   <td class="hide-mobile">{e.get('organizer', '')}</td>
+  <td class="hide-mobile">{e.get('classes', '')}</td>
   <td class="hide-mobile">{e.get('status', '')}</td>
 </tr>"""
 
     return f"""<table class="cal-table">
 <thead><tr>
   <th>Datum</th><th>Tävling</th><th>Gren</th><th>Plats</th>
-  <th class="hide-mobile">Arrangör</th><th class="hide-mobile">Status</th>
+  <th class="hide-mobile">Arrangör</th><th class="hide-mobile">Klasser</th><th class="hide-mobile">Status</th>
 </tr></thead>
 <tbody>{rows}</tbody></table>"""
 
@@ -75,6 +80,7 @@ def build_uim_table(events):
     """Build HTML table rows for UIM events.
 
     UIM data fields: date, name, venue, country, discipline
+    Table columns: Datum | Tävling | Gren | Plats | Klasser (hide-mobile)
     """
     if not events:
         return "<tr><td colspan='5'>Inga internationella tävlingar hittade.</td></tr>"
@@ -87,13 +93,27 @@ def build_uim_table(events):
             "Circuit": "badge-circuit",
         }.get(e.get("discipline", ""), "badge-uim")
 
+        # Build plats from venue + country
+        venue = e.get("venue", "")
+        country = e.get("country", "")
+        if venue and country:
+            plats = f"{venue}, {country}"
+        elif country:
+            plats = country
+        else:
+            plats = venue or "TBA"
+
+        # Format date to prevent phone detection on iOS
+        date_str = e.get("date", "")
+        date_cell = f'<span style="white-space:nowrap;" x-apple-data-detectors="false">{date_str}</span>'
+
         rows += (
             f'<tr data-branch="{e.get("discipline", "").lower()}" class="uim">'
-            f'<td>{e.get("date", "")}</td>'
-            f'<td>{e.get("venue", "")}</td>'
-            f'<td><span class="badge {badge_class}">{e.get("name", "")}</span></td>'
-            f'<td class="hide-mobile">{e.get("country", "")}</td>'
-            f'<td>{e.get("discipline", "")}</td>'
+            f'<td>{date_cell}</td>'
+            f'<td>{e.get("name", "")}</td>'
+            f'<td><span class="badge {badge_class}">{e.get("discipline", "")}</span></td>'
+            f'<td>{plats}</td>'
+            f'<td class="hide-mobile">{e.get("classes", "")}</td>'
             f'</tr>'
         )
     return rows
@@ -127,19 +147,24 @@ def build():
                 "Aquabike": "badge-aquabike",
             }.get(e.get("branch", ""), "badge-open")
 
+            # Format date to prevent phone detection on iOS
+            date_str = e.get("date", "")
+            date_cell = f'<span style="white-space:nowrap;" x-apple-data-detectors="false">{date_str}</span>'
+
             svemo_rows += (
                 f'<tr data-branch="{e.get("branch", "").lower()}">'
-                f'<td>{e.get("date", "")}</td>'
+                f'<td>{date_cell}</td>'
                 f'<td>{e.get("name", "")}</td>'
                 f'<td><span class="badge {badge_class}">{e.get("branch", "")}</span></td>'
+                f'<td>{e.get("location", "")}</td>'
                 f'<td class="hide-mobile">{e.get("organizer", "")}</td>'
                 f'<td class="hide-mobile">{e.get("classes", "")}</td>'
-                f'<td>{e.get("status", "")}</td>'
+                f'<td class="hide-mobile">{e.get("status", "")}</td>'
                 f'</tr>\n        '
             )
 
         if not svemo_rows:
-            svemo_rows = '<tr><td colspan="6">Inga kommande svenska tävlingar hittade.</td></tr>'
+            svemo_rows = '<tr><td colspan="7">Inga kommande svenska tävlingar hittade.</td></tr>'
 
         html = re.sub(svemo_pattern, rf'\1\n        {svemo_rows}\2', html, flags=re.DOTALL)
         updated = True
