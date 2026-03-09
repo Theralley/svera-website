@@ -30,13 +30,16 @@ python3 "$SCRIPT_DIR/scrapers/webtracking_results.py" || echo "WARNING: webtrack
 echo "[3/6] SVEMO calendar..."
 python3 "$SCRIPT_DIR/scrapers/svemo_calendar.py" || echo "WARNING: svemo calendar scraper failed"
 
-echo "[4/6] UIM calendar..."
+echo "[4/7] UIM calendar..."
 python3 "$SCRIPT_DIR/scrapers/uim_calendar.py" || echo "WARNING: uim calendar scraper failed"
 
-echo "[5/6] Rules & regulations..."
+echo "[5/7] SVEMO public calendar (verification)..."
+python3 "$SCRIPT_DIR/scrapers/svemo_calendar_public.py" || echo "WARNING: svemo public calendar scraper failed"
+
+echo "[6/7] Rules & regulations..."
 python3 "$SCRIPT_DIR/scrapers/svemo_rules.py" || echo "WARNING: rules scraper failed"
 
-echo "[6/6] International powerboat news..."
+echo "[7/7] International powerboat news..."
 python3 "$SCRIPT_DIR/scrapers/news_aggregator.py" || echo "WARNING: news aggregator failed"
 
 # Step 2: Rebuild pages from scraped data

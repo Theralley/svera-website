@@ -25,6 +25,7 @@ INTERVALS = {
     "svemo_calendar": 48,           # Every 2 days
     "uim_calendar": 48,             # Every 2 days
     "svemo_results": 48,            # Every 2 days
+    "svemo_calendar_public": 48,     # Every 2 days — public verification
     "svemo_rules": 168,             # Weekly — rules change very rarely
     "news_articles": 168,           # Weekly — news aggregation
     "news_weekly_summary": 168,     # Weekly — AI summary

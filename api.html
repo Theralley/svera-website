@@ -136,6 +136,12 @@ deploy.sh &rarr; svera.nu
           <td>Publika resultatlistor fr&aring;n SVEMO. Parseade HTML-tabeller med position, f&ouml;rare, klubb, b&aring;t, klass, nationalitet och po&auml;ng.</td>
         </tr>
         <tr>
+          <td><strong>SVEMO Publik</strong><br><code>ta.svemo.se/public</code></td>
+          <td><span class="badge-source badge-public">Publik</span></td>
+          <td><span class="badge-interval">48h</span></td>
+          <td>Sekundär verifieringsk&auml;lla f&ouml;r SVEMO-kalendern. H&auml;mtar t&auml;vlingar fr&aring;n publika sidor (Telerik-grid) per gren &mdash; ingen inloggning kr&auml;vs. Korsverifierar mot TAM-data och loggar avvikelser.</td>
+        </tr>
+        <tr>
           <td><strong>UIM Sport</strong><br><code>uim.sport</code></td>
           <td><span class="badge-source badge-public">Publik</span></td>
           <td><span class="badge-interval">48h</span></td>
@@ -177,6 +183,21 @@ deploy.sh &rarr; svera.nu
   }
 ]
     </div>
+
+    <h4>svemo_calendar_public.json &mdash; SVEMO Publik (verifiering)</h4>
+    <div class="code-block">
+[
+  {
+    <span class="key">"name"</span>: <span class="str">"V&aring;rracet"</span>,
+    <span class="key">"date"</span>: <span class="str">"2026-06-13"</span>,
+    <span class="key">"organizer"</span>: <span class="str">"&Ouml;regrunds RK"</span>,
+    <span class="key">"branch"</span>: <span class="str">"Offshore"</span>,
+    <span class="key">"competition_id"</span>: <span class="str">"17531"</span>,  <span class="comment">// SVEMO TAM ID &mdash; l&auml;nkar till detaljsida</span>
+    <span class="key">"source"</span>: <span class="str">"public"</span>
+  }
+]
+    </div>
+    <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:16px;">Verifieringsrapporten sparas i <code>svemo_verification.json</code> med antal avvikelser och tidsstämpel.</p>
 
     <h4>uim_calendar.json &mdash; UIM Kalender</h4>
     <div class="code-block">
