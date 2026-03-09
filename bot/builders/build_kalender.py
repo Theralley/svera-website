@@ -3,6 +3,7 @@
 import json
 import os
 import re
+from collections import OrderedDict
 from datetime import datetime
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
@@ -37,43 +38,45 @@ def load_data():
     return svemo, uim
 
 
-def build_svemo_table(events):
-    """Build HTML table for SVEMO events."""
-    if not events:
-        return "<p>Inga kommande svenska tävlingar hittade.</p>"
+BADGE_CLASSES = {
+    "Offshore": "badge-offshore",
+    "Rundbana": "badge-rundbana",
+    "Aquabike": "badge-aquabike",
+}
 
-    today = datetime.now().strftime("%Y-%m-%d")
-    future = [e for e in events if e.get("date", "") >= today]
-    future.sort(key=lambda e: e["date"])
 
-    rows = ""
-    for e in future:
-        badge_class = {
-            "Offshore": "badge-offshore",
-            "Rundbana": "badge-rundbana",
-            "Aquabike": "badge-aquabike",
-        }.get(e.get("branch", ""), "badge-open")
+def merge_events(events):
+    """Merge events with same date + location into single entries with multiple branches."""
+    grouped = OrderedDict()
+    for e in events:
+        key = (e.get("date", ""), e.get("location", ""))
+        if key not in grouped:
+            grouped[key] = {
+                "date": e.get("date", ""),
+                "name": e.get("name", ""),
+                "location": e.get("location", ""),
+                "organizer": e.get("organizer", ""),
+                "branches": [],
+                "classes_list": [],
+                "status": e.get("status", ""),
+            }
+        merged = grouped[key]
+        branch = e.get("branch", "")
+        if branch and branch not in merged["branches"]:
+            merged["branches"].append(branch)
+        classes = e.get("classes", "")
+        if classes and classes not in merged["classes_list"]:
+            merged["classes_list"].append(classes)
+    return list(grouped.values())
 
-        # Format date to prevent phone detection on iOS
-        date_str = e.get('date', '')
-        date_cell = f'<span style="white-space:nowrap;" x-apple-data-detectors="false">{date_str}</span>'
 
-        rows += f"""<tr data-type="{e.get('branch', '').lower()}">
-  <td>{date_cell}</td>
-  <td>{e.get('name', '')}</td>
-  <td><span class="badge {badge_class}">{e.get('branch', '')}</span></td>
-  <td>{e.get('location', '')}</td>
-  <td class="hide-mobile">{e.get('organizer', '')}</td>
-  <td class="hide-mobile">{e.get('classes', '')}</td>
-  <td class="hide-mobile">{e.get('status', '')}</td>
-</tr>"""
-
-    return f"""<table class="cal-table">
-<thead><tr>
-  <th>Datum</th><th>Tävling</th><th>Gren</th><th>Plats</th>
-  <th class="hide-mobile">Arrangör</th><th class="hide-mobile">Klasser</th><th class="hide-mobile">Status</th>
-</tr></thead>
-<tbody>{rows}</tbody></table>"""
+def build_badges(branches):
+    """Build HTML badge spans for one or more branches."""
+    parts = []
+    for b in branches:
+        cls = BADGE_CLASSES.get(b, "badge-open")
+        parts.append(f'<span class="badge {cls}">{b}</span>')
+    return " ".join(parts)
 
 
 def build_uim_table(events):
@@ -108,7 +111,7 @@ def build_uim_table(events):
         date_cell = f'<span style="white-space:nowrap;" x-apple-data-detectors="false">{date_str}</span>'
 
         rows += (
-            f'<tr data-branch="{e.get("discipline", "").lower()}" class="uim">'
+            f'<tr data-branches="{e.get("discipline", "").lower()}" class="uim">'
             f'<td>{date_cell}</td>'
             f'<td>{e.get("name", "")}</td>'
             f'<td><span class="badge {badge_class}">{e.get("discipline", "")}</span></td>'
@@ -139,26 +142,28 @@ def build():
         future = [e for e in svemo if e.get("date", "") >= today]
         future.sort(key=lambda e: e["date"])
 
+        # Merge events with same date + location into single rows
+        merged = merge_events(future)
+
         svemo_rows = ""
-        for e in future:
-            badge_class = {
-                "Offshore": "badge-offshore",
-                "Rundbana": "badge-rundbana",
-                "Aquabike": "badge-aquabike",
-            }.get(e.get("branch", ""), "badge-open")
+        for e in merged:
+            branches = e.get("branches", [])
+            branches_attr = " ".join(b.lower() for b in branches)
+            badges_html = build_badges(branches)
+            classes_combined = ", ".join(e.get("classes_list", []))
 
             # Format date to prevent phone detection on iOS
             date_str = e.get("date", "")
             date_cell = f'<span style="white-space:nowrap;" x-apple-data-detectors="false">{date_str}</span>'
 
             svemo_rows += (
-                f'<tr data-branch="{e.get("branch", "").lower()}">'
+                f'<tr data-branches="{branches_attr}">'
                 f'<td>{date_cell}</td>'
                 f'<td>{e.get("name", "")}</td>'
-                f'<td><span class="badge {badge_class}">{e.get("branch", "")}</span></td>'
+                f'<td>{badges_html}</td>'
                 f'<td>{e.get("location", "")}</td>'
                 f'<td class="hide-mobile">{e.get("organizer", "")}</td>'
-                f'<td class="hide-mobile">{e.get("classes", "")}</td>'
+                f'<td class="hide-mobile">{classes_combined}</td>'
                 f'<td class="hide-mobile">{e.get("status", "")}</td>'
                 f'</tr>\n        '
             )
@@ -168,7 +173,7 @@ def build():
 
         html = re.sub(svemo_pattern, rf'\1\n        {svemo_rows}\2', html, flags=re.DOTALL)
         updated = True
-        print(f"[build_kalender] Updated SVEMO section: {len(future)} future events")
+        print(f"[build_kalender] Updated SVEMO section: {len(merged)} events ({len(future)} raw, {len(future) - len(merged)} merged)")
 
     # Update UIM table body — only if data has proper date fields (YYYY-MM-DD format)
     uim_pattern = r'(<tbody id="uim-events">).*?(</tbody>)'
@@ -181,9 +186,10 @@ def build():
     elif uim:
         print(f"[build_kalender] UIM: {len(uim)} events (skipped — raw data lacks full dates)")
 
-    # Update the "Uppdaterad" date in source notes
+    # Update "Senast kontrollerad" to today (content-change detection in
+    # check_content_changes.py handles the "Uppdaterad" date at deploy time)
     today_str = datetime.now().strftime("%Y-%m-%d")
-    html = re.sub(r'Uppdaterad \d{4}-\d{2}-\d{2}', f'Uppdaterad {today_str}', html)
+    html = re.sub(r'Senast kontrollerad \d{4}-\d{2}-\d{2}', f'Senast kontrollerad {today_str}', html)
 
     if updated:
         with open(kalender_path, "w") as f:

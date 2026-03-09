@@ -38,6 +38,11 @@ if [ -z "$SFTP_PASS" ] || [ -z "$SFTP_HOST" ] || [ -z "$WEBROOT" ]; then
     exit 1
 fi
 
+# Pre-deploy: detect content changes and update dates
+echo "Checking for content changes..."
+python3 "$SCRIPT_DIR/check_content_changes.py" || echo "WARNING: content change check failed"
+
+echo ""
 echo "Deploying SVERA to one.com..."
 echo "Host: $SFTP_HOST"
 echo "Webroot: $WEBROOT"

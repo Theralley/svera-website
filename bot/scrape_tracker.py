@@ -18,14 +18,13 @@ from datetime import datetime, timedelta
 LOG_FILE = os.path.join(os.path.dirname(__file__), "scrape_log.json")
 
 # Default intervals (hours) before re-scraping each source
-# All set to weekly (168h) to reduce load and API calls
 INTERVALS = {
-    "webtracking_races": 168,       # Weekly — race list changes rarely
-    "webtracking_results": 168,     # Weekly — results only change during race weekends
-    "webtracking_results_recent": 168, # Weekly
-    "svemo_calendar": 168,          # Weekly — calendar changes infrequently
-    "uim_calendar": 168,            # Weekly — UIM calendar changes infrequently
-    "svemo_results": 168,           # Weekly — SVEMO official results
+    "webtracking_races": 48,        # Every 2 days
+    "webtracking_results": 48,      # Every 2 days
+    "webtracking_results_recent": 48, # Every 2 days
+    "svemo_calendar": 48,           # Every 2 days
+    "uim_calendar": 48,             # Every 2 days
+    "svemo_results": 48,            # Every 2 days
     "svemo_rules": 168,             # Weekly — rules change very rarely
     "news_articles": 168,           # Weekly — news aggregation
     "news_weekly_summary": 168,     # Weekly — AI summary
