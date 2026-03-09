@@ -275,8 +275,75 @@ def main():
             print(f"  [FAIL] {page}#{anchor} NOT FOUND")
             errors.append(f"Missing anchor: {page}#{anchor}")
 
-    # Test 10: Nav consistency — all pages have same Klubbar dropdown
-    print("\n--- Test 10: Nav consistency across all pages ---")
+    # Test 10: api.html page validation
+    print("\n--- Test 10: api.html page ---")
+    total += 1
+    api_path = os.path.join(SITE_DIR, 'api.html')
+    if os.path.exists(api_path):
+        print(f"  [PASS] api.html exists")
+        passed += 1
+    else:
+        print(f"  [FAIL] api.html MISSING")
+        errors.append("api.html: Page missing")
+
+    total += 1
+    if 'main' in page_ids.get('api.html', set()):
+        print(f"  [PASS] api.html has #main")
+        passed += 1
+    else:
+        print(f"  [FAIL] api.html missing #main")
+        errors.append("api.html: Missing #main")
+
+    # Check api.html has required content sections
+    total += 1
+    api_ids = page_ids.get('api.html', set())
+    with open(api_path, 'r', encoding='utf-8') as f:
+        api_content = f.read()
+    api_keywords = ['svemo_calendar', 'uim_calendar', 'webtracking', 'JSON', 'Dataformat']
+    missing_kw = [kw for kw in api_keywords if kw not in api_content]
+    if not missing_kw:
+        print(f"  [PASS] api.html has all required data source documentation")
+        passed += 1
+    else:
+        print(f"  [FAIL] api.html missing content: {missing_kw}")
+        errors.append(f"api.html: Missing content keywords: {missing_kw}")
+
+    # Test 11: robots.txt exists
+    print("\n--- Test 11: robots.txt ---")
+    total += 1
+    robots_path = os.path.join(SITE_DIR, 'robots.txt')
+    if os.path.exists(robots_path):
+        with open(robots_path, 'r') as f:
+            robots = f.read()
+        if 'User-agent' in robots and 'Disallow: /bot/' in robots:
+            print(f"  [PASS] robots.txt exists with correct directives")
+            passed += 1
+        else:
+            print(f"  [FAIL] robots.txt missing required directives")
+            errors.append("robots.txt: Missing User-agent or Disallow directives")
+    else:
+        print(f"  [FAIL] robots.txt MISSING")
+        errors.append("robots.txt: File missing")
+
+    # Test 12: .htaccess cache headers
+    print("\n--- Test 12: .htaccess cache control ---")
+    total += 1
+    htaccess_path = os.path.join(SITE_DIR, '.htaccess')
+    if os.path.exists(htaccess_path):
+        with open(htaccess_path, 'r') as f:
+            htaccess = f.read()
+        if 'no-cache' in htaccess and 'must-revalidate' in htaccess:
+            print(f"  [PASS] .htaccess has no-cache headers for HTML")
+            passed += 1
+        else:
+            print(f"  [FAIL] .htaccess missing cache control for HTML")
+            errors.append(".htaccess: Missing no-cache/must-revalidate for HTML")
+    else:
+        print(f"  [FAIL] .htaccess MISSING")
+        errors.append(".htaccess: File missing")
+
+    # Test 13: Nav consistency — all pages have same Klubbar dropdown
+    print("\n--- Test 13: Nav consistency across all pages ---")
     for page in EXPECTED_PAGES:
         total += 1
         filepath = os.path.join(SITE_DIR, page)

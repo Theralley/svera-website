@@ -102,7 +102,10 @@ Scraper &rarr; bot/data/*.json
 <span class="comment">// 2. Builders l&auml;ser cachad JSON och genererar HTML</span>
 Builder &rarr; *.html
 
-<span class="comment">// 3. Deploy laddar upp till webbhotellet</span>
+<span class="comment">// 3. Inneh&aring;llskontroll &mdash; uppdaterar &rdquo;Uppdaterad&rdquo;-datum vid &auml;ndringar</span>
+check_content_changes.py &rarr; hash-j&auml;mf&ouml;relse
+
+<span class="comment">// 4. Deploy laddar upp till webbhotellet</span>
 deploy.sh &rarr; svera.nu
     </div>
   </div>
