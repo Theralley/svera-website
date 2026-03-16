@@ -51,7 +51,7 @@ def update_html_file(filepath, date_str):
     with open(filepath, "r", encoding="utf-8") as f:
         content = f.read()
 
-    new_line = f"&copy; 2026 SVERA — Svenska Evenemang &amp; Racerbåtsarkivet. Senast uppdaterad {date_str}."
+    new_line = "&copy; 2026 SVERA — Svenska Evenemang &amp; Racerbåtsarkivet."
 
     updated = FOOTER_PATTERN.sub(new_line, content)
 

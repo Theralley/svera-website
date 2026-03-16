@@ -457,7 +457,7 @@ def _render_page(articles, summary, scraped_at):
       </div>
     </div>
     <div class="footer-bottom">
-      &copy; 2026 SVERA &mdash; Svenska Evenemang &amp; Racerb&aring;tsarkivet. Senast uppdaterad {today}.
+      &copy; 2026 SVERA &mdash; Svenska Evenemang &amp; Racerb&aring;tsarkivet.
     </div>
   </div>
 </footer>

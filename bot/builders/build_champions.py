@@ -769,7 +769,7 @@ def generate_html(standings):
         <a href="https://buymeacoffee.com/theralley" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#FFDD00;color:#333;padding:8px 18px;border-radius:6px;font-size:0.82rem;font-weight:700;text-decoration:none;transition:all 0.2s;">&#9749; Bjud oss p\u00e5 en kaffe</a>
       </div>
       <p style="margin-bottom:6px;font-size:0.8rem;color:#8899aa;">Vi samlar och automatiserar informationen kring svensk b\u00e5tracing \u2014 f\u00f6r att g\u00f6ra den tillg\u00e4nglig f\u00f6r alla. Hj\u00e4lp oss g\u00f6ra det \u00e4nnu b\u00e4ttre.</p>
-      &copy; 2026 SVERA \u2014 Svenska Evenemang &amp; Racerb\u00e5tsarkivet. Senast uppdaterad {today}.
+      &copy; 2026 SVERA \u2014 Svenska Evenemang &amp; Racerb\u00e5tsarkivet.
     </div>
   </div>
 </footer>
