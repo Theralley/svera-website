@@ -179,7 +179,7 @@ All scrapers live in `bot/scrapers/` and use **Python stdlib only** (zero pip de
 | **Source** | [WebTracking.se](https://webtracking.se) (public REST API) |
 | **API** | `https://webtracking.se/pbl?reqType=rc&date=all` |
 | **Auth** | None |
-| **Interval** | 24h |
+| **Interval** | 48h |
 | **Output** | `bot/data/webtracking_races.json` (~36 KB) |
 | **Used by** | `build_resultat.py` → `resultat.html` |
 
@@ -196,7 +196,7 @@ python3 bot/scrapers/webtracking.py --force
 | **Source** | [WebTracking.se](https://webtracking.se) (public REST API) |
 | **API** | `https://webtracking.se/pbl?reqType=rs&raceIdx={id}` |
 | **Auth** | None |
-| **Interval** | 24h |
+| **Interval** | 48h |
 | **Output** | `bot/data/webtracking_results.json` (~426 KB) |
 | **Used by** | `build_resultat.py` → `resultat.html` |
 
@@ -279,7 +279,7 @@ python3 bot/scrapers/svemo_rules.py --force
 |---|---|
 | **Sources** | [Powerboat Racing World](https://powerboatracingworld.com) (WP REST), [F1H2O](https://www.f1h2o.com) (HTML), [Powerboat News](https://powerboat.news) (WP REST) |
 | **Auth** | None |
-| **Interval** | 12h |
+| **Interval** | 168h (weekly) |
 | **Output** | `bot/data/news_feed.json` (~13 KB) |
 | **Used by** | `build_news.py` → `nyheter.html` |
 
@@ -299,7 +299,7 @@ Reads `webtracking_races.json`, `webtracking_results.json`, and `svemo_results.j
 
 ### `build_kalender.py` — Calendar Page
 
-Reads `svemo_calendar.json` and `uim_calendar.json`. Replaces the `<tbody>` contents in `kalender.html` with upcoming events, adds class badges (offshore, rundbana, aquabike), and updates the "Uppdaterad" date.
+Reads `svemo_calendar.json` and `uim_calendar.json`. Replaces the `<tbody>` contents in `kalender.html` with upcoming events, adds class badges (offshore, rundbana, aquabike), and updates the "Uppdaterad" date. Calendar supports two-group filtering: branch filters (Offshore/Rundbana/Aquabike/UIM) can be combined with country filters (Endast Sverige/Inbjudan utomlands) via `data-country` attribute. Manually added events (e.g. foreign invitation races) use `data-country="other"`.
 
 ### `build_news.py` — News + AI Digest
 
@@ -315,12 +315,12 @@ The daemon (`svera_daemon.sh`) runs a full scrape every **7 days**. Between cycl
 
 | Source | Scraper | Interval | Auth |
 |--------|---------|----------|------|
-| WebTracking races | `webtracking.py` | 24h | None |
-| WebTracking results | `webtracking_results.py` | 24h | None |
+| WebTracking races | `webtracking.py` | 48h | None |
+| WebTracking results | `webtracking_results.py` | 48h | None |
 | SVEMO calendar | `svemo_calendar.py` | 48h | TAM login |
 | SVEMO results | `svemo_results.py` | 48h | TAM login |
 | UIM calendar | `uim_calendar.py` | 48h | None |
-| News (PRW, F1H2O, PBN) | `news_aggregator.py` | 12h | None |
+| News (PRW, F1H2O, PBN) | `news_aggregator.py` | 168h | None |
 | Rules (SVEMO + UIM) | `svemo_rules.py` | 168h | None |
 
 ### Manual commands
