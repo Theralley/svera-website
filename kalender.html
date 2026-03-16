@@ -93,11 +93,14 @@
 <div class="container page-content" id="main">
 
   <div class="calendar-filter">
-    <button class="filter-btn active" onclick="filterCal('all')">Alla</button>
-    <button class="filter-btn" onclick="filterCal('offshore')">Offshore</button>
-    <button class="filter-btn" onclick="filterCal('rundbana')">Rundbana</button>
-    <button class="filter-btn" onclick="filterCal('aquabike')">Aquabike</button>
-    <button class="filter-btn" onclick="filterCal('uim')">Internationellt (UIM)</button>
+    <button class="filter-btn active" data-group="branch" data-value="all" onclick="toggleFilter(this)">Alla</button>
+    <button class="filter-btn" data-group="branch" data-value="offshore" onclick="toggleFilter(this)">Offshore</button>
+    <button class="filter-btn" data-group="branch" data-value="rundbana" onclick="toggleFilter(this)">Rundbana</button>
+    <button class="filter-btn" data-group="branch" data-value="aquabike" onclick="toggleFilter(this)">Aquabike</button>
+    <button class="filter-btn" data-group="branch" data-value="uim" onclick="toggleFilter(this)">Internationellt (UIM)</button>
+    <span style="border-left:2px solid var(--border);margin:0 6px;"></span>
+    <button class="filter-btn" data-group="country" data-value="sweden" onclick="toggleFilter(this)">Endast Sverige</button>
+    <button class="filter-btn" data-group="country" data-value="other" onclick="toggleFilter(this)">Inbjudan utomlands</button>
   </div>
 
   <!-- SVEMO Swedish Calendar -->
@@ -116,17 +119,18 @@
         </tr>
       </thead>
       <tbody id="svemo-events">
-        <tr data-branches="offshore"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-05-01 – 02</span></td><td>Avrostning</td><td><span class="badge badge-offshore">Offshore</span></td><td>Loftahammar</td><td class="hide-mobile">Kungliga MBK</td><td class="hide-mobile">Träningsläger (Offshore)</td><td class="hide-mobile"><span class="badge badge-open">Träning</span></td></tr>
-        <tr data-branches="rundbana offshore"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-05-23</span></td><td>Träningsläger</td><td><span class="badge badge-rundbana">Rundbana</span> <span class="badge badge-offshore">Offshore</span></td><td>Östhammar</td><td class="hide-mobile">Östhammars SS</td><td class="hide-mobile">GT15, GT30, Offshore, Aquabike</td><td class="hide-mobile"></td></tr>
-        <tr data-branches="offshore"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-06-13</span></td><td>Vårracet</td><td><span class="badge badge-offshore">Offshore</span></td><td>Öregrund</td><td class="hide-mobile">Öregrunds RK</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td class="hide-mobile"></td></tr>
-        <tr data-branches="offshore"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-07-04</span></td><td>Oskarshamn Offshore</td><td><span class="badge badge-offshore">Offshore</span></td><td>Oskarshamn</td><td class="hide-mobile">SUK</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td class="hide-mobile"></td></tr>
-        <tr data-branches="offshore"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-08-08</span></td><td>Roslagsloppet</td><td><span class="badge badge-offshore">Offshore</span></td><td>Öregrund</td><td class="hide-mobile">Öregrunds RK</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td class="hide-mobile"></td></tr>
-        <tr data-branches="rundbana"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-08-29</span></td><td>Dalälvstrofén 2026</td><td><span class="badge badge-rundbana">Rundbana</span></td><td>Avesta</td><td class="hide-mobile">RBK Ruskprickarna</td><td class="hide-mobile">F125, F4, GT15, GT30, OSY400, Thundercat</td><td class="hide-mobile"></td></tr>
-        <tr data-branches="offshore"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-09-05</span></td><td>Saltsjöloppet 2026</td><td><span class="badge badge-offshore">Offshore</span></td><td>Stockholm</td><td class="hide-mobile">Sportbåtsklubben</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150</td><td class="hide-mobile"></td></tr>
-        <tr data-branches="rundbana offshore"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-09-26</span></td><td>Östhammars GP mot cancer</td><td><span class="badge badge-rundbana">Rundbana</span> <span class="badge badge-offshore">Offshore</span></td><td>Östhammar</td><td class="hide-mobile">Östhammars SS</td><td class="hide-mobile">F4, GT15, GT30, OSY400, Thundercat, 3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td class="hide-mobile"></td></tr>
+        <tr data-branches="offshore" data-country="sweden"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-05-01 – 02</span></td><td>Avrostning</td><td><span class="badge badge-offshore">Offshore</span></td><td>Loftahammar</td><td class="hide-mobile">Kungliga MBK</td><td class="hide-mobile">Träningsläger (Offshore)</td><td class="hide-mobile"><span class="badge badge-open">Träning</span></td></tr>
+        <tr data-branches="rundbana offshore" data-country="sweden"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-05-23</span></td><td>Träningsläger</td><td><span class="badge badge-rundbana">Rundbana</span> <span class="badge badge-offshore">Offshore</span></td><td>Östhammar</td><td class="hide-mobile">Östhammars SS</td><td class="hide-mobile">GT15, GT30, Offshore, Aquabike</td><td class="hide-mobile"></td></tr>
+        <tr data-branches="offshore" data-country="other" style="background:#f9f5e6;"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-06-06</span></td><td>Kalkstrand Offshore &#127467;&#127470;</td><td><span class="badge badge-offshore">Offshore</span></td><td>Kalkstrand, Finland</td><td class="hide-mobile">PROMO</td><td class="hide-mobile">Offshore (inbjudan)</td><td class="hide-mobile"><span class="badge badge-open">Öppen</span></td></tr>
+        <tr data-branches="offshore" data-country="sweden"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-06-13</span></td><td>Vårracet</td><td><span class="badge badge-offshore">Offshore</span></td><td>Öregrund</td><td class="hide-mobile">Öregrunds RK</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td class="hide-mobile"></td></tr>
+        <tr data-branches="offshore" data-country="sweden"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-07-04</span></td><td>Oskarshamn Offshore</td><td><span class="badge badge-offshore">Offshore</span></td><td>Oskarshamn</td><td class="hide-mobile">SUK</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td class="hide-mobile"></td></tr>
+        <tr data-branches="offshore" data-country="sweden"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-08-08</span></td><td>Roslagsloppet</td><td><span class="badge badge-offshore">Offshore</span></td><td>Öregrund</td><td class="hide-mobile">Öregrunds RK</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td class="hide-mobile"></td></tr>
+        <tr data-branches="rundbana" data-country="sweden"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-08-29</span></td><td>Dalälvstrofén 2026</td><td><span class="badge badge-rundbana">Rundbana</span></td><td>Avesta</td><td class="hide-mobile">RBK Ruskprickarna</td><td class="hide-mobile">F125, F4, GT15, GT30, OSY400, Thundercat</td><td class="hide-mobile"></td></tr>
+        <tr data-branches="offshore" data-country="sweden"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-09-05</span></td><td>Saltsjöloppet 2026</td><td><span class="badge badge-offshore">Offshore</span></td><td>Stockholm</td><td class="hide-mobile">Sportbåtsklubben</td><td class="hide-mobile">3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150</td><td class="hide-mobile"></td></tr>
+        <tr data-branches="rundbana offshore" data-country="sweden"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-09-26</span></td><td>Östhammars GP mot cancer</td><td><span class="badge badge-rundbana">Rundbana</span> <span class="badge badge-offshore">Offshore</span></td><td>Östhammar</td><td class="hide-mobile">Östhammars SS</td><td class="hide-mobile">F4, GT15, GT30, OSY400, Thundercat, 3A-3C, 3J, 3X, K, T, U, V24, V90, V150, W150, Runabout GP1/GP4</td><td class="hide-mobile"></td></tr>
       </tbody>
     </table>
-    <p class="cal-note">Källa: SVEMO TA (tam.svemo.se). Uppdaterad 2026-03-09. Senast kontrollerad 2026-03-09.</p>
+    <p class="cal-note">Källa: SVEMO TA (tam.svemo.se). Uppdaterad 2026-03-16. Senast kontrollerad 2026-03-16.</p>
   </div>
 
   <!-- UIM International Calendar -->
@@ -168,7 +172,7 @@
         <tr data-branches="offshore" class="uim"><td><span style="white-space:nowrap;" x-apple-data-detectors="false">2026-12-11 – 13</span></td><td>XCAT World Championship</td><td><span class="badge badge-offshore">Offshore</span></td><td>Dubai, UAE</td><td class="hide-mobile">XCAT</td></tr>
       </tbody>
     </table>
-    <p class="cal-note">Källa: UIM (uim.sport). Visar offshore, aquabike och circuit. Uppdaterad 2026-03-09. Senast kontrollerad 2026-03-09.</p>
+    <p class="cal-note">Källa: UIM (uim.sport). Visar offshore, aquabike och circuit. Uppdaterad 2026-03-16. Senast kontrollerad 2026-03-16.</p>
   </div>
 
 </div>
@@ -186,26 +190,56 @@
         <a href="https://buymeacoffee.com/theralley" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#FFDD00;color:#333;padding:8px 18px;border-radius:6px;font-size:0.82rem;font-weight:700;text-decoration:none;transition:all 0.2s;">&#9749; Bjud oss på en kaffe</a>
       </div>
       <p style="margin-bottom:6px;font-size:0.8rem;color:#8899aa;">Vi samlar och automatiserar informationen kring svensk båtracing — för att göra den tillgänglig för alla. Hjälp oss göra det ännu bättre.</p>
-      &copy; 2026 SVERA — Svenska Evenemang &amp; Racerbåtsarkivet. Senast uppdaterad 2026-03-04.
+      &copy; 2026 SVERA — Svenska Evenemang &amp; Racerbåtsarkivet. Senast uppdaterad 2026-03-11.
     </div>
   </div>
 </footer>
 
 <script src="assets/js/main.js"></script>
 <script>
-function filterCal(branch) {
-  document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-  event.target.classList.add('active');
+var activeBranch = 'all';
+var activeCountry = null;
+
+function toggleFilter(btn) {
+  var group = btn.getAttribute('data-group');
+  var value = btn.getAttribute('data-value');
+
+  if (group === 'branch') {
+    document.querySelectorAll('.filter-btn[data-group="branch"]').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    activeBranch = value;
+  } else {
+    if (btn.classList.contains('active')) {
+      btn.classList.remove('active');
+      activeCountry = null;
+    } else {
+      document.querySelectorAll('.filter-btn[data-group="country"]').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeCountry = value;
+    }
+  }
+  applyFilters();
+}
+
+function applyFilters() {
   var rows = document.querySelectorAll('#svemo-events tr, #uim-events tr');
   rows.forEach(function(row) {
     var branches = row.getAttribute('data-branches') || '';
-    if (branch === 'all') {
-      row.style.display = '';
-    } else if (branch === 'uim') {
-      row.style.display = row.classList.contains('uim') ? '' : 'none';
-    } else {
-      row.style.display = branches.split(' ').indexOf(branch) !== -1 ? '' : 'none';
+    var country = row.getAttribute('data-country') || '';
+    var branchMatch = true;
+    var countryMatch = true;
+
+    if (activeBranch === 'uim') {
+      branchMatch = row.classList.contains('uim');
+    } else if (activeBranch !== 'all') {
+      branchMatch = branches.split(' ').indexOf(activeBranch) !== -1;
     }
+
+    if (activeCountry) {
+      countryMatch = country === activeCountry;
+    }
+
+    row.style.display = (branchMatch && countryMatch) ? '' : 'none';
   });
 }
 </script>
