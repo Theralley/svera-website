@@ -765,14 +765,28 @@ def run_agent(prompt, api_key, model, zdr=False):
                 "- Nyheter laggs i index.html div.news-list\n"
                 "- Skapa ALDRIG separata HTML-filer for nyheter\n"
                 "- Nyhets-kort har INGEN bild/news-image — anvand compact format:\n"
-                '  <article class="news-card"><div class="news-body">\n'
-                '    <div class="news-meta"><span class="category">Kategori</span>'
+                '  <article class="news-card" style="border-left:4px solid FARG;">'
+                '<div class="news-body">\n'
+                '    <div class="news-meta">'
+                '<span class="category" style="background:FARG;color:#fff;">Kategori</span>'
+                '<span class="separator"></span>'
                 '<span class="news-date">YYYY-MM-DD</span></div>\n'
                 "    <h3>Rubrik</h3><p>Text</p>\n"
-                '    <a href=\"url\" class=\"read-more\">Las mer &rarr;</a>\n'
+                '    <a href="url" class="read-more">Las mer &rarr;</a>\n'
                 "  </div></article>\n"
+                "- KATEGORI-FARGER (badge + border-left maste matcha):\n"
+                "  Evenemang: #c0392b (rod) | Internationellt: #e67e22 (orange)\n"
+                "  Ny funktion: linear-gradient(135deg,#ffd700,#f0c800) + color:#5a4700 + border #ffd700\n"
+                "  Tavling: #2980b9 (bla) | Nyhet/Arkivet/Klasser: default gul (ingen inline style)\n"
                 "- VIKTIGT: news-date ska ALLTID vara dagens datum (publiceringsdatum), "
-                "INTE evenemangsdatum. Dagens datum: " + datetime.now().strftime("%Y-%m-%d") + "\n"
+                "INTE evenemangsdatum. Evenemangsdatum skrivs i texten.\n"
+                "  Dagens datum: " + datetime.now().strftime("%Y-%m-%d") + "\n"
+                "- SORTERING: Nya kort laggs FORST i div.news-list (nyast overst)\n"
+                "- FORMATERING: Anvand ALDRIG <ul>/<li> i nyhetskort. "
+                "Skriv info som inline text med middot-separator: "
+                "<strong>Var:</strong> X &middot; <strong>Nar:</strong> Y\n"
+                "- LANKAR: Anvand ALDRIG href='#'. Om ingen riktig URL finns, "
+                "skippa <a class='read-more'> helt.\n"
                 "- PDF-bilagor ar sparade i assets/uploads/\n"
                 "- Nar klar: run_bash('bash bot/deploy.sh')\n"
                 "- Svara kort pa svenska (max 3 meningar)\n\n"
