@@ -21,8 +21,10 @@ DATA_DIR = os.path.join(BOT_DIR, "data")
 OUTPUT_FILE = os.path.join(DATA_DIR, "social_tiktok.json")
 
 # Accounts to track — add more as needed
+# Format: (username, tag)
+# Tags: news, team, driver, copilot
 ACCOUNTS = [
-    "rasmushamren",
+    ("rasmushamren", "driver"),
 ]
 
 USER_AGENT = (
@@ -100,9 +102,10 @@ def scrape():
     print(f"[social_tiktok] Fetching {len(ACCOUNTS)} profile(s)...")
 
     profiles = []
-    for username in ACCOUNTS:
+    for username, tag in ACCOUNTS:
         profile = fetch_profile(username)
         if profile:
+            profile["tag"] = tag
             profiles.append(profile)
 
     if not profiles:

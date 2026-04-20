@@ -109,8 +109,11 @@ run_scrape() {
     log "[8/9] Social media (TikTok)..."
     python3 "$SCRIPT_DIR/scrapers/social_tiktok.py" 2>&1 | tee -a "$LOG" || true
 
-    log "[9/9] Social media (Facebook)..."
+    log "[9/10] Social media (Facebook)..."
     python3 "$SCRIPT_DIR/scrapers/social_facebook.py" 2>&1 | tee -a "$LOG" || true
+
+    log "[10/10] Social media (Instagram)..."
+    python3 "$SCRIPT_DIR/scrapers/social_instagram.py" 2>&1 | tee -a "$LOG" || true
 
     python3 "$SCRIPT_DIR/builders/build_social.py" 2>&1 | tee -a "$LOG" || true
 

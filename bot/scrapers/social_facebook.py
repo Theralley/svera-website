@@ -22,8 +22,10 @@ DATA_DIR = os.path.join(BOT_DIR, "data")
 OUTPUT_FILE = os.path.join(DATA_DIR, "social_facebook.json")
 
 # Facebook pages to track — add more as needed
+# Format: (page_id, tag)
+# Tags: news, team, driver, copilot
 PAGES = [
-    "smugglerracing",
+    ("smugglerracing", "team"),
 ]
 
 # Facebook serves OG metadata to its own crawler UA
@@ -111,9 +113,10 @@ def scrape():
     print(f"[social_facebook] Fetching {len(PAGES)} page(s)...")
 
     pages = []
-    for page_id in PAGES:
+    for page_id, tag in PAGES:
         page = fetch_page(page_id)
         if page:
+            page["tag"] = tag
             pages.append(page)
 
     if not pages:

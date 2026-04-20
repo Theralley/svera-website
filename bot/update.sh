@@ -45,8 +45,11 @@ python3 "$SCRIPT_DIR/scrapers/news_aggregator.py" || echo "WARNING: news aggrega
 echo "[8/9] Social media (TikTok)..."
 python3 "$SCRIPT_DIR/scrapers/social_tiktok.py" || echo "WARNING: social tiktok scraper failed"
 
-echo "[9/9] Social media (Facebook)..."
+echo "[9/10] Social media (Facebook)..."
 python3 "$SCRIPT_DIR/scrapers/social_facebook.py" || echo "WARNING: social facebook scraper failed"
+
+echo "[10/10] Social media (Instagram)..."
+python3 "$SCRIPT_DIR/scrapers/social_instagram.py" || echo "WARNING: social instagram scraper failed"
 
 # Step 2: Rebuild pages from scraped data
 echo ""
