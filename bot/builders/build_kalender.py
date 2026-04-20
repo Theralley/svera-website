@@ -44,6 +44,21 @@ BADGE_CLASSES = {
     "Aquabike": "badge-aquabike",
 }
 
+# Foreign invitation events — manually curated events where Sweden is invited
+# These are added to the SVEMO calendar section with data-country="other"
+FOREIGN_EVENTS = [
+    {
+        "name": "Kalkstrand Offshore",
+        "date": "2026-06-06",
+        "location": "Kalkstrand, Finland",
+        "organizer": "PROMO",
+        "branches": ["Offshore"],
+        "classes_list": [],
+        "status": "Inbjudan",
+        "country": "other",
+    },
+]
+
 
 def merge_events(events):
     """Merge events with same date + organizer into single entries with multiple branches.
@@ -154,19 +169,30 @@ def build():
         # Merge events with same date + location into single rows
         merged = merge_events(future)
 
+        # Add foreign invitation events and sort all together
+        today = datetime.now().strftime("%Y-%m-%d")
+        for fe in FOREIGN_EVENTS:
+            if fe["date"] >= today:
+                merged.append(fe)
+        merged.sort(key=lambda e: e["date"])
+
         svemo_rows = ""
         for e in merged:
             branches = e.get("branches", [])
             branches_attr = " ".join(b.lower() for b in branches)
             badges_html = build_badges(branches)
             classes_combined = ", ".join(e.get("classes_list", []))
+            country = e.get("country", "sweden")
 
             # Format date to prevent phone detection on iOS
             date_str = e.get("date", "")
             date_cell = f'<span style="white-space:nowrap;" x-apple-data-detectors="false">{date_str}</span>'
 
+            # Foreign events get a subtle background highlight
+            row_style = ' style="background:#f9f5e6;"' if country == "other" else ""
+
             svemo_rows += (
-                f'<tr data-branches="{branches_attr}">'
+                f'<tr data-branches="{branches_attr}" data-country="{country}"{row_style}>'
                 f'<td>{date_cell}</td>'
                 f'<td>{e.get("name", "")}</td>'
                 f'<td>{badges_html}</td>'
