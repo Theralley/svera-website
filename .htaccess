@@ -9,6 +9,13 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 RewriteCond %{HTTP_HOST} ^svera\.nu$ [NC]
 RewriteRule ^(.*)$ https://www.svera.nu/$1 [R=301,L]
 
+# --- Clean URLs ---
+# /api -> /api.html
+RewriteRule ^api$ /api.html [L]
+
+# /docs -> /api
+RewriteRule ^docs$ /api [R=301,L]
+
 # --- Cache Control ---
 # HTML: always revalidate (so Safari/browsers fetch latest)
 <FilesMatch "\.html$">
