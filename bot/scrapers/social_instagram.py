@@ -26,6 +26,8 @@ OUTPUT_FILE = os.path.join(DATA_DIR, "social_instagram.json")
 # Tags: news, team, driver, copilot
 ACCOUNTS = [
     ("powerboatracingworld", "news"),
+    ("karnagracing", "team"),
+    ("wibergracing", "team"),
 ]
 
 USER_AGENT = "facebookexternalhit/1.1"

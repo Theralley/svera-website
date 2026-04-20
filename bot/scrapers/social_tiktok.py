@@ -25,6 +25,7 @@ OUTPUT_FILE = os.path.join(DATA_DIR, "social_tiktok.json")
 # Tags: news, team, driver, copilot
 ACCOUNTS = [
     ("rasmushamren", "driver"),
+    ("svemovattensport", "news"),
 ]
 
 USER_AGENT = (
