@@ -46,10 +46,15 @@ BADGE_CLASSES = {
 
 
 def merge_events(events):
-    """Merge events with same date + location into single entries with multiple branches."""
+    """Merge events with same date + organizer into single entries with multiple branches.
+
+    Uses (date, organizer) as key because the same event at the same venue
+    can have slightly different location names per branch (e.g.
+    'Östhammars träningsbana' vs 'Östhammars träningsbana offshore').
+    """
     grouped = OrderedDict()
     for e in events:
-        key = (e.get("date", ""), e.get("location", ""))
+        key = (e.get("date", ""), e.get("organizer", ""))
         if key not in grouped:
             grouped[key] = {
                 "date": e.get("date", ""),
