@@ -101,10 +101,14 @@ run_scrape() {
     log "[6/7] Rules..."
     python3 "$SCRIPT_DIR/scrapers/svemo_rules.py" --force 2>&1 | tee -a "$LOG" || true
 
-    log "[7/7] News aggregator + weekly digest..."
+    log "[7/8] News aggregator + weekly digest..."
     python3 "$SCRIPT_DIR/scrapers/news_aggregator.py" 2>&1 | tee -a "$LOG" || true
     python3 "$SCRIPT_DIR/builders/build_news.py" 2>&1 | tee -a "$LOG" || true
     python3 "$SCRIPT_DIR/builders/build_rss.py" 2>&1 | tee -a "$LOG" || true
+
+    log "[8/8] Social media (TikTok)..."
+    python3 "$SCRIPT_DIR/scrapers/social_tiktok.py" 2>&1 | tee -a "$LOG" || true
+    python3 "$SCRIPT_DIR/builders/build_social.py" 2>&1 | tee -a "$LOG" || true
 
     log "Rebuilding pages..."
     python3 "$SCRIPT_DIR/builders/build_resultat.py" 2>&1 | tee -a "$LOG" || true

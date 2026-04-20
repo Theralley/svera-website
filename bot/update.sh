@@ -39,8 +39,11 @@ python3 "$SCRIPT_DIR/scrapers/svemo_calendar_public.py" || echo "WARNING: svemo 
 echo "[6/7] Rules & regulations..."
 python3 "$SCRIPT_DIR/scrapers/svemo_rules.py" || echo "WARNING: rules scraper failed"
 
-echo "[7/7] International powerboat news..."
+echo "[7/8] International powerboat news..."
 python3 "$SCRIPT_DIR/scrapers/news_aggregator.py" || echo "WARNING: news aggregator failed"
+
+echo "[8/8] Social media (TikTok)..."
+python3 "$SCRIPT_DIR/scrapers/social_tiktok.py" || echo "WARNING: social tiktok scraper failed"
 
 # Step 2: Rebuild pages from scraped data
 echo ""
@@ -58,8 +61,11 @@ python3 "$SCRIPT_DIR/builders/build_news.py" || echo "WARNING: news builder fail
 echo "[4/5] Building champions.html (SM/RM standings)..."
 python3 "$SCRIPT_DIR/builders/build_champions.py" || echo "WARNING: champions builder failed"
 
-echo "[5/5] Building rss.xml (news RSS feed)..."
+echo "[5/6] Building rss.xml (news RSS feed)..."
 python3 "$SCRIPT_DIR/builders/build_rss.py" || echo "WARNING: RSS builder failed"
+
+echo "[6/6] Building social.html (social media feed)..."
+python3 "$SCRIPT_DIR/builders/build_social.py" || echo "WARNING: social builder failed"
 
 # Step 3: Update footer dates
 echo ""

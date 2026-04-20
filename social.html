@@ -42,6 +42,27 @@
     .feed-placeholder:hover { border-color:var(--primary); }
     .feed-placeholder strong { display:block; font-size:0.95rem; color:var(--text); margin-bottom:6px; }
 
+    .social-feed-list { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:20px; margin:20px 0; }
+    .social-profile-card { background:var(--white); border-radius:var(--radius-lg); box-shadow:var(--shadow); padding:24px; transition:all var(--transition); }
+    .social-profile-card:hover { box-shadow:var(--shadow-hover); transform:translateY(-2px); }
+    .social-profile-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+    .social-avatar { width:56px; height:56px; border-radius:50%; object-fit:cover; border:2px solid var(--border); }
+    .social-profile-info h3 { font-size:0.95rem; color:var(--text); margin:0; }
+    .social-handle { font-size:0.82rem; color:var(--text-light); text-decoration:none; }
+    .social-handle:hover { color:var(--primary); }
+    .social-platform-tag { margin-left:auto; padding:3px 10px; border-radius:12px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#fff; flex-shrink:0; }
+    .social-platform-tag.tiktok { background:#000; }
+    .social-platform-tag.instagram { background:linear-gradient(135deg,#f09433,#dc2743); }
+    .social-platform-tag.facebook { background:#1877f2; }
+    .social-bio { font-size:0.84rem; color:var(--text-light); line-height:1.55; margin-bottom:14px; }
+    .social-stats { display:flex; gap:16px; font-size:0.82rem; color:var(--text-light); margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--border); }
+    .social-stats strong { color:var(--text); }
+    .social-visit-btn { display:inline-block; padding:9px 20px; border-radius:6px; font-size:0.84rem; font-weight:700; text-decoration:none; transition:all var(--transition); }
+    .social-visit-btn:hover { transform:translateY(-1px); filter:brightness(1.1); }
+    .social-visit-btn.tiktok { background:#000; color:#fff; }
+    .social-visit-btn.instagram { background:linear-gradient(135deg,#f09433,#dc2743); color:#fff; }
+    .social-visit-btn.facebook { background:#1877f2; color:#fff; }
+
     .accounts-section { margin-top:36px; }
     .accounts-table { width:100%; border-collapse:collapse; font-size:0.86rem; margin:16px 0; }
     .accounts-table thead { background:var(--primary); color:#fff; }
@@ -178,18 +199,23 @@
     <p>Automatiskt h&auml;mtade inl&auml;gg fr&aring;n b&aring;tracingkonton p&aring; sociala medier. Uppdateras l&ouml;pande.</p>
 
     <!-- SOCIAL FEED START -->
-    <div class="feed-grid">
-      <div class="feed-placeholder">
-        <strong>Instagram-fl&ouml;de</strong>
-        Kopplas upp n&auml;r h&auml;mtning &auml;r konfigurerad
-      </div>
-      <div class="feed-placeholder">
-        <strong>Facebook-fl&ouml;de</strong>
-        Kopplas upp n&auml;r h&auml;mtning &auml;r konfigurerad
-      </div>
-      <div class="feed-placeholder">
-        <strong>TikTok-fl&ouml;de</strong>
-        Kopplas upp n&auml;r h&auml;mtning &auml;r konfigurerad
+    <div class="social-feed-list">
+      <div class="social-profile-card">
+        <div class="social-profile-header">
+          <img class="social-avatar" src="https://p16-common-sign.tiktokcdn-eu.com/tos-no1a-avt-0068c001-no/ce1377971c2300df939692dd292232ad~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=10399&amp;refresh_token=5af3ac01&amp;x-expires=1776844800&amp;x-signature=Ui%2FwhaZOJcKLK8rHfyJBkjEIp%2F4%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=a5d48078&amp;shcp=81f88b70&amp;idc=no1a" alt="rasmushamren" loading="lazy">
+          <div class="social-profile-info">
+            <h3>rasmushamren</h3>
+            <a href="https://www.tiktok.com/@rasmushamren" target="_blank" rel="noopener" class="social-handle">@rasmushamren</a>
+          </div>
+          <span class="social-platform-tag tiktok">TikTok</span>
+        </div>
+        <p class="social-bio">Boat racing enthusiast | Offshore speed &amp; adrenaline | Smuggler Racing</p>
+        <div class="social-stats">
+          <span><strong>241</strong> f&ouml;ljare</span>
+          <span><strong>3.9K</strong> likes</span>
+          <span><strong>8</strong> videos</span>
+        </div>
+        <a href="https://www.tiktok.com/@rasmushamren" target="_blank" rel="noopener" class="social-visit-btn tiktok">Se videos p&aring; TikTok &rarr;</a>
       </div>
     </div>
     <!-- SOCIAL FEED END -->
