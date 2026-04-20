@@ -31,6 +31,7 @@ PAGES = [
     ("grothfyroracing", "team"),
     ("wibergracing", "team"),
     ("karnagracing", "team"),
+    ("K2000OFFSHORE", "team"),
 ]
 
 # Facebook serves OG metadata to its own crawler UA
