@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Scrape boat racing calendar from tam.svemo.se."""
+"""Scrape boat racing calendar from tam.svemo.se.
+
+TAM API returns competitions as JSON with camelCase field names.
+We filter for water sport branches (Rundbana=22, Aquabike=26, Offshore=27)
+and extract upcoming events with class lists.
+"""
 import urllib.request
 import urllib.parse
 import json
@@ -71,6 +76,7 @@ def scrape_calendar():
 
     # Try current year first, then next year
     all_comps = []
+    seen_ids = set()
     for year in [str(datetime.now().year), str(datetime.now().year + 1)]:
         search_data = urllib.parse.urlencode({
             "__RequestVerificationToken": token,
@@ -89,7 +95,11 @@ def scrape_calendar():
             model_match = re.search(r"\$model\s*=\s*(\[.*?\]);", html, re.DOTALL)
             if model_match:
                 comps = json.loads(model_match.group(1))
-                all_comps.extend(comps)
+                for c in comps:
+                    cid = c.get("id")
+                    if cid and cid not in seen_ids:
+                        seen_ids.add(cid)
+                        all_comps.append(c)
                 print(f"[svemo] Year {year}: found {len(comps)} competitions")
         except Exception as e:
             print(f"[svemo] Year {year} search failed: {e}")
@@ -97,25 +107,46 @@ def scrape_calendar():
     competitions = all_comps
 
     # Filter for boat racing branches
+    # API uses camelCase: branchId, name, fromDate, arena, organizer
     today = datetime.now().strftime("%Y-%m-%d")
     events = []
     for comp in competitions:
-        branch_id = comp.get("BranchId")
+        branch_id = comp.get("branchId")
         if branch_id not in BRANCHES:
             continue
-        date_str = comp.get("StartDate", "")
-        # Only future events
+
+        # Parse date from ISO format "2026-05-01T00:00:00"
+        from_date = comp.get("fromDate", "")
+        date_str = from_date[:10] if from_date else ""
+
+        # Skip past events
         if date_str < today:
             continue
+
+        # Skip cancelled events
+        if comp.get("workflowStateCancelled"):
+            continue
+
+        # Extract class names from competitionClasses
+        classes_list = []
+        for cc in comp.get("competitionClasses", []):
+            cc_name = cc.get("name", "")
+            if cc_name:
+                # Clean up: "3A" from "3A" or "Träningsläger (Offshore)" etc.
+                classes_list.append(cc_name)
+
         events.append({
-            "name": comp.get("Name", ""),
+            "competition_id": comp.get("id"),
+            "name": comp.get("name", ""),
             "date": date_str,
-            "end_date": comp.get("EndDate", ""),
-            "location": comp.get("LocationName", ""),
-            "organizer": comp.get("OrganizerName", ""),
+            "end_date": "",  # Not available in list view
+            "location": comp.get("arena", ""),
+            "organizer": comp.get("organizer", ""),
             "branch": BRANCHES[branch_id],
             "branch_id": branch_id,
-            "status": comp.get("StatusText", ""),
+            "status": "Inställd" if comp.get("workflowStateCancelled") else "Planerad",
+            "classes": classes_list,
+            "open_for_registration": comp.get("openForRegistration", False),
         })
 
     events.sort(key=lambda e: e["date"])
@@ -141,6 +172,6 @@ if __name__ == "__main__":
         print("[svemo_calendar] Skipping — scraped recently")
     else:
         events = scrape_calendar()
-        if events:
+        if events is not None:
             save(events)
             mark_scraped("svemo_calendar", count=len(events))

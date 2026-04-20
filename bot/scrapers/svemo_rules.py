@@ -43,8 +43,8 @@ def scrape_uim_rules():
     # Parse article blocks
     for block in re.finditer(r'<article[^>]*>(.*?)</article>', html, re.DOTALL):
         content = block.group(1)
-        title_match = re.search(r'<h5[^>]*>(.*?)</h5>', content, re.DOTALL)
-        pdf_match = re.search(r'href="(/Documents/[^"]+\.pdf)"', content)
+        title_match = re.search(r'<h5[^>]*>(.*?)</h5>', content, re.DOTALL | re.IGNORECASE)
+        pdf_match = re.search(r"href='([^']+\.pdf)'", content)
         if not pdf_match:
             pdf_match = re.search(r'href="([^"]+\.pdf)"', content)
 
@@ -53,10 +53,12 @@ def scrape_uim_rules():
             pdf_url = ""
             if pdf_match:
                 pdf_path = pdf_match.group(1)
-                if pdf_path.startswith("/"):
+                if pdf_path.startswith("http"):
+                    pdf_url = pdf_path
+                elif pdf_path.startswith("/"):
                     pdf_url = "https://www.uim.sport" + pdf_path
                 else:
-                    pdf_url = pdf_path
+                    pdf_url = "https://www.uim.sport/" + pdf_path
                 pdf_url = pdf_url.replace(" ", "%20")
 
             # Determine category

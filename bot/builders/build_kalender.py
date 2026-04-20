@@ -64,8 +64,12 @@ def merge_events(events):
         branch = e.get("branch", "")
         if branch and branch not in merged["branches"]:
             merged["branches"].append(branch)
-        classes = e.get("classes", "")
-        if classes and classes not in merged["classes_list"]:
+        classes = e.get("classes", [])
+        if isinstance(classes, list):
+            for c in classes:
+                if c and c not in merged["classes_list"]:
+                    merged["classes_list"].append(c)
+        elif classes and classes not in merged["classes_list"]:
             merged["classes_list"].append(classes)
     return list(grouped.values())
 
