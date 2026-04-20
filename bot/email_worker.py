@@ -425,14 +425,28 @@ def extract_names_with_qwen(text, api_key, model_zdr):
 # ==============================================================
 # Task classifier — LOW / MEDIUM / HIGH
 # ==============================================================
+# Keywords that indicate content creation tasks — DeepSeek struggles with these
+# so we escalate to at least MEDIUM (Qwen ZDR) for better HTML output quality
+_CONTENT_CREATION_KEYWORDS = re.compile(
+    r'(?:inl[aä]gg|skapa.*(?:nyhet|post|artikel)|skriv.*(?:nyhet|post|artikel)|'
+    r'publicera|l[aä]gg\s*till.*(?:nyhet|post)|skapa\s*(?:en|ett)\s)',
+    re.IGNORECASE,
+)
+
+
 def classify_task(subject, body, api_key, model):
-    """DeepSeek classifies task complexity. Returns 'low', 'medium', or 'high'."""
+    """DeepSeek classifies task complexity. Returns 'low', 'medium', or 'high'.
+
+    Content creation tasks (posts, articles) are escalated to at least 'medium'
+    because DeepSeek V3 struggles with HTML news card templates.
+    """
     prompt = (
         "Du ar en task-klassificerare for webbplatsen svera.nu (statisk HTML/CSS/JS).\n"
         "Klassificera uppgiften som LOW, MEDIUM eller HIGH.\n\n"
-        "LOW = enkel textandring, lagga till/ta bort en nyhet, byta ett ord, "
-        "andra en lank, trigga deploy. En fil, inga kodandringar.\n\n"
-        "MEDIUM = fixa en bugg i en fil, smarre CSS-tweak, andra en specifik "
+        "LOW = enkel textandring, byta ett ord, "
+        "andra en lank, trigga deploy, ta bort nagon rad.\n\n"
+        "MEDIUM = lagga till/skapa nyheter eller inlagg, fixa en bugg i en fil, "
+        "smarre CSS-tweak, andra en specifik "
         "komponent, lagga till en enkel funktion i en befintlig fil.\n\n"
         "HIGH = designandringar, layout-omgorningar, andringar som spanner "
         "flera filer, ny funktionalitet, nya scrapers, JavaScript-andringar, "
@@ -444,13 +458,23 @@ def classify_task(subject, body, api_key, model):
     )
 
     answer = call_openrouter_simple(prompt, api_key, model, max_tokens=10)
+    level = "low"
     if answer:
         answer = answer.upper().strip()
         if "HIGH" in answer:
-            return "high"
-        if "MEDIUM" in answer:
-            return "medium"
-    return "low"
+            level = "high"
+        elif "MEDIUM" in answer:
+            level = "medium"
+
+    # Escalate content creation tasks — DeepSeek can't reliably produce
+    # correct HTML news cards, so route these to Qwen ZDR at minimum
+    if level == "low":
+        combined = f"{subject}\n{body[:300]}"
+        if _CONTENT_CREATION_KEYWORDS.search(combined):
+            log(f"  Escalating LOW -> MEDIUM (content creation detected)")
+            level = "medium"
+
+    return level
 
 
 # ==============================================================

@@ -248,6 +248,113 @@ deploy.sh &rarr; svera.nu
   ]
 }
     </div>
+
+    <h4>svemo_results.json &mdash; SVEMO Resultat</h4>
+    <div class="code-block">
+{
+  <span class="key">"competitions"</span>: [
+    {
+      <span class="key">"name"</span>: <span class="str">"Roslagsloppet"</span>,
+      <span class="key">"date"</span>: <span class="str">"2025-08-09"</span>,
+      <span class="key">"class"</span>: <span class="str">"3B"</span>,
+      <span class="key">"results"</span>: [
+        {
+          <span class="key">"position"</span>: <span class="num">1</span>,
+          <span class="key">"driver"</span>: <span class="str">"F&ouml;rnamn Efternamn"</span>,
+          <span class="key">"club"</span>: <span class="str">"RBR"</span>,
+          <span class="key">"points"</span>: <span class="num">25</span>
+        }
+      ]
+    }
+  ]
+}
+    </div>
+    <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:16px;">Anv&auml;nds av <code>build_champions.py</code> f&ouml;r att ber&auml;kna SM/RM-st&auml;llningar.</p>
+
+    <h4>news_feed.json &mdash; Nyhetsk&auml;llor</h4>
+    <div class="code-block">
+{
+  <span class="key">"scraped_at"</span>: <span class="str">"2026-04-17 00:00"</span>,
+  <span class="key">"total"</span>: <span class="num">30</span>,
+  <span class="key">"articles"</span>: [
+    {
+      <span class="key">"title"</span>: <span class="str">"UIM World Championship Round 3"</span>,
+      <span class="key">"date"</span>: <span class="str">"2026-04-15"</span>,
+      <span class="key">"url"</span>: <span class="str">"https://..."</span>,
+      <span class="key">"excerpt"</span>: <span class="str">"Kort utdrag ur artikeln..."</span>,
+      <span class="key">"source"</span>: <span class="str">"Powerboat Racing World"</span>,
+      <span class="key">"source_short"</span>: <span class="str">"PRW"</span>          <span class="comment">// PRW | F1H2O | PBN</span>
+    }
+  ]
+}
+    </div>
+    <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:16px;">Aggregerat fr&aring;n tre k&auml;llor: Powerboat Racing World (PRW), F1H2O och Powerboat News (PBN). Anv&auml;nds av <code>build_news.py</code> och <code>build_rss.py</code>.</p>
+
+    <h4>weekly_digest.json &mdash; AI-sammanfattning</h4>
+    <div class="code-block">
+{
+  <span class="key">"date"</span>: <span class="str">"2026-04-17 00:00"</span>,
+  <span class="key">"summary"</span>: <span class="str">"AI-genererad svensk sammanfattning..."</span>,
+  <span class="key">"article_count"</span>: <span class="num">30</span>,
+  <span class="key">"sources"</span>: [<span class="str">"F1H2O"</span>, <span class="str">"PBN"</span>, <span class="str">"PRW"</span>]
+}
+    </div>
+    <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:16px;">Genereras veckovis av AI-modell (med ZDR &mdash; Zero Data Retention &mdash; n&auml;r personnamn f&ouml;rekommer). Visas p&aring; <a href="nyheter.html">nyheter.html</a>.</p>
+
+    <h4>rules.json &mdash; Regler &amp; Best&auml;mmelser</h4>
+    <div class="code-block">
+[
+  {
+    <span class="key">"title"</span>: <span class="str">"T&auml;vlingsreglemente 2026"</span>,
+    <span class="key">"url"</span>: <span class="str">"https://svemo.se/..."</span>,
+    <span class="key">"type"</span>: <span class="str">"pdf"</span>,
+    <span class="key">"branch"</span>: <span class="str">"Offshore"</span>
+  }
+]
+    </div>
+    <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:16px;">Regelsamling fr&aring;n SVEMO. Anv&auml;nds p&aring; <a href="klasser.html">klasser.html</a>.</p>
+  </div>
+
+  <!-- Generated Outputs -->
+  <div class="api-section">
+    <h3>Genererade utdata</h3>
+    <p style="font-size:0.88rem;color:var(--text-light);line-height:1.7;margin-bottom:16px;">Ut&ouml;ver HTML-sidorna genererar SVERA &auml;ven f&ouml;ljande maskinl&auml;sbara fl&ouml;den:</p>
+
+    <table class="api-table">
+      <thead><tr><th>Fil</th><th>Format</th><th>Beskrivning</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong><a href="rss.xml" style="color:var(--primary);">rss.xml</a></strong></td>
+          <td>RSS 2.0</td>
+          <td>SVERAs egna svenska nyheter (fr&aring;n index.html). Inkluderar kategori-taggar och sociala delningsbeskrivningar.</td>
+        </tr>
+        <tr>
+          <td><strong><a href="rss-intl.xml" style="color:var(--primary);">rss-intl.xml</a></strong></td>
+          <td>RSS 2.0</td>
+          <td>Internationella racerb&aring;tsnyheter (PRW, F1H2O, PBN). Uppdateras veckovis.</td>
+        </tr>
+        <tr>
+          <td><strong><a href="champions.html" style="color:var(--primary);">champions.html</a></strong></td>
+          <td>HTML</td>
+          <td>SM/RM-m&auml;starst&auml;llningar. Genereras fr&aring;n <code>svemo_results.json</code> med automatisk po&auml;ngber&auml;kning.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Bot System -->
+  <div class="api-section">
+    <h3>Automationsbot (Charlie Webber)</h3>
+    <p style="font-size:0.88rem;color:var(--text-light);line-height:1.7;margin-bottom:16px;">SVERA drivs av en autonom bot &mdash; <strong>Charlie Webber</strong> &mdash; som hanterar b&aring;de schemalagda uppdateringar och email-styrda uppgifter.</p>
+
+    <h4>Schemalagt fl&ouml;de</h4>
+    <p style="font-size:0.88rem;color:var(--text-light);line-height:1.7;">Daglig cron-k&ouml;rning (06:00): scrapers h&auml;mtar data &rarr; builders genererar HTML &rarr; inneh&aring;llskontroll (hash-j&auml;mf&ouml;relse) &rarr; deploy. &rdquo;Uppdaterad&rdquo;-datum &auml;ndras bara n&auml;r inneh&aring;ll faktiskt &auml;ndrats.</p>
+
+    <h4>Email-pipeline</h4>
+    <p style="font-size:0.88rem;color:var(--text-light);line-height:1.7;">Admin kan skicka uppgifter via email. Boten klassificerar komplexiteten (LOW/MEDIUM/HIGH) och delegerar till r&auml;tt AI-motor. Vid personuppgifter anv&auml;nds alltid Zero Data Retention (ZDR) f&ouml;r integritetsskydd.</p>
+
+    <h4>AI-sammanfattning</h4>
+    <p style="font-size:0.88rem;color:var(--text-light);line-height:1.7;">Internationella nyheter sammanfattas veckovis p&aring; svenska av AI. N&auml;r artiklar inneh&aring;ller personnamn dirigeras bearbetningen genom en ZDR-modell (Zero Data Retention) som inte lagrar n&aring;gon data efter behandling.</p>
   </div>
 
   <!-- Merge Logic -->
