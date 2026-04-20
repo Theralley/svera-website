@@ -546,7 +546,7 @@ def generate_html(standings):
   <meta property="og:title" content="Champions \u2014 SVERA">
   <meta property="og:description" content="SM och RM-st\u00e4llningar f\u00f6r svensk offshore-racing.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.svera.nu/champions.html">
+  <meta property="og:url" content="https://www.svera.nu/champions">
   <meta property="og:locale" content="sv_SE">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
@@ -670,20 +670,32 @@ def generate_html(standings):
     <div class="container">
       <ul class="nav-list">
         <li><a href="/">Hem</a></li>
-        <li><a href="om.html">Om SVERA</a></li>
-        <li><a href="arkivet.html">Arkivet</a></li>
-        <li><a href="klasser.html">Klasser &amp; Regler</a></li>
-        <li><a href="kalender.html">Kalender</a></li>
         <li>
-          <a href="resultat.html" class="active">Resultat</a>
+          <a href="/om">Om SVERA</a>
           <ul class="dropdown">
-            <li><a href="resultat.html">T\u00e4vlingsresultat</a></li>
-            <li><a href="champions.html">Svenska- och Riksm\u00e4stare</a></li>
+            <li><a href="/om">Om SVERA</a></li>
+            <li><a href="/sponsorer">Sponsorer &amp; Partners</a></li>
           </ul>
         </li>
-        <li><a href="nyheter.html">Nyheter</a></li>
-        <li><a href="klubbar.html">Klubbar</a></li>
-        <li><a href="kontakt.html">Kontakt</a></li>
+        <li><a href="/arkivet">Arkivet</a></li>
+        <li><a href="/klasser">Klasser &amp; Regler</a></li>
+        <li><a href="/kalender">Kalender</a></li>
+        <li><a href="/resultat">Resultat</a></li>
+        <li>
+          <a href="/nyheter">Nyheter</a>
+          <ul class="dropdown">
+            <li><a href="/nyheter">Nyheter</a></li>
+            <li><a href="/social">Social</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="/klubbar">Klubbar</a>
+          <ul class="dropdown">
+            <li><a href="/klubbar">Klubbar</a></li>
+            <li><a href="/team">Aktiva Team</a></li>
+          </ul>
+        </li>
+        <li><a href="/kontakt">Kontakt</a></li>
       </ul>
     </div>
   </nav>
@@ -730,7 +742,7 @@ def generate_html(standings):
   </div>
 
   <div class="wip-notice" style="margin-top:24px;padding:18px 22px;background:#fff8e1;border:1px solid #ffe082;border-left:4px solid #ffc107;border-radius:var(--radius);font-size:.85rem;line-height:1.7;color:#5d4037;">
-    <strong>OBS \u2014 Work in progress.</strong> Ta inte denna sida f\u00f6r given. St\u00e4llningarna h\u00e4mtas automatiskt fr\u00e5n SVEMO:s officiella resultat och borde st\u00e4mma, men logiken f\u00f6r att avg\u00f6ra SM- respektive RM-status \u00e4r inte perfekt. Hittar du fel? <a href="kontakt.html" style="color:#e65100;font-weight:600;">H\u00f6r av dig!</a>
+    <strong>OBS \u2014 Work in progress.</strong> Ta inte denna sida f\u00f6r given. St\u00e4llningarna h\u00e4mtas automatiskt fr\u00e5n SVEMO:s officiella resultat och borde st\u00e4mma, men logiken f\u00f6r att avg\u00f6ra SM- respektive RM-status \u00e4r inte perfekt. Hittar du fel? <a href="/kontakt" style="color:#e65100;font-weight:600;">H\u00f6r av dig!</a>
   </div>
 
 </div>
@@ -742,25 +754,25 @@ def generate_html(standings):
         <h3>SVERA</h3>
         <p>Svenska Evenemang &amp; Racerb\u00e5tsarkivet</p>
         <p>Oberoende informationsresurs f\u00f6r svensk racerb\u00e5tssport.</p>
-        <p style="margin-top:10px;"><a href="policy.html" style="display:inline-block;background:rgba(255,255,255,0.08);color:#fde506;padding:6px 14px;border-radius:4px;font-size:0.76rem;font-weight:600;text-decoration:none;border:1px solid rgba(253,229,6,0.25);transition:all 0.2s;">Data &amp; Integritet &rarr;</a></p>
+        <p style="margin-top:10px;"><a href="/policy" style="display:inline-block;background:rgba(255,255,255,0.08);color:#fde506;padding:6px 14px;border-radius:4px;font-size:0.76rem;font-weight:600;text-decoration:none;border:1px solid rgba(253,229,6,0.25);transition:all 0.2s;">Data &amp; Integritet &rarr;</a></p>
       </div>
       <div class="footer-col">
         <h3>Utforska</h3>
         <ul>
-          <li><a href="om.html">Om SVERA</a></li>
-          <li><a href="arkivet.html">Arkivet</a></li>
-          <li><a href="klasser.html">Klasser &amp; Regler</a></li>
-          <li><a href="kalender.html">Kalender</a></li>
-          <li><a href="resultat.html">Resultat</a></li>
-          <li><a href="champions.html">Svenska- och Riksm\u00e4stare</a></li>
-          <li><a href="nyheter.html">Nyheter</a></li>
-          <li><a href="klubbar.html">Klubbar</a></li>
+          <li><a href="/om">Om SVERA</a></li>
+          <li><a href="/arkivet">Arkivet</a></li>
+          <li><a href="/klasser">Klasser &amp; Regler</a></li>
+          <li><a href="/kalender">Kalender</a></li>
+          <li><a href="/resultat">Resultat</a></li>
+          <li><a href="/champions">Svenska- och Riksm\u00e4stare</a></li>
+          <li><a href="/nyheter">Nyheter</a></li>
+          <li><a href="/klubbar">Klubbar</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h3>Kontakt</h3>
         <p>Har du material, bilder eller kunskap att bidra med?</p>
-        <p><a href="kontakt.html">Kontakta oss &rarr;</a></p>
+        <p><a href="/kontakt">Kontakta oss &rarr;</a></p>
       </div>
     </div>
 
