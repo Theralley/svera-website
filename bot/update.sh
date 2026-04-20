@@ -42,8 +42,11 @@ python3 "$SCRIPT_DIR/scrapers/svemo_rules.py" || echo "WARNING: rules scraper fa
 echo "[7/8] International powerboat news..."
 python3 "$SCRIPT_DIR/scrapers/news_aggregator.py" || echo "WARNING: news aggregator failed"
 
-echo "[8/8] Social media (TikTok)..."
+echo "[8/9] Social media (TikTok)..."
 python3 "$SCRIPT_DIR/scrapers/social_tiktok.py" || echo "WARNING: social tiktok scraper failed"
+
+echo "[9/9] Social media (Facebook)..."
+python3 "$SCRIPT_DIR/scrapers/social_facebook.py" || echo "WARNING: social facebook scraper failed"
 
 # Step 2: Rebuild pages from scraped data
 echo ""
