@@ -197,20 +197,20 @@ def build():
         print("[build_social] No social data to display")
         return False
 
-    # Build sections per platform
+    # Build sections per platform — TikTok first (video), then Facebook, then Instagram
     feed_html = '    <!-- SOCIAL FEED START -->\n'
 
-    if ig_profiles:
-        feed_html += build_section("Instagram", "instagram",
-                                   build_instagram_cards(ig_profiles))
+    if tiktok_profiles:
+        feed_html += build_section("TikTok", "tiktok",
+                                   build_tiktok_cards(tiktok_profiles))
 
     if fb_pages:
         feed_html += build_section("Facebook", "facebook",
                                    build_facebook_cards(fb_pages))
 
-    if tiktok_profiles:
-        feed_html += build_section("TikTok", "tiktok",
-                                   build_tiktok_cards(tiktok_profiles))
+    if ig_profiles:
+        feed_html += build_section("Instagram", "instagram",
+                                   build_instagram_cards(ig_profiles))
 
     feed_html += '    <!-- SOCIAL FEED END -->'
 
