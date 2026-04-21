@@ -25,7 +25,7 @@ OUTPUT_FILE = os.path.join(DATA_DIR, "social_facebook.json")
 # Format: (page_id, tag)
 # Tags: news, team, driver, copilot
 PAGES = [
-    ("f4powerboat", "news"),
+    # Teams
     ("smugglerracing", "team"),
     ("janssonoffshoreracing", "team"),
     ("TeamEldaracing", "team"),
@@ -33,6 +33,9 @@ PAGES = [
     ("wibergracing", "team"),
     ("karnagracing", "team"),
     ("K2000OFFSHORE", "team"),
+    # News (längst ner)
+    ("f4powerboat", "news"),
+    ("XCATWorldChampionship", "news"),
 ]
 
 # Facebook serves OG metadata to its own crawler UA
