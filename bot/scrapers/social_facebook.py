@@ -25,6 +25,7 @@ OUTPUT_FILE = os.path.join(DATA_DIR, "social_facebook.json")
 # Format: (page_id, tag)
 # Tags: news, team, driver, copilot
 PAGES = [
+    ("f4powerboat", "news"),
     ("smugglerracing", "team"),
     ("janssonoffshoreracing", "team"),
     ("TeamEldaracing", "team"),
