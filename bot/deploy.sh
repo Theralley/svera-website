@@ -93,6 +93,25 @@ if [ -d "$PROJECT_DIR/assets/uploads" ]; then
   done
 fi
 
+# Add social avatars (cached from FB/IG/TikTok)
+if [ -d "$PROJECT_DIR/assets/social-avatars" ]; then
+  CMDS+="-mkdir $WEBROOT/assets/social-avatars
+"
+  for platform_dir in "$PROJECT_DIR"/assets/social-avatars/*/; do
+    if [ -d "$platform_dir" ]; then
+      platform_name=$(basename "$platform_dir")
+      CMDS+="-mkdir $WEBROOT/assets/social-avatars/$platform_name
+"
+      for avatar in "$platform_dir"*; do
+        if [ -f "$avatar" ]; then
+          CMDS+="put $avatar $WEBROOT/assets/social-avatars/$platform_name/$(basename "$avatar")
+"
+        fi
+      done
+    fi
+  done
+fi
+
 CMDS+="quit
 "
 

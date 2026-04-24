@@ -12,6 +12,11 @@ import os
 import re
 from html import escape
 
+try:
+    from .avatar_cache import cache_avatars_for_platform
+except ImportError:
+    from avatar_cache import cache_avatars_for_platform
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 BOT_DIR = os.path.dirname(SCRIPT_DIR)
 PROJECT_DIR = os.path.dirname(BOT_DIR)
@@ -192,6 +197,14 @@ def build():
         with open(TIKTOK_FILE) as f:
             tiktok_profiles = json.load(f).get("profiles", [])
         print(f"[build_social] Loaded {len(tiktok_profiles)} TikTok profile(s)")
+
+    # Cache avatars locally so signed CDN URLs cannot expire on us
+    if fb_pages:
+        cache_avatars_for_platform(fb_pages, "facebook", "page_id", "image")
+    if ig_profiles:
+        cache_avatars_for_platform(ig_profiles, "instagram", "username", "image")
+    if tiktok_profiles:
+        cache_avatars_for_platform(tiktok_profiles, "tiktok", "username", "avatar")
 
     if not fb_pages and not ig_profiles and not tiktok_profiles:
         print("[build_social] No social data to display")
