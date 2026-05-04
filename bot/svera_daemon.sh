@@ -22,7 +22,7 @@ LAST_SCRAPE="$SCRIPT_DIR/.last_scrape"
 LAST_DEPLOY_HASH="$SCRIPT_DIR/.last_deploy_hash"
 LAST_NEWS="$SCRIPT_DIR/.last_news"
 SCRAPE_INTERVAL=604800  # 7 days in seconds
-EMAIL_INTERVAL=60       # check email every 60 seconds (lightweight IMAP poll)
+EMAIL_INTERVAL=30       # poll email + git every 30s (lightweight IMAP poll)
 NEWS_DAY=5              # Friday (1=Mon ... 5=Fri, per date +%u)
 
 # ---- Logging ----
