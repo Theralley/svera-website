@@ -26,7 +26,7 @@ The old Svenska Racerbatforbundet (SVERA) was absorbed into Svemo around 2020 an
 
 - **Frontend:** Pure HTML/CSS/JS — no frameworks, works on one.com free hosting
 - **Scrapers:** Python 3 (stdlib only — zero pip dependencies)
-- **AI Agent:** DeepSeek V3 (general), Qwen ZDR (personal data), Claude Code CLI (complex tasks) — all via OpenRouter
+- **AI Agent:** DeepSeek V4 Pro (general), Qwen ZDR (personal data), Claude Code CLI (complex tasks) — all via OpenRouter
 - **Data Privacy:** ZDR (Zero Data Retention) routing — personal names detected and routed to Qwen ZDR, masked before Claude
 - **Deployment:** SFTP to one.com via `sshpass`
 - **Automation:** systemd user service — starts at boot, checks email every 60s, full scrape weekly
@@ -303,7 +303,7 @@ Reads `svemo_calendar.json` and `uim_calendar.json`. Replaces the `<tbody>` cont
 
 ### `build_news.py` — News + AI Digest
 
-Reads `news_feed.json`. Scans articles for personal names — if found, uses **Qwen ZDR** (Zero Data Retention); otherwise uses **DeepSeek V3** (cheaper). Generates a Swedish weekly summary (3–4 paragraphs). Builds article cards (max 15, balanced across sources). Replaces the digest and article grid sections in `nyheter.html`. Requires an OpenRouter API key in `config.json`.
+Reads `news_feed.json`. Scans articles for personal names — if found, uses **Qwen ZDR** (Zero Data Retention); otherwise uses **DeepSeek V4 Pro** (cheaper). Generates a Swedish weekly summary (3–4 paragraphs). Builds article cards (max 15, balanced across sources). Replaces the digest and article grid sections in `nyheter.html`. Requires an OpenRouter API key in `config.json`.
 
 ### `build_champions.py` — SM/RM Championship Standings
 
@@ -369,7 +369,7 @@ Send an email from the admin address to the configured email and **Charlie Webbe
 
 | Level | Names? | Engine | ZDR? |
 |-------|--------|--------|------|
-| LOW | No | DeepSeek V3 | No |
+| LOW | No | DeepSeek V4 Pro | No |
 | LOW | Yes | Qwen | Yes |
 | MEDIUM | Any | Qwen | Yes (always) |
 | HIGH | No | DeepSeek crafts → Claude CLI | No |

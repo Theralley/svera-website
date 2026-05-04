@@ -3,7 +3,7 @@
 
 Reads: bot/data/news_feed.json (from news_aggregator.py)
 Updates: nyheter.html — replaces the weekly digest and article grid sections
-Uses: DeepSeek V3 (no names) or Qwen ZDR (when articles contain personal names)
+Uses: DeepSeek V4 Pro (no names) or Qwen ZDR (when articles contain personal names)
 """
 import json
 import os
@@ -301,7 +301,7 @@ def build():
     config = load_config()
     api_cfg = config.get("api_keys", {})
     api_key = api_cfg.get("openrouter", "")
-    model = api_cfg.get("openrouter_model", "deepseek/deepseek-chat-v3-0324")
+    model = api_cfg.get("openrouter_model", "deepseek/deepseek-v4-pro")
     model_zdr = api_cfg.get("openrouter_model_fallback", "qwen/qwen-2.5-72b-instruct")
 
     if not api_key:

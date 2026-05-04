@@ -118,7 +118,7 @@ News cards go in `<main id="nyheter"><div class="news-list">`. Newest first.
 
 ## Email Worker (bot/email_worker.py)
 Charlie Webber — email-to-AI pipeline:
-- LOW tasks (no names) → DeepSeek V3
+- LOW tasks (no names) → DeepSeek V4 Pro
 - LOW tasks (names) or MEDIUM → Qwen ZDR
 - HIGH → Claude Code CLI
 - Content creation tasks (inlägg, posts) auto-escalated to MEDIUM

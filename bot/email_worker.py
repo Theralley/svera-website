@@ -4,7 +4,7 @@
 Smart email-to-AI pipeline that classifies tasks and routes them
 with ZDR (Zero Data Retention) compliance for personal data:
 
-  LOW (no names)  → DeepSeek V3 (cheap, fast)
+  LOW (no names)  → DeepSeek V4 Pro (cheap, fast)
   LOW (names)     → Qwen ZDR (protects personal data)
   MEDIUM          → Qwen ZDR (always)
   HIGH (no names) → DeepSeek crafts prompt → Claude Code CLI
@@ -216,7 +216,7 @@ def send_reply(email_cfg, admin_addr, original_subject, body_text, is_error=Fals
 def build_success_reply(subject, engine, level):
     engine_labels = {
         "claude": "Claude Code",
-        "deepseek": "DeepSeek V3",
+        "deepseek": "DeepSeek V4 Pro",
         "qwen-zdr": "Qwen ZDR (Zero Data Retention)",
     }
     engine_label = engine_labels.get(engine, engine)
@@ -438,7 +438,7 @@ def classify_task(subject, body, api_key, model):
     """DeepSeek classifies task complexity. Returns 'low', 'medium', or 'high'.
 
     Content creation tasks (posts, articles) are escalated to at least 'medium'
-    because DeepSeek V3 struggles with HTML news card templates.
+    because the cheaper model can struggle with HTML news card templates.
     """
     prompt = (
         "Du ar en task-klassificerare for webbplatsen svera.nu (statisk HTML/CSS/JS).\n"
@@ -905,7 +905,7 @@ def check_inbox():
         return 0
 
     api_key = api_cfg.get("openrouter", "")
-    model = api_cfg.get("openrouter_model", "deepseek/deepseek-chat-v3-0324")
+    model = api_cfg.get("openrouter_model", "deepseek/deepseek-v4-pro")
     model_zdr = api_cfg.get("openrouter_model_fallback", "qwen/qwen-2.5-72b-instruct")
     if not api_key:
         log("No OpenRouter API key")

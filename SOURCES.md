@@ -82,7 +82,7 @@ Last updated: 2026-02-26
 
 ### 9. OpenRouter API (AI Summarization)
 - **URL:** `https://openrouter.ai/api/v1/chat/completions`
-- **Model:** `deepseek/deepseek-chat-v3-0324` (primary), `qwen/qwen-2.5-72b-instruct` (fallback)
+- **Model:** `deepseek/deepseek-v4-pro` (primary), `qwen/qwen-2.5-72b-instruct` (fallback)
 - **Auth:** Bearer token (API key in config.json)
 - **Used by:** `bot/builders/build_news.py` (weekly digest summarization), `bot/email_worker.py` (task processing)
 

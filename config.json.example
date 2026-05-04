@@ -20,7 +20,7 @@
 
   "api_keys": {
     "openrouter": "",
-    "openrouter_model": "deepseek/deepseek-chat-v3-0324",
+    "openrouter_model": "deepseek/deepseek-v4-pro",
     "openrouter_model_fallback": "qwen/qwen-2.5-72b-instruct",
     "openrouter_base_url": "https://openrouter.ai/api/v1",
     "note": "Get your API key at https://openrouter.ai/keys"

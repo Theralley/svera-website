@@ -39,7 +39,7 @@ def generate_weekly_summary(articles, config):
     """Use DeepSeek via OpenRouter to generate a weekly summary."""
     api_keys = config.get("api_keys", {})
     api_key = api_keys.get("openrouter")
-    model = api_keys.get("openrouter_model", "deepseek/deepseek-chat-v3-0324")
+    model = api_keys.get("openrouter_model", "deepseek/deepseek-v4-pro")
     base_url = api_keys.get("openrouter_base_url", "https://openrouter.ai/api/v1")
 
     if not api_key:
