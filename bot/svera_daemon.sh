@@ -50,21 +50,75 @@ site_hash() {
 
 # ---- Deploy only if site changed ----
 deploy_if_changed() {
-    local current_hash
+    local current_hash prev_hash
     current_hash=$(site_hash)
-    local prev_hash
     prev_hash=$(cat "$LAST_DEPLOY_HASH" 2>/dev/null || echo "none")
 
     if [ "$current_hash" = "$prev_hash" ]; then
-        log "No changes — skipping deploy"
         return 1
     fi
 
     log "Changes detected — deploying..."
-    bash "$SCRIPT_DIR/deploy.sh" 2>&1 | tee -a "$LOG"
-    echo "$current_hash" > "$LAST_DEPLOY_HASH"
-    log "Deploy complete"
-    return 0
+    if bash "$SCRIPT_DIR/deploy.sh" 2>&1 | tee -a "$LOG"; then
+        echo "$current_hash" > "$LAST_DEPLOY_HASH"
+        log "Deploy complete"
+        return 0
+    else
+        log "WARN: deploy failed (check config.json hosting/sftp creds)"
+        return 1
+    fi
+}
+
+# ---- Two-way git sync (origin <-> plex) ------------------
+# Pulls remote commits in (so a Mac developer can push and plex picks up),
+# and pushes the bot's local edits out (so Mac sees what the agent did).
+sync_git_pull() {
+    [ -d "$PROJECT_DIR/.git" ] || return 1
+    cd "$PROJECT_DIR" || return 1
+
+    git fetch origin master --quiet 2>>"$LOG" || { log "git fetch failed"; return 1; }
+    local local_head remote_head
+    local_head=$(git rev-parse master 2>/dev/null)
+    remote_head=$(git rev-parse origin/master 2>/dev/null)
+    [ "$local_head" = "$remote_head" ] && return 0
+
+    log "Git: new commits on origin — rebasing local on top..."
+    if git pull --rebase --autostash origin master 2>&1 | tee -a "$LOG"; then
+        log "Git: pull OK ($(git rev-parse --short HEAD))"
+        return 0
+    fi
+    log "WARN: git rebase failed — aborting and leaving working tree alone for manual fix"
+    git rebase --abort 2>/dev/null || true
+    return 1
+}
+
+commit_and_push_changes() {
+    [ -d "$PROJECT_DIR/.git" ] || return 1
+    cd "$PROJECT_DIR" || return 1
+
+    if [ -z "$(git status --porcelain)" ]; then
+        return 0
+    fi
+
+    log "Git: committing agent/scrape changes..."
+    git add -A 2>>"$LOG"
+    git commit -m "auto: SVERA daemon update $(date '+%Y-%m-%d %H:%M')" 2>&1 | tee -a "$LOG" || {
+        log "WARN: git commit failed (probably nothing to commit after .gitignore filter)"
+        return 1
+    }
+
+    if git push origin master 2>&1 | tee -a "$LOG"; then
+        log "Git: pushed $(git rev-parse --short HEAD)"
+        return 0
+    fi
+    log "Git: push failed, attempting rebase + retry..."
+    if git pull --rebase --autostash origin master 2>&1 | tee -a "$LOG" \
+       && git push origin master 2>&1 | tee -a "$LOG"; then
+        log "Git: pushed after rebase"
+        return 0
+    fi
+    log "ERROR: git push still failing — manual intervention needed"
+    return 1
 }
 
 # ---- Check if weekly scrape is due ----
@@ -154,11 +208,12 @@ run_news_refresh() {
 # ---- Check email for tasks ----
 check_email() {
     python3 "$SCRIPT_DIR/email_worker.py" 2>&1 | tee -a "$LOG"
-    local exit_code=$?
+    local exit_code=${PIPESTATUS[0]}
     if [ $exit_code -ne 0 ]; then
         log "WARN: email check failed (exit $exit_code)"
     fi
-    # If email_worker made changes, deploy them
+    # Push agent/scrape changes back to GitHub before deploying.
+    commit_and_push_changes || true
     deploy_if_changed || true
 }
 
@@ -169,6 +224,7 @@ log ""
 log "###################################"
 log "# SVERA Daemon started"
 log "# Email:  every ${EMAIL_INTERVAL}s"
+log "# Git:    pull every loop, push after agent/scrape runs"
 log "# Scrape: every ${SCRAPE_INTERVAL}s (7 days)"
 log "# News:   every Friday"
 log "###################################"
@@ -179,7 +235,10 @@ STATUS_EVERY=60  # log "next scrape" every ~60 loops (once/hour at 60s interval)
 while true; do
     rotate_log
 
-    # 1. Check email — every loop (60s)
+    # 1. Pull latest from origin first (so agent/scrapers work on the newest tree)
+    sync_git_pull || true
+
+    # 2. Check email — every loop (60s); also commits+pushes+deploys after
     check_email
 
     # 1.5. Friday news refresh
