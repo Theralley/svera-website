@@ -16,6 +16,8 @@ bot/data/
 bot/scrape_log.json
 bot/processed_emails.json
 bot/task_history.json
+bot/pending_plans.json
+bot/.task_counter
 bot/.last_deploy_hash
 bot/.last_scrape
 bot/.last_news
